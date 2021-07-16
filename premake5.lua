@@ -10,17 +10,17 @@ workspace "Wargo"
     targetdir "bin/%{cfg.buildcfg}"
     objdir "obj"
 
+    files { "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp" }
+
     project "Core"
         kind "StaticLib"
         location "%{prj.name}"
-        files { "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp" }
-        includedirs { "%{prj.name}/src/**" }
+        includedirs { "Core/src", "Core/src/**" }
 
     project "Arch"
         kind "StaticLib"
         location "%{prj.name}"
-        files { "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp" }
-        includedirs { "%{prj.name}/src/**" }
+        includedirs { "Core/src", "Core/src/**", "Arch/src/**" }
         links { "Core" }
 
     project "Gui"
@@ -31,8 +31,8 @@ workspace "Wargo"
         qtmodules { "core", "gui", "widgets" }
         qtprefix "Qt6"
 
-        files { "%{prj.name}/src/**.hpp", "%{prj.name}/src/**.cpp", "%{prj.name}/src/**.ui" }
-        includedirs { "%{prj.name}/src/**" }
+        files { "%{prj.name}/src/**.ui" }
+        includedirs { "Core/src", "Core/src/**", "Arch/src/**", "Gui/src/**" }
         links { "Arch" }
 
         configuration { "Debug" }

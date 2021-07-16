@@ -1,6 +1,7 @@
 #ifndef HEIRARCHYFRAME_HPP
 #define HEIRARCHYFRAME_HPP
 
+#include <list>
 #include "IFrame.hpp"
 
 

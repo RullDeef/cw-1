@@ -1,10 +1,21 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-struct Scene
-{
-};
+#include "StatusCodes.hpp"
+#include "RenderTarget.hpp"
+#include "Scene.hpp"
+#include "Camera.hpp"
 
-void renderScene(const Scene& scene);
+
+namespace Core
+{
+    enum class RenderType
+    {
+        FastRenderType,
+        FancyRenderType
+    };
+
+    StatusCode renderScene(RenderTarget& renderTarget, const Scene& scene, const Camera& camera, RenderType renderType = RenderType::FastRenderType);
+}
 
 #endif // CORE_HPP
