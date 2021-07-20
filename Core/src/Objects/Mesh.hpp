@@ -1,7 +1,7 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
-#include "ext_math.hpp"
+#include "Vec.hpp"
 #include "vect_t.hpp"
 
 
@@ -9,9 +9,9 @@ namespace Core
 {
     struct Vertex
     {
-        vec position;
-        vec normal;
-        vec uv;
+        Vec position;
+        Vec normal;
+        Vec uv;
     };
 
     struct Face

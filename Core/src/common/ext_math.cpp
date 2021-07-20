@@ -1,3 +1,4 @@
+#if 0
 #include <cmath>
 #include "ext_math.hpp"
 
@@ -266,3 +267,5 @@ screen_point Core::vec_project(const vec& v, const mat& prj, viewport viewport)
         static_cast<int>(viewport.top + 0.5 * (1 - p_v.y / -p_v.z) * viewport.height)
     };
 }
+
+#endif

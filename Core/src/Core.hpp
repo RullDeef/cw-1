@@ -5,17 +5,27 @@
 #include "RenderTarget.hpp"
 #include "Scene.hpp"
 #include "Camera.hpp"
+#include "Rect.hpp"
 
 
 namespace Core
 {
-    enum class RenderType
+    struct RenderParams
     {
-        FastRenderType,
-        FancyRenderType
+        RenderTarget& renderTarget;
+        const Scene& scene;
+        const Camera& camera;
+
+        enum class RenderType
+        {
+            FastRenderType,
+            FancyRenderType
+        } renderType;
+
+        Rect viewport;
     };
 
-    StatusCode renderScene(RenderTarget& renderTarget, const Scene& scene, const Camera& camera, RenderType renderType = RenderType::FastRenderType);
+    StatusCode renderScene(RenderParams renderParams);
 }
 
 #endif // CORE_HPP

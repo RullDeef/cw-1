@@ -1,25 +1,21 @@
 #include "FastRender.hpp"
 #include "LineRenderer.hpp"
+#include "Mat.hpp"
 
 using namespace Core;
 
 static void makeBG(RenderTarget& renderTarget);
-static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, const mat& camera_mat);
-static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const mat& camera_mat);
-static StatusCode renderLine(RenderTarget& renderTarget, screen_point p1, screen_point p2);
+static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, const Camera& camera);
+static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const Camera& camera);
+static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2);
 
 
-StatusCode Core::fastRenderScene(RenderTarget& renderTarget, const Scene& scene, const Camera& camera)
+StatusCode Core::fastRenderScene(RenderParams renderParams)
 {
-    makeBG(renderTarget);
+    makeBG(renderParams.renderTarget);
 
-    mat camera_mat = get_camera_mat(camera, renderTarget.width, renderTarget.height);
-    for (auto node = scene.meshList.head; node; node = node->next)
-        renderWireframeMesh(renderTarget, node->value, camera_mat);
-
-    // renderLine(renderTarget, 10, 20, 300, 400, Color::green);
-    // renderLine(renderTarget, 30, 20, 300, 400, Color::green);
-    // renderLine(renderTarget, 10, 60, 300, 400, Color::green);
+    for (auto node = renderParams.scene.meshList.head; node; node = node->next)
+        renderWireframeMesh(renderParams.renderTarget, node->value, renderParams.camera);
 
     return StatusCode::Success;
 }
@@ -38,40 +34,32 @@ static void makeBG(RenderTarget& renderTarget)
     }
 }
 
-static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, const mat& camera_mat)
+static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, const Camera& camera)
 {
     for (size_t i = 0; i < mesh.faces.size; i++)
     {
         const Face* face;
         at(mesh.faces, i, face);
-        renderFace(renderTarget, *face, camera_mat);
+        renderFace(renderTarget, *face, camera);
     }
 
     return StatusCode::Success;
 }
 
-static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const mat& camera_mat)
+static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const Camera& camera)
 {
-    screen_point p1, p2;
+    Vec p1 = project_point(camera, face.verts[0].position);
+    Vec p2 = project_point(camera, face.verts[1].position);
+    Vec p3 = project_point(camera, face.verts[2].position);
 
-    viewport vp = viewport_init(renderTarget.width, renderTarget.height);
-
-    p1 = vec_project(face.verts[0].position, camera_mat, vp);
-    p2 = vec_project(face.verts[1].position, camera_mat, vp);
     renderLine(renderTarget, p1, p2);
-
-    p1 = vec_project(face.verts[1].position, camera_mat, vp);
-    p2 = vec_project(face.verts[2].position, camera_mat, vp);
-    renderLine(renderTarget, p1, p2);
-
-    p1 = vec_project(face.verts[2].position, camera_mat, vp);
-    p2 = vec_project(face.verts[0].position, camera_mat, vp);
-    renderLine(renderTarget, p1, p2);
+    renderLine(renderTarget, p2, p3);
+    renderLine(renderTarget, p3, p1);
 
     return StatusCode::Success;
 }
 
-static StatusCode renderLine(RenderTarget& renderTarget, screen_point p1, screen_point p2)
+static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2)
 {
     return renderLine(renderTarget, p1.x, p1.y, p2.x, p2.y, Color::green);
 }

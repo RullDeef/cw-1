@@ -7,6 +7,7 @@ namespace Core
     {
         Success,
         InvalidRenderType,
+        InvalidRenderViewport,
     };
 }
 

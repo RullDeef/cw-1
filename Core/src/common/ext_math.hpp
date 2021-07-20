@@ -1,4 +1,4 @@
-#ifndef EXT_MATH_HPP
+#if 0 // #ifndef EXT_MATH_HPP
 #define EXT_MATH_HPP
 
 
@@ -54,12 +54,12 @@ namespace Core
 
     screen_point vec_project(const vec& v, const mat& prj, viewport viewport);
 
-    constexpr viewport viewport_init(unsigned int width = 0, unsigned int height = 0)
+    constexpr viewport viewport_init(unsigned int width = 0, unsigned int height = 0, unsigned int left = 0, unsigned int top = 0)
     {
         viewport v {};
 
-        v.left = 0;
-        v.top = 0;
+        v.left = left;
+        v.top = top;
         v.width = width;
         v.height = height;
 

@@ -4,7 +4,14 @@
 #include "IObject.hpp"
 
 
-template<typename T>
+
+enum class AdapterPolicy
+{
+    StrongOwnership,
+    WeakOwnership
+};
+
+template<typename T, AdapterPolicy policy = AdapterPolicy::StrongOwnership>
 class ObjectAdapter : public IObject
 {
 public:
@@ -14,10 +21,12 @@ public:
     T& getAdaptee();
     const T& getAdaptee() const;
 
-    virtual accept(IObjectVisitor& visitor) override;
+    virtual void accept(IObjectVisitor& visitor) override;
 
 private:
     T* adaptee;
 };
+
+#include "ObjectAdapterImp.hpp"
 
 #endif // OBJECTADAPTER_HPP

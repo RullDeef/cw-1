@@ -16,6 +16,8 @@ void ViewportFrame::paintEvent(QPaintEvent* event)
     painter.drawImage(0, 0, image);
 
     IFrame::paintEvent(event);
+
+    update();
 }
 
 void ViewportFrame::resizeEvent(QResizeEvent* event)

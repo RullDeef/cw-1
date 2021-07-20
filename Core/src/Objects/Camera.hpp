@@ -1,22 +1,26 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-#include "ext_math.hpp"
+#include "Vec.hpp"
+#include "Mat.hpp"
+#include "Rect.hpp"
 
 
 namespace Core
 {
     struct Camera
     {
-        mat model_mat;
-        double fov;
-        double near;
-        double far;
+        Rect viewport;
+        Mat model_mat;
+        Mat proj_mat;
+        Mat mvp;
     };
 
-    Camera make_camera(double fov = 1.2217, double near = 0.1, double far = 1000.0);
+    Camera make_camera(const Rect& viewport, double fov = 1.2217, double near = 0.1, double far = 1000.0);
 
-    mat get_camera_mat(const Camera& camera, int vwidth, int vheight);
+    void recalc_mvp(Camera& camera);
+
+    Vec project_point(const Camera& camera, const Vec& pos);
 }
 
 #endif // CMAERA_HPP

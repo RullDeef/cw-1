@@ -1,24 +1,37 @@
 #include "Camera.hpp"
+#include <algorithm>
 
 using namespace Core;
 
 
-Camera Core::make_camera(double fov, double near, double far)
+Camera Core::make_camera(const Rect& viewport, double fov, double near, double far)
 {
     Camera cam;
 
-    cam.model_mat = mat_identity();
-    cam.fov = fov;
-    cam.near = near;
-    cam.far = far;
+    cam.viewport = viewport;
+    cam.model_mat = make_mat_id();
+    cam.proj_mat = make_mat_perspective(fov, near, far);
 
     return cam;
 }
 
-mat Core::get_camera_mat(const Camera& camera, int vwidth, int vheight)
+void Core::recalc_mvp(Camera& camera)
 {
-    double aspect = static_cast<double>(vwidth) / vheight;
-    mat proj_mat = mat_perspective(camera.fov, aspect, camera.near, camera.far);
+    camera.mvp = camera.proj_mat * camera.model_mat;
+}
 
-    return mat_mult(camera.model_mat, proj_mat);
+Vec Core::project_point(const Camera& camera, const Vec& pos)
+{
+    Vec res = camera.mvp * pos;
+
+    res.x /= res.z;
+    res.y /= res.z;
+    res.z = res.w;
+    res.w = 1.0;
+
+    double vmin2 = std::min(camera.viewport.width, camera.viewport.height) / 2;
+    res.x = camera.viewport.left + res.x * vmin2 + camera.viewport.width / 2;
+    res.y = camera.viewport.top - res.y * vmin2 + camera.viewport.height / 2;
+
+    return res;
 }
