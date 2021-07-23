@@ -2,15 +2,16 @@
 #define OBJLOADER_HPP
 
 #include <string>
+#include <vector>
 #include "ILoader.hpp"
 
-namespace Core { class Vertex; }
+namespace Core { class Vertex; class Vec; }
 
 
 class ObjLoader : public ILoader
 {
 public:
-    explicit ObjLoader(const std::string& filename);
+    explicit ObjLoader(std::string  filename);
 
     virtual std::unique_ptr<IObject> loadObject() override;
     virtual std::unique_ptr<Scene> loadScene() override;

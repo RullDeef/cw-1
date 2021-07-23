@@ -31,6 +31,23 @@ inline void normalize(Vec& vec)
     vec = normalised(vec);
 }
 
+inline double dot(const Vec& v1, const Vec& v2)
+{
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+
+inline Vec cross(const Vec& v1, const Vec& v2)
+{
+    Vec res{};
+
+    res.x = v1.y * v2.z - v1.z * v2.y;
+    res.y = v1.z * v2.x - v1.x * v2.z;
+    res.z = v1.x * v2.y - v1.y * v2.x;
+    res.w = 0.0;
+
+    return res;
+}
+
 inline Vec operator+(const Vec& v1, const Vec& v2)
 {
     return make_pos(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w);

@@ -3,15 +3,25 @@
 
 #include "IObject.hpp"
 
+namespace Core
+{
+    class Mesh;
+    class Camera;
+    class LightSource;
+}
+
+// enum class AdapterPolicy;
+// template<typename T, AdapterPolicy policy>
+// class ObjectAdapter;
 
 class IObjectVisitor
 {
 public:
     virtual ~IObjectVisitor() = default;
 
-    virtual visit(ObjectAdapter<Mesh>& mesh) = 0;
-    virtual visit(ObjectAdapter<Camera>& camera) = 0;
-    virtual visit(ObjectAdapter<LightSource>& lightSource) = 0;
+    virtual void visit(ObjectAdapter<Core::Mesh>& mesh) = 0;
+    virtual void visit(ObjectAdapter<Core::Camera>& camera) = 0;
+    virtual void visit(ObjectAdapter<Core::LightSource>& lightSource) = 0;
 };
 
 #endif // IOBJECTVISITOR_HPP

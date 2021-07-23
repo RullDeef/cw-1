@@ -20,6 +20,9 @@ namespace Core
     inline Vec normalised(const Vec& vec);
     inline void normalize(Vec& vec);
 
+    inline double dot(const Vec& v1, const Vec& v2);
+    inline Vec cross(const Vec& v1, const Vec& v2);
+
     inline Vec operator+(const Vec& v1, const Vec& v2);
     inline Vec operator-(const Vec& v1, const Vec& v2);
     inline Vec operator*(double val, const Vec& vec);

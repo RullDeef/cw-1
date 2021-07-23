@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "MainWindow.hpp"
+#include <Managers/QtManagerFactory.hpp>
 
 
 int main(int argc, char* argv[])

@@ -16,7 +16,7 @@ public:
     using const_iterator = containter_t::const_iterator;
 
 public:
-    void insert(const_iterator pos, objptr_t object);
+    void insert(const_iterator pos, const objptr_t& object);
     void erase(const_iterator pos);
 
     iterator begin();

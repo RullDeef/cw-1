@@ -1,6 +1,7 @@
 #ifndef RENDERTARGET_HPP
 #define RENDERTARGET_HPP
 
+#include <cstddef>
 #include "Pixel.hpp"
 
 

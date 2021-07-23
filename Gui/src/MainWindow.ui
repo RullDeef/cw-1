@@ -37,7 +37,14 @@
     </widget>
     <addaction name="addMenu"/>
    </widget>
+   <widget class="QMenu" name="object">
+    <property name="title">
+     <string>Объект</string>
+    </property>
+    <addaction name="loadObject"/>
+   </widget>
    <addaction name="windowMenu"/>
+   <addaction name="object"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="ViewportWindow">
@@ -53,6 +60,11 @@
   <action name="action_3">
    <property name="text">
     <string>Список сцен</string>
+   </property>
+  </action>
+  <action name="loadObject">
+   <property name="text">
+    <string>Загрузить</string>
    </property>
   </action>
  </widget>

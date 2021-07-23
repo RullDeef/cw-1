@@ -64,4 +64,4 @@ namespace Core
     }
 }
 
-#endif LIST_T_HPP
+#endif // LIST_T_HPP

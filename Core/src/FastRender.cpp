@@ -8,6 +8,7 @@ static void makeBG(RenderTarget& renderTarget);
 static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, const Camera& camera);
 static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const Camera& camera);
 static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2);
+static bool backFaceCooling(const Face& face);
 
 
 StatusCode Core::fastRenderScene(RenderParams renderParams)
@@ -48,6 +49,9 @@ static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& me
 
 static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const Camera& camera)
 {
+    if (backFaceCooling(face))
+        return StatusCode::Success;
+
     Vec p1 = project_point(camera, face.verts[0].position);
     Vec p2 = project_point(camera, face.verts[1].position);
     Vec p3 = project_point(camera, face.verts[2].position);
@@ -57,6 +61,13 @@ static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const
     renderLine(renderTarget, p3, p1);
 
     return StatusCode::Success;
+}
+
+static bool backFaceCooling(const Face& face)
+{
+    Vec norm = Core::cross(face.verts[1].position - face.verts[0].position, face.verts[2].position - face.verts[0].position);
+    double dot = Core::dot(Core::make_dir(0,0, 1), norm);
+    return dot < 0.0;
 }
 
 static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2)

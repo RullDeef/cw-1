@@ -1,22 +1,24 @@
 #include <QPaintEvent>
 #include <QPainter>
+#include <utility>
 #include "ViewportFrame.hpp"
 
 
 ViewportFrame::ViewportFrame(std::shared_ptr<RenderManager> renderManager, QWidget* parent)
-    : IFrame(u8"Видовое окно", parent), renderManager(renderManager)
+    : IFrame(u8"РІРёРґРѕРІРѕРµ РѕРєРЅРѕ", parent), renderManager(std::move(renderManager))
 {
 }
 
 void ViewportFrame::paintEvent(QPaintEvent* event)
 {
-    QPainter painter(this);
+    {
+        QPainter painter(this);
 
-    redraw();
-    painter.drawImage(0, 0, image);
+        redraw();
+        painter.drawImage(0, 0, image);
+    }
 
-    IFrame::paintEvent(event);
-
+    QDockWidget::paintEvent(event);
     update();
 }
 
@@ -27,7 +29,7 @@ void ViewportFrame::resizeEvent(QResizeEvent* event)
 
 void ViewportFrame::redraw()
 {
-    Core::RenderTarget renderTarget;
+    Core::RenderTarget renderTarget{};
     renderTarget.width = image.width();
     renderTarget.height = image.height();
     renderTarget.data = (Core::Pixel*)image.bits();

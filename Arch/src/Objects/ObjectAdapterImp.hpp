@@ -2,34 +2,33 @@
 #include "IObjectVisitor.hpp"
 
 
-template<typename T, AdapterPolicy policy>
-ObjectAdapter<T, policy>::ObjectAdapter(T& adaptee)
-    : adaptee(&adaptee)
+template<typename T>
+ObjectAdapter<T>::ObjectAdapter(size_t id, T& adaptee, AdapterPolicy policy)
+    : adaptee(&adaptee), IObject(id), policy(policy)
 {
 }
 
-template<typename T, AdapterPolicy policy>
-ObjectAdapter<T, policy>::~ObjectAdapter()
+template<typename T>
+ObjectAdapter<T>::~ObjectAdapter()
 {
-    constexpr if (policy == AdapterPolicy::StrongOwnership)
+    if (policy == AdapterPolicy::StrongOwnership)
         delete adaptee;
 }
 
-template<typename T, AdapterPolicy policy>
-T& ObjectAdapter<T, policy>::getAdaptee()
+template<typename T>
+T& ObjectAdapter<T>::getAdaptee()
 {
     return *adaptee;
 }
 
-template<typename T, AdapterPolicy policy>
-const T& ObjectAdapter<T, policy>::getAdaptee() const
+template<typename T>
+const T& ObjectAdapter<T>::getAdaptee() const
 {
     return *adaptee;
 }
 
-template<typename T, AdapterPolicy policy>
-void ObjectAdapter<T, policy>::accept(IObjectVisitor& visitor)
+template<typename T>
+void ObjectAdapter<T>::accept(IObjectVisitor& visitor)
 {
-    visitor->visit(*this);
+    visitor.visit(*this);
 }
-

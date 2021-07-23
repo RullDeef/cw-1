@@ -1,13 +1,17 @@
+#include <utility>
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <sstream>
+#include <string>
+#include "../../Arch/src/Scene/Scene.hpp"
 #include "Mesh.hpp"
 #include "ObjLoader.hpp"
 #include "ObjectAdapter.hpp"
 
 
-ObjLoader::ObjLoader(const std::string& filename)
-    : filename(filename)
+ObjLoader::ObjLoader(std::string filename)
+    : filename(std::move(filename))
 {
 }
 
@@ -20,6 +24,7 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
 
     std::vector<Core::Vec> verts;
     std::vector<Core::Vec> norms;
+    std::vector<Core::Face> faces;
 
     while (std::getline(file, line))
     {
@@ -41,28 +46,57 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
         }
         else if (sym == "f")
         {
+            std::string s1, s2, s3;
+            ss >> s1 >> s2 >> s3;
 
+            Core::Face face{};
+            face.verts[0] = extractVertex(s1, verts, norms);
+            face.verts[1] = extractVertex(s2, verts, norms);
+            face.verts[2] = extractVertex(s3, verts, norms);
+            faces.push_back(face);
         }
     }
 
-    return std::unique_ptr<IObject>(new ObjectAdapter<Mesh>(mesh));
+    Core::Mesh mesh{};
+
+    mesh.faces = Core::make_vect<Core::Face>(faces.size());
+    mesh.faces.size = faces.size();
+    size_t i = 0;
+    for (const auto& face : faces)
+        Core::set(mesh.faces, i++, face);
+
+    size_t id = -1;
+    return std::unique_ptr<IObject>(new ObjectAdapter<Core::Mesh>(id, mesh, AdapterPolicy::StrongOwnership));
 }
 
-static Core::Vertex ObjLoader::extractVertex(const std::string &str, const std::vector<Core::Vec>& verts, const std::vector<Core::Vec>& norms)
+Core::Vertex ObjLoader::extractVertex(const std::string &str, const std::vector<Core::Vec>& verts, const std::vector<Core::Vec>& norms)
 {
-    Core::Vertex res;
+    Core::Vertex res{};
     res.position = Core::make_pos(0, 0, 0);
     res.normal = Core::make_dir(0, 0, 0);
     res.uv = Core::make_pos(0, 0, 0);
 
     size_t slashes = std::count(str.begin(), str.end(), '/');
+
     if (slashes == 0)
-        res.position = verts[std::stoi(str)];
+    {
+        res.position = verts[std::stoi(str) - 1];
+    }
     else if (slashes == 1)
     {
-        res.position = verts[std::stoi(std::string(str.begin(), str.begin() + str.find('/')))];
-        
+        size_t pos = str.find('/');
+        size_t index = std::stoi(std::string(str.begin(), str.begin() + str.find('/')));
+        res.position = verts[index - 1];
+    }
+    else
+    {
+        size_t index = std::stoi(std::string(str.begin(), str.begin() + str.find('/')));
+        res.position = verts[index - 1];
     }
 
     return res;
+}
+
+std::unique_ptr<Scene> ObjLoader::loadScene() {
+    return std::make_unique<Scene>();
 }

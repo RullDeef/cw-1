@@ -1,16 +1,21 @@
+#include <utility>
+#include <Managers/QtManagerFactory.hpp>
 #include "MainWindow.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
 #include "Frames/HierarchyFrame/HierarchyFrame.hpp"
 
+#include "LoadManager.hpp"
+
 
 MainWindow::MainWindow()
 {
+    factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory(this));
     ui.setupUi(this);
     setCentralWidget(nullptr);
 
     // setup default frames
     {
-        IFrame* frame = new ViewportFrame(std::make_shared<RenderManager>(), this);
+        IFrame* frame = new ViewportFrame(factory->getRenderManager(), this);
         addDockWidget(Qt::LeftDockWidgetArea, frame);
         frames.push_back(frame);
     }
@@ -20,4 +25,16 @@ MainWindow::MainWindow()
         addDockWidget(Qt::LeftDockWidgetArea, frame);
         frames.push_back(frame);
     }
+
+    setupActions();
+}
+
+void MainWindow::setupActions()
+{
+    connect(ui.loadObject, &QAction::triggered, this, &MainWindow::loadObjectCommand);
+}
+
+void MainWindow::loadObjectCommand()
+{
+    factory->getLoadManager()->loadMesh();
 }

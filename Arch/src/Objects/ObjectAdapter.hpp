@@ -4,18 +4,17 @@
 #include "IObject.hpp"
 
 
-
 enum class AdapterPolicy
 {
     StrongOwnership,
     WeakOwnership
 };
 
-template<typename T, AdapterPolicy policy = AdapterPolicy::StrongOwnership>
+template<typename T>
 class ObjectAdapter : public IObject
 {
 public:
-    explicit ObjectAdapter(T& adaptee);
+    ObjectAdapter(size_t id, T& adaptee, AdapterPolicy policy);
     virtual ~ObjectAdapter();
 
     T& getAdaptee();
@@ -25,8 +24,10 @@ public:
 
 private:
     T* adaptee;
+    AdapterPolicy policy;
 };
 
 #include "ObjectAdapterImp.hpp"
+#include "Adapters/MeshAdapter.hpp"
 
 #endif // OBJECTADAPTER_HPP
