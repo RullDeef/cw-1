@@ -2,6 +2,8 @@
 #define RAY_HPP
 
 #include "Vec.hpp"
+#include "Plane.hpp"
+#include "Mesh.hpp"
 
 
 namespace Core
@@ -12,9 +14,12 @@ namespace Core
         Vec direction;
     };
 
-    constexpr Ray make_ray(const Vec& position, const Vec& direction);
+    Ray make_ray(const Vec& position, const Vec& direction);
 
-    bool ray_intersects();
+    Vec ray_at(const Ray& ray, double t);
+
+    bool ray_intersects(double& t, const Ray& ray, const Plane& plane);
+    bool ray_intersects(double& t, const Ray& ray, const Face& face);
 }
 
 #endif // RAY_HPP

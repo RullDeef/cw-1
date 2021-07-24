@@ -2,10 +2,12 @@
 #include <QPainter>
 #include <utility>
 #include "ViewportFrame.hpp"
+#include "CameraManager.hpp"
+#include <QApplication>
 
 
-ViewportFrame::ViewportFrame(std::shared_ptr<RenderManager> renderManager, QWidget* parent)
-    : IFrame(u8"видовое окно", parent), renderManager(std::move(renderManager))
+ViewportFrame::ViewportFrame(IManagerFactory& managerFactory, QWidget* parent)
+    : IFrame(u8"видовое окно", parent), managerFactory(&managerFactory)
 {
 }
 
@@ -19,12 +21,48 @@ void ViewportFrame::paintEvent(QPaintEvent* event)
     }
 
     QDockWidget::paintEvent(event);
-    update();
+    //update();
 }
 
 void ViewportFrame::resizeEvent(QResizeEvent* event)
 {
     image = QImage(width(), height(), QImage::Format_ARGB32);
+}
+
+void ViewportFrame::mousePressEvent(QMouseEvent *event)
+{
+    x_prev = event->x();
+    y_prev = event->y();
+
+    if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
+        state = ControllState::RotateState;
+    else
+        state = ControllState::DragState;
+
+    QWidget::mousePressEvent(event);
+}
+
+void ViewportFrame::mouseMoveEvent(QMouseEvent *event)
+{
+    double dx = event->x() - x_prev;
+    double dy = event->y() - y_prev;
+
+    x_prev = event->x();
+    y_prev = event->y();
+
+    if (state == ControllState::DragState)
+    {
+        double scale = 0.25;
+        managerFactory->getCameraManager()->dragCamera(scale * dx, -scale * dy);
+    }
+    else if (state == ControllState::RotateState)
+    {
+        double scale = 0.0025;
+        managerFactory->getCameraManager()->rotateCamera(-scale * dx, -scale * dy);
+    }
+
+    QWidget::mouseMoveEvent(event);
+    repaint();
 }
 
 void ViewportFrame::redraw()
@@ -34,5 +72,5 @@ void ViewportFrame::redraw()
     renderTarget.height = image.height();
     renderTarget.data = (Core::Pixel*)image.bits();
 
-    renderManager->renderScene(renderTarget);
+    managerFactory->getRenderManager()->renderScene(renderTarget);
 }

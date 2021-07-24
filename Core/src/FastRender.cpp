@@ -49,8 +49,8 @@ static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& me
 
 static StatusCode renderFace(RenderTarget& renderTarget, const Face& face, const Camera& camera)
 {
-    if (backFaceCooling(face))
-        return StatusCode::Success;
+    //if (backFaceCooling(face))
+    //    return StatusCode::Success;
 
     Vec p1 = project_point(camera, face.verts[0].position);
     Vec p2 = project_point(camera, face.verts[1].position);

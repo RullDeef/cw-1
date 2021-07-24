@@ -4,15 +4,23 @@
 using namespace Core;
 
 
-Camera Core::make_camera(const Rect& viewport, double fov, double near, double far)
+Camera Core::make_camera(double fov, double near, double far)
 {
     Camera cam;
 
-    cam.viewport = viewport;
+    cam.fov = fov;
+    cam.near = near;
+    cam.far = far;
+
     cam.model_mat = make_mat_id();
     cam.proj_mat = make_mat_perspective(fov, near, far);
 
     return cam;
+}
+
+void Core::update_viewport(Camera& camera, const Rect& viewport)
+{
+    camera.viewport = viewport;
 }
 
 void Core::recalc_mvp(Camera& camera)

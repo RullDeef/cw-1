@@ -11,6 +11,12 @@ namespace Core
     {
         list_t<Mesh> meshList;
     };
+
+    Scene make_scene();
+
+    void append(Scene& scene, const Mesh& mesh);
+
+    void destroy(Scene& scene);
 }
 
 #endif // SCENE_HPP

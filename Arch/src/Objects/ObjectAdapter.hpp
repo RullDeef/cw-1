@@ -14,8 +14,8 @@ template<typename T>
 class ObjectAdapter : public IObject
 {
 public:
-    ObjectAdapter(size_t id, T& adaptee, AdapterPolicy policy);
-    virtual ~ObjectAdapter();
+    ObjectAdapter(size_t id, T adaptee, AdapterPolicy policy);
+    virtual ~ObjectAdapter() = default;
 
     T& getAdaptee();
     const T& getAdaptee() const;
@@ -23,7 +23,7 @@ public:
     virtual void accept(IObjectVisitor& visitor) override;
 
 private:
-    T* adaptee;
+    T adaptee;
     AdapterPolicy policy;
 };
 

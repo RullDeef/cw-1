@@ -15,7 +15,7 @@ MainWindow::MainWindow()
 
     // setup default frames
     {
-        IFrame* frame = new ViewportFrame(factory->getRenderManager(), this);
+        IFrame* frame = new ViewportFrame(*factory, this);
         addDockWidget(Qt::LeftDockWidgetArea, frame);
         frames.push_back(frame);
     }

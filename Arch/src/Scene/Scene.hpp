@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <list>
+#include "Scene.hpp"
+#include "../../Core/src/Scene/Scene.hpp"
 
 class IObject;
 
@@ -16,6 +18,9 @@ public:
     using const_iterator = containter_t::const_iterator;
 
 public:
+    Scene();
+    virtual ~Scene();
+
     void insert(const_iterator pos, const objptr_t& object);
     void erase(const_iterator pos);
 
@@ -25,8 +30,12 @@ public:
     const_iterator begin() const;
     const_iterator end() const;
 
+    Core::Scene& getRawScene();
+    const Core::Scene& getRawScene() const;
+
 private:
     containter_t objects;
+    Core::Scene rawScene;
 };
 
 #endif // ARCH_SCENE_HPP

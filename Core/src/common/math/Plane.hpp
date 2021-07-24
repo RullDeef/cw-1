@@ -14,11 +14,17 @@ namespace Core
         double d;
     };
 
-    constexpr Plane make_plane(double a, double b, double c, double d);
-    constexpr Plane make_plane(const Vec& p1, const Vec& p2, const Vec& p3);
-    constexpr Plane make_plane(const Vec& pos, const Vec& norm);
+    inline Plane make_plane(double a, double b, double c, double d);
+    inline Plane make_plane(const Vec& p1, const Vec& p2, const Vec& p3);
+    inline Plane make_plane(const Vec& pos, const Vec& norm);
+
+    inline void normalize(Plane& plane);
 
     inline double distance(const Plane& plane, const Vec& pos);
+
+    inline Vec normal(const Plane& plane);
 }
+
+#include "PlaneImp.hpp"
 
 #endif // PLANE_HPP

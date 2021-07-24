@@ -51,7 +51,7 @@ add_library(Core STATIC
         Core/src/FancyRenderer.cpp
         Core/src/FancyRenderer.hpp
         Core/src/FastRender.cpp
-        Core/src/FastRender.hpp Arch/src/Objects/IObject.cpp)
+        Core/src/FastRender.hpp Arch/src/Objects/IObject.cpp Core/src/Scene/Scene.cpp Core/src/common/math/Ray.cpp Core/src/common/math/PlaneImp.hpp)
 
 include_directories(Arch/src)
 include_directories(Arch/src/Loaders)
@@ -103,6 +103,6 @@ add_executable(cw_1
         Gui/src/Managers/QtManagerFactory.cpp
         Gui/src/Managers/QtManagerFactory.hpp
         Arch/src/Objects/Adapters/MeshAdapter.cpp
-        Arch/src/Objects/Adapters/MeshAdapter.hpp)
+        Arch/src/Objects/Adapters/MeshAdapter.hpp Arch/src/Managers/CameraManager.cpp Arch/src/Managers/CameraManager.hpp)
 
 target_link_libraries(cw_1 Core Qt5::Core Qt5::Widgets)

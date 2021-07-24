@@ -8,6 +8,7 @@
 LoadManager::LoadManager(IManagerFactory& factory)
     : IManager(factory)
 {
+    //_loadMesh("/home/rulldeef/Projects/cw-1/Models/cube.obj");
 }
 
 void LoadManager::_loadMesh(const std::string& filename)
