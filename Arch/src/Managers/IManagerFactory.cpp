@@ -1,8 +1,8 @@
-#include "IManagerFactory.hpp"
-#include "SceneManager.hpp"
-#include "RenderManager.hpp"
-#include "LoadManager.hpp"
-#include "CameraManager.hpp"
+#include "Managers/IManagerFactory.hpp"
+#include "Managers/SceneManager.hpp"
+#include "Managers/RenderManager.hpp"
+#include "Managers/LoadManager.hpp"
+#include "Managers/CameraManager.hpp"
 
 
 std::shared_ptr<SceneManager> IManagerFactory::getSceneManager()

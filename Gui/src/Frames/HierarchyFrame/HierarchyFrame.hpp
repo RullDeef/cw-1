@@ -2,7 +2,7 @@
 #define HEIRARCHYFRAME_HPP
 
 #include <list>
-#include "IFrame.hpp"
+#include "Frames/IFrame.hpp"
 
 
 class HierarchyFrame : public IFrame

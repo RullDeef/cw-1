@@ -31,33 +31,40 @@
      <property name="title">
       <string>Добавить...</string>
      </property>
-     <addaction name="ViewportWindow"/>
-     <addaction name="action_2"/>
-     <addaction name="action_3"/>
+     <addaction name="viewportWindow"/>
+     <addaction name="hierarhyWindow"/>
+     <addaction name="sceneListWindow"/>
     </widget>
     <addaction name="addMenu"/>
    </widget>
-   <widget class="QMenu" name="object">
+   <widget class="QMenu" name="objectMenu">
     <property name="title">
      <string>Объект</string>
     </property>
     <addaction name="loadObject"/>
    </widget>
+   <widget class="QMenu" name="renderMenu">
+    <property name="title">
+     <string>Рендер</string>
+    </property>
+    <addaction name="saveRender"/>
+   </widget>
    <addaction name="windowMenu"/>
-   <addaction name="object"/>
+   <addaction name="objectMenu"/>
+   <addaction name="renderMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="ViewportWindow">
+  <action name="viewportWindow">
    <property name="text">
     <string>Видовое окно</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="hierarhyWindow">
    <property name="text">
     <string>Иерархия объектов</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="sceneListWindow">
    <property name="text">
     <string>Список сцен</string>
    </property>
@@ -65,6 +72,11 @@
   <action name="loadObject">
    <property name="text">
     <string>Загрузить</string>
+   </property>
+  </action>
+  <action name="saveRender">
+   <property name="text">
+    <string>Сохранить как...</string>
    </property>
   </action>
  </widget>

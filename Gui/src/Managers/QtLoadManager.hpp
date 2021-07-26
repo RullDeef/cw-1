@@ -1,7 +1,7 @@
 #ifndef QTLOADMANAGER_HPP
 #define QTLOADMANAGER_HPP
 
-#include "LoadManager.hpp"
+#include "Managers/LoadManager.hpp"
 
 
 class QtLoadManager : public LoadManager

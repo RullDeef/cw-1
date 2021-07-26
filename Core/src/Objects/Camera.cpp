@@ -1,4 +1,4 @@
-#include "Camera.hpp"
+#include "Core/Objects/Camera.hpp"
 #include <algorithm>
 
 using namespace Core;

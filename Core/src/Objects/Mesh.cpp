@@ -1,4 +1,4 @@
-#include "Mesh.hpp"
+#include "Core/Objects/Mesh.hpp"
 
 using namespace Core;
 

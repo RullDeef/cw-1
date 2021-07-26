@@ -1,8 +1,8 @@
-#include "LoadManager.hpp"
-#include "IManagerFactory.hpp"
-#include "IObject.hpp"
-#include "ObjectAdapter.hpp"
+#include "Objects/IObject.hpp"
+#include "Objects/ObjectAdapter.hpp"
 #include "Loaders/ObjLoader/ObjLoader.hpp"
+#include "Managers/IManagerFactory.hpp"
+#include "Managers/LoadManager.hpp"
 
 
 LoadManager::LoadManager(IManagerFactory& factory)

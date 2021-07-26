@@ -1,5 +1,5 @@
-#include "QtManagerFactory.hpp"
-#include "QtLoadManager.hpp"
+#include "Managers/QtManagerFactory.hpp"
+#include "Managers/QtLoadManager.hpp"
 
 
 QtManagerFactory::QtManagerFactory(QWidget *mainWindow)

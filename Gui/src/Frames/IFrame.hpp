@@ -1,10 +1,10 @@
 #ifndef IFRAME_HPP
 #define IFRAME_HPP
 
-#include <QDockWidget>
+#include <DockWidget.h>
 
 
-class IFrame : public QDockWidget
+class IFrame : public ads::CDockWidget
 {
     Q_OBJECT
 

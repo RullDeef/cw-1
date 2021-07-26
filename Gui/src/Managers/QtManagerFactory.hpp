@@ -2,7 +2,8 @@
 #define QTMANAGERFACTORY_HPP
 
 #include <QWidget>
-#include "IManagerFactory.hpp"
+#include "Managers/IManagerFactory.hpp"
+
 
 class QtManagerFactory : public IManagerFactory
 {

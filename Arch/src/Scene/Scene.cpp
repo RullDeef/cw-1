@@ -1,5 +1,5 @@
-#include "Scene.hpp"
-#include "ObjectAdapter.hpp"
+#include "Objects/ObjectAdapter.hpp"
+#include "Scene/Scene.hpp"
 
 
 Scene::Scene()

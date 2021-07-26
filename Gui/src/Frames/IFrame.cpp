@@ -1,9 +1,9 @@
-#include "IFrame.hpp"
+#include "Frames/IFrame.hpp"
 
 
 IFrame::IFrame(const QString& title, QWidget* parent)
-    : QDockWidget(parent)
+    : ads::CDockWidget(title, parent)
 {
     setWindowTitle(title);
-    setAllowedAreas(Qt::AllDockWidgetAreas);
+    // setAllowedAreas(Qt::AllDockWidgetAreas);
 }

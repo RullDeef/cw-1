@@ -1,4 +1,4 @@
-#include "IManager.hpp"
+#include "Managers/IManager.hpp"
 
 
 IManager::IManager(IManagerFactory &factory)

@@ -1,8 +1,8 @@
 #include <cmath>
-#include "FancyRenderer.hpp"
-#include "Ray.hpp"
-#include "Plane.hpp"
-#include "Mesh.hpp"
+#include "Core/common/math/Ray.hpp"
+#include "Core/common/math/Plane.hpp"
+#include "Core/Objects/Mesh.hpp"
+#include "Core/FancyRenderer.hpp"
 
 using namespace Core;
 

@@ -1,5 +1,5 @@
 #include <cmath>
-#include "LineRenderer.hpp"
+#include "Core/Rasterizers/LineRenderer.hpp"
 
 using namespace Core;
 

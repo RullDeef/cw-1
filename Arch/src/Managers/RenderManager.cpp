@@ -1,10 +1,10 @@
 #include <chrono>
-#include "Core.hpp"
-#include "RenderManager.hpp"
-#include "IManagerFactory.hpp"
-#include "SceneManager.hpp"
-#include "ObjectAdapter.hpp"
-#include "CameraManager.hpp"
+#include "Core/Core.hpp"
+#include "Objects/ObjectAdapter.hpp"
+#include "Managers/IManagerFactory.hpp"
+#include "Managers/SceneManager.hpp"
+#include "Managers/CameraManager.hpp"
+#include "Managers/RenderManager.hpp"
 
 
 RenderManager::RenderManager(IManagerFactory &factory)

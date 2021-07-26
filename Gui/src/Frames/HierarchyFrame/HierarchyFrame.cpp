@@ -1,4 +1,4 @@
-#include "HierarchyFrame.hpp"
+#include "Frames/HierarchyFrame/HierarchyFrame.hpp"
 
 
 HierarchyFrame::HierarchyFrame(QWidget* parent)

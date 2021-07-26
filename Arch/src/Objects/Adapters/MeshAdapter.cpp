@@ -1,6 +1,6 @@
-#include "Mesh.hpp"
-#include "MeshAdapter.hpp"
-#include "IObjectVisitor.hpp"
+#include "Core/Objects/Mesh.hpp"
+#include "Objects/Adapters/MeshAdapter.hpp"
+#include "Visitors/IObjectVisitor.hpp"
 
 
 ObjectAdapter<Core::Mesh>::ObjectAdapter(size_t id, Core::Mesh mesh, AdapterPolicy policy)

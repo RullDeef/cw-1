@@ -1,6 +1,6 @@
-#include "FastRender.hpp"
-#include "LineRenderer.hpp"
-#include "Mat.hpp"
+#include "Core/FastRender.hpp"
+#include "Core/Rasterizers/LineRenderer.hpp"
+#include "Core/common/math/Mat.hpp"
 
 using namespace Core;
 

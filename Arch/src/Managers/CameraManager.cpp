@@ -1,8 +1,5 @@
-//
-// Created by rulldeef on 7/24/21.
-//
+#include "Managers/CameraManager.hpp"
 
-#include "CameraManager.hpp"
 
 CameraManager::CameraManager(IManagerFactory &factory)
     : IManager(factory), mainCamera(-1, Core::make_camera(), AdapterPolicy::WeakOwnership)

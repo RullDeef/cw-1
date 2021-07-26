@@ -1,4 +1,4 @@
-#include "Scene.hpp"
+#include "Core/Scene/Scene.hpp"
 
 using namespace Core;
 

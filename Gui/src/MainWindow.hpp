@@ -3,9 +3,10 @@
 
 #include <memory>
 #include <QMainWindow>
-#include "ui_MainWindow.h"
+#include <DockManager.h>
+#include "Managers/IManagerFactory.hpp"
 #include "Frames/IFrame.hpp"
-#include "IManagerFactory.hpp"
+#include "ui_MainWindow.h"
 
 
 class MainWindow : public QMainWindow
@@ -18,9 +19,12 @@ public:
 
 protected:
     virtual void loadObjectCommand();
+    virtual void saveRenderCommand();
 
 private:
     void setupActions();
+
+    ads::CDockManager* dockManager;
 
     std::shared_ptr<IManagerFactory> factory;
     std::list<IFrame*> frames;

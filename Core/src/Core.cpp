@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Core.hpp"
-#include "FastRender.hpp"
-#include "FancyRenderer.hpp"
+#include "Core/Core.hpp"
+#include "Core/FastRender.hpp"
+#include "Core/FancyRenderer.hpp"
 
 using namespace Core;
 

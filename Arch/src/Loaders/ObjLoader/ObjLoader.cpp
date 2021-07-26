@@ -4,10 +4,10 @@
 #include <algorithm>
 #include <sstream>
 #include <string>
-#include "../../Arch/src/Scene/Scene.hpp"
-#include "Mesh.hpp"
-#include "ObjLoader.hpp"
-#include "ObjectAdapter.hpp"
+#include "Core/Objects/Mesh.hpp"
+#include "Objects/ObjectAdapter.hpp"
+#include "Scene/Scene.hpp"
+#include "Loaders/ObjLoader/ObjLoader.hpp"
 
 
 ObjLoader::ObjLoader(std::string filename)

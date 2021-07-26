@@ -1,6 +1,6 @@
 #include <utility>
-#include "IManagerFactory.hpp"
-#include "SceneManager.hpp"
+#include "Managers/IManagerFactory.hpp"
+#include "Managers/SceneManager.hpp"
 
 
 SceneManager::SceneManager(IManagerFactory& factory)

@@ -3,9 +3,9 @@
 
 #include <memory>
 #include <QImage>
-#include <IManagerFactory.hpp>
-#include "IFrame.hpp"
-#include "RenderManager.hpp"
+#include <Managers/IManagerFactory.hpp>
+#include <Managers/RenderManager.hpp>
+#include "Frames/IFrame.hpp"
 
 class QPaintEvent;
 class QResizeEvent;
@@ -17,8 +17,10 @@ class ViewportFrame : public IFrame
     Q_OBJECT
 
 public:
-    ViewportFrame(IManagerFactory& managerFactory, QWidget* parent = nullptr);
+    explicit ViewportFrame(IManagerFactory& managerFactory, QWidget* parent = nullptr);
     virtual ~ViewportFrame() = default;
+
+    void saveToImage();
 
 protected:
     virtual void paintEvent(QPaintEvent* event) override;
@@ -36,13 +38,13 @@ private:
     double x_prev;
     double y_prev;
 
-    enum class ControllState
+    enum class ControlState
     {
         DragState,
         RotateState
     };
 
-    ControllState state;
+    ControlState state;
 };
 
 #endif // VIEWPORTFRAME_HPP

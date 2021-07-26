@@ -1,6 +1,6 @@
 #include <QFileDialog>
 #include <QString>
-#include "QtLoadManager.hpp"
+#include "Managers/QtLoadManager.hpp"
 
 
 QtLoadManager::QtLoadManager(IManagerFactory &factory, QWidget *dialogParent)
