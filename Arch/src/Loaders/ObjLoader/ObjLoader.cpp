@@ -46,14 +46,26 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
         }
         else if (sym == "f")
         {
-            std::string s1, s2, s3;
-            ss >> s1 >> s2 >> s3;
+            std::vector<Core::Vertex> face_verts;
+            std::string vert;
+            ss.ignore(1);
+            while (std::getline(ss, vert, ' '))
+                face_verts.push_back(extractVertex(vert, verts, norms));
 
-            Core::Face face{};
-            face.verts[0] = extractVertex(s1, verts, norms);
-            face.verts[1] = extractVertex(s2, verts, norms);
-            face.verts[2] = extractVertex(s3, verts, norms);
-            faces.push_back(face);
+            size_t i1 = 0;
+            size_t i2 = 1;
+            size_t i3 = 2;
+
+            while (i3 < face_verts.size())
+            {
+                Core::Face face{};
+                face.verts[0] = face_verts[i1];
+                face.verts[1] = face_verts[i2];
+                face.verts[2] = face_verts[i3];
+                faces.push_back(face);
+                i2++;
+                i3++;
+            }
         }
     }
 
