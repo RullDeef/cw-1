@@ -14,6 +14,9 @@ static bool backFaceCooling(const Face& face, const Camera& camera);
 static bool oculusCooling(const Face& face, const Camera& camera);
 static bool same_projected(const Vec& v1, const Vec& v2);
 
+// clipping functions
+static unsigned int computeBitCode(const Vec& point);
+
 
 StatusCode Core::fastRenderScene(RenderParams renderParams)
 {
@@ -57,8 +60,8 @@ static StatusCode renderWireframeMesh(RenderTarget& renderTarget, ZBuffer& zbuff
 
 static StatusCode renderFace(RenderTarget& renderTarget, ZBuffer& zbuffer, const Face& face, const Camera& camera)
 {
-    //if (oculusCooling(face, camera) || backFaceCooling(face, camera))
-    //    return StatusCode::Success;
+    // if (oculusCooling(face, camera)) // || backFaceCooling(face, camera))
+    //     return StatusCode::Success;
 
     Vec p1 = project_point(camera, face.verts[0].position);
     p1.x = int(p1.x); p1.y = int(p1.y);
@@ -71,30 +74,32 @@ static StatusCode renderFace(RenderTarget& renderTarget, ZBuffer& zbuffer, const
     if (same_projected(p1, p2) || same_projected(p1, p3) || same_projected(p2, p3))
         return StatusCode::Success;
 
-    Plane plane = make_plane(face.verts[0].position, face.verts[1].position, face.verts[2].position);
-    Vec n = normal(plane);
-    normalize(n);
-
-    Vec light = - (face.verts[0].position + face.verts[1].position + face.verts[2].position) / 3.0 + view_pos(camera); // -view_dir(camera); // make_dir(-1, 2, 1);
-    normalize(light);
-
-    double lit_factor = dot(n, light);
-    if (lit_factor < 0) lit_factor = 0;
-
     Pixel color = Color::black;
+    Vec n{};
+    if (1) {
+        Plane plane = make_plane(face.verts[0].position, face.verts[1].position, face.verts[2].position);
+        n = normal(plane);
+        normalize(n);
 
-    { // generate color from lit factor
-        const int min_r = 64;
-        const int max_r = 255;
-        const int min_g = 64;
-        const int max_g = 255;
-        const int min_b = 64;
-        const int max_b = 255;
+        Vec light = - (face.verts[0].position + face.verts[1].position + face.verts[2].position) / 3.0 + view_pos(camera); // -view_dir(camera); // make_dir(-1, 2, 1);
+        normalize(light);
 
-        color.red   = min_r + (max_r - min_r) * lit_factor;
-        color.green = min_g + (max_g - min_g) * lit_factor;
-        color.blue  = min_b + (max_b - min_b) * lit_factor;
-        color.alpha = 255;
+        double lit_factor = dot(n, light);
+        if (lit_factor < 0) lit_factor = 0;
+
+        { // generate color from lit factor
+            const int min_r = 64;
+            const int max_r = 255;
+            const int min_g = 64;
+            const int max_g = 255;
+            const int min_b = 64;
+            const int max_b = 255;
+
+            color.red   = min_r + (max_r - min_r) * lit_factor;
+            color.green = min_g + (max_g - min_g) * lit_factor;
+            color.blue  = min_b + (max_b - min_b) * lit_factor;
+            color.alpha = 255;
+        }
     }
 
     // возможные частные случаи:
@@ -118,71 +123,136 @@ static StatusCode renderFace(RenderTarget& renderTarget, ZBuffer& zbuffer, const
             double dx1_2 = (p2.x - p1.x) / (p2.y - p1.y);
             double dx1_3 = (p3.x - p1.x) / (p3.y - p1.y);
 
-            double x_left = p1.x;
-            double x_right = p1.x + 1;
-
-            if (p2.y == p3.y) // TODO: поменять местами if-else по частотам срабатывания
+            if (dx1_2 < dx1_3)
             {
-                while (y <= p2.y)
+                double x_left = p1.x;
+                double x_right = p1.x + 1;
+
+                if (p2.y == p3.y) // TODO: поменять местами if-else по частотам срабатывания
                 {
-                    if (x_left < x_right)
+                    while (y <= p2.y)
+                    {
                         for (int x = x_left; x < x_right; x++)
                             updatePixel(renderTarget, zbuffer, y, x, z, color);
-                    else
+
+                        y++;
+                        x_left += dx1_2;
+                        x_right += dx1_3;
+                    }
+                }
+                else if (p2.y < p3.y)
+                {
+                    while (y <= p2.y)
+                    {
                         for (int x = x_left; x < x_right; x++)
                             updatePixel(renderTarget, zbuffer, y, x, z, color);
 
-                    y++;
-                    x_left += dx1_2;
-                    x_right += dx1_3;
+                        y++;
+                        x_left += dx1_2;
+                        x_right += dx1_3;
+                    }
+
+                    double dx2_3 = (p3.x - p2.x) / (p3.y - p2.y);
+                    x_left = p2.x;
+                    while (y <= p3.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
+
+                        y++;
+                        x_left += dx2_3;
+                        x_right += dx1_3;
+                    }
                 }
-            }
-            else if (p2.y < p3.y)
-            {
-                while (y <= p2.y)
+                else
                 {
-                    for (int x = x_left; x < x_right; x++)
-                        updatePixel(renderTarget, zbuffer, y, x, z, color);
+                    while (y <= p3.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
 
-                    y++;
-                    x_left += dx1_2;
-                    x_right += dx1_3;
-                }
+                        y++;
+                        x_left += dx1_2;
+                        x_right += dx1_3;
+                    }
 
-                double dx2_3 = (p3.x - p2.x) / (p3.y - p2.y);
-                x_left = p2.x;
-                while (y <= p3.y)
-                {
-                    for (int x = x_left; x < x_right; x++)
-                        updatePixel(renderTarget, zbuffer, y, x, z, color);
+                    double dx3_2 = (p2.x - p3.x) / (p2.y - p3.y);
+                    x_right = p3.x;
+                    while (y <= p2.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
 
-                    y++;
-                    x_left += dx2_3;
-                    x_right += dx1_3;
+                        y++;
+                        x_left += dx1_2;
+                        x_right += dx3_2;
+                    }
                 }
             }
             else
             {
-                while (y <= p3.y)
-                {
-                    for (int x = x_left; x < x_right; x++)
-                        updatePixel(renderTarget, zbuffer, y, x, z, color);
+                double x_left = p1.x;
+                double x_right = p1.x + 1;
 
-                    y++;
-                    x_left += dx1_2;
-                    x_right += dx1_3;
+                if (p2.y == p3.y) // TODO: поменять местами if-else по частотам срабатывания
+                {
+                    while (y <= p2.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
+
+                        y++;
+                        x_left += dx1_3;
+                        x_right += dx1_2;
+                    }
                 }
-
-                double dx3_2 = (p2.x - p3.x) / (p2.y - p3.y);
-                x_right = p3.x;
-                while (y <= p2.y)
+                else if (p2.y < p3.y)
                 {
-                    for (int x = x_left; x < x_right; x++)
-                        updatePixel(renderTarget, zbuffer, y, x, z, color);
+                    while (y <= p2.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
 
-                    y++;
-                    x_left += dx1_2;
-                    x_right += dx3_2;
+                        y++;
+                        x_left += dx1_3;
+                        x_right += dx1_2;
+                    }
+
+                    double dx2_3 = (p3.x - p2.x) / (p3.y - p2.y);
+                    x_right = p2.x;
+                    while (y <= p3.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
+
+                        y++;
+                        x_left += dx1_3;
+                        x_right += dx2_3;
+                    }
+                }
+                else
+                {
+                    while (y <= p3.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
+
+                        y++;
+                        x_left += dx1_3;
+                        x_right += dx1_2;
+                    }
+
+                    double dx3_2 = (p2.x - p3.x) / (p2.y - p3.y);
+                    x_left = p3.x;
+                    while (y <= p2.y)
+                    {
+                        for (int x = x_left; x < x_right; x++)
+                            updatePixel(renderTarget, zbuffer, y, x, z, color);
+
+                        y++;
+                        x_left += dx3_2;
+                        x_right += dx1_2;
+                    }
                 }
             }
         }
@@ -265,13 +335,28 @@ static bool backFaceCooling(const Face& face, const Camera& camera)
 
     Vec dir = normalised(face.verts[0].position - cam_pos);
 
+
     double dot = Core::dot(dir, norm);
     return dot < 0.0;
 }
 
 static bool oculusCooling(const Face& face, const Camera& camera)
 {
-    Vec view = view_dir(camera);
+    Vec p1 = camera.mvp * face.verts[0].position;
+    Vec p2 = camera.mvp * face.verts[1].position;
+    Vec p3 = camera.mvp * face.verts[2].position;
+
+    double dz = camera.far - camera.near;
+    p1.x /= p1.z; p1.y /= p1.z; p1.z = (p1.z - camera.near) / dz * 2 - 1;
+    p2.x /= p2.z; p2.y /= p2.z; p2.z = (p2.z - camera.near) / dz * 2 - 1;
+    p3.x /= p3.z; p3.y /= p3.z; p3.z = (p3.z - camera.near) / dz * 2 - 1;
+
+    unsigned int code1 = computeBitCode(p1);
+    unsigned int code2 = computeBitCode(p2);
+    unsigned int code3 = computeBitCode(p3);
+
+    if (code1 & code2 & code3)
+        return true;
 
     return false;
 }
@@ -284,4 +369,18 @@ static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Ve
 static bool same_projected(const Vec& v1, const Vec& v2)
 {
     return v1.x == v2.x && v1.y == v2.y;
+}
+
+static unsigned int computeBitCode(const Vec& point)
+{
+    unsigned int code = 0x000000;
+
+    code |= (point.x < -1 ? 1 : 0) << 0;
+    code |= (point.x >  1 ? 1 : 0) << 1;
+    code |= (point.y < -1 ? 1 : 0) << 2;
+    code |= (point.y >  1 ? 1 : 0) << 3;
+    code |= (point.z < -1 ? 1 : 0) << 4;
+    code |= (point.z >  1 ? 1 : 0) << 5;
+
+    return code;
 }
