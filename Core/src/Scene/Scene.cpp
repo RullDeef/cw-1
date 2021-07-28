@@ -14,7 +14,7 @@ Scene Core::make_scene()
 
 void Core::append(Scene& scene, const Mesh& mesh)
 {
-    append(scene.meshList, mesh);
+    push_back(scene.meshList, mesh);
 }
 
 void Core::destroy(Scene& scene)

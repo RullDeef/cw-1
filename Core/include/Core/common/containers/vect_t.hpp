@@ -6,6 +6,8 @@
 
 namespace Core
 {
+    constexpr auto VECT_CAPACITY_MULTIPLIER = 1.5;
+
     template<typename T>
     struct vect_t
     {
@@ -16,81 +18,36 @@ namespace Core
     };
 
     template<typename T>
-    vect_t<T> make_vect(size_t capacity = 0)
-    {
-        vect_t<T> vect;
-        vect.size = 0;
-
-        vect.capacity = capacity;
-        if (capacity == 0)
-            vect.data = nullptr;
-        else
-        {
-            vect.data = static_cast<T*>(std::malloc(capacity * sizeof(T)));
-            // error pulling if data == nullptr
-        }
-
-        return vect;
-    }
+    vect_t<T> make_vect(size_t capacity = 0);
 
     template<typename T>
-    void destroy(vect_t<T>& vect)
-    {
-        if (vect.data != nullptr)
-        {
-            std::free(vect.data);
-            vect.data = nullptr;
-        }
-        vect.size = 0;
-        vect.capacity = 0;
-    }
+    void destroy(vect_t<T>& vect);
 
     template<typename T>
-    bool set(vect_t<T>& vect, size_t index, const T& value)
-    {
-        if (index < vect.size)
-        {
-            vect.data[index] = value;
-            return true;
-        }
-        return false;
-    }
+    bool is_valid(const vect_t<T>& vect);
 
     template<typename T>
-    bool get(const vect_t<T>& vect, size_t index, T& value)
-    {
-        if (index < vect.size)
-        {
-            value = vect.data[index];
-            return true;
-        }
-
-        return false;
-    }
+    bool reserve(vect_t<T>& vect, size_t newCapacity);
 
     template<typename T>
-    bool at(vect_t<T>& vect, size_t index, T*& ref)
-    {
-        if (index < vect.size)
-        {
-            ref = &vect.data[index];
-            return true;
-        }
-
-        return false;
-    }
+    bool set(vect_t<T>& vect, size_t index, const T& value);
 
     template<typename T>
-    bool at(const vect_t<T>& vect, size_t index, const T*& ref)
-    {
-        if (index < vect.size)
-        {
-            ref = &vect.data[index];
-            return true;
-        }
+    bool get(const vect_t<T>& vect, size_t index, T& value);
 
-        return false;
-    }
+    template<typename T>
+    bool at(vect_t<T>& vect, size_t index, T*& ref);
+
+    template<typename T>
+    bool at(const vect_t<T>& vect, size_t index, const T*& ref);
+
+    template<typename T>
+    bool push_back(vect_t<T>& vect, const T& value);
+
+    template<typename T>
+    bool push_front(vect_t<T>& vect, const T& value);
 }
+
+#include "Core/common/containers/vect_t_imp.hpp"
 
 #endif // VECT_T_HPP

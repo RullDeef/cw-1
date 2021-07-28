@@ -15,6 +15,7 @@ static bool oculusCooling(const Face& face, const Camera& camera);
 static bool same_projected(const Vec& v1, const Vec& v2);
 
 // clipping functions
+static Vec projectToFrustrum(const Camera& camera, const Vec& point);
 static unsigned int computeBitCode(const Vec& point);
 
 
@@ -38,7 +39,7 @@ static void makeBG(RenderTarget& renderTarget)
     {
         for (size_t col = 0; col < renderTarget.width; col++)
         {
-            if (((row / 64) % 2 == 0) ^ ((col / 64) % 2 == 0))
+            if (true || ((row / 64) % 2 == 0) ^ ((col / 64) % 2 == 0))
                 setPixel(renderTarget, row, col, Color::black);
             else
                 setPixel(renderTarget, row, col, { 64u, 0u, 64u, 255u });
@@ -60,8 +61,8 @@ static StatusCode renderWireframeMesh(RenderTarget& renderTarget, ZBuffer& zbuff
 
 static StatusCode renderFace(RenderTarget& renderTarget, ZBuffer& zbuffer, const Face& face, const Camera& camera)
 {
-    // if (oculusCooling(face, camera)) // || backFaceCooling(face, camera))
-    //     return StatusCode::Success;
+    if (oculusCooling(face, camera) || backFaceCooling(face, camera))
+        return StatusCode::Success;
 
     Vec p1 = project_point(camera, face.verts[0].position);
     p1.x = int(p1.x); p1.y = int(p1.y);
@@ -330,11 +331,12 @@ static StatusCode renderFace(RenderTarget& renderTarget, ZBuffer& zbuffer, const
 
 static bool backFaceCooling(const Face& face, const Camera& camera)
 {
-    Vec cam_pos = view_pos(camera);
-    Vec norm = Core::cross(face.verts[1].position - face.verts[0].position, face.verts[2].position - face.verts[0].position);
+    Vec p1 = projectToFrustrum(camera, face.verts[0].position);
+    Vec p2 = projectToFrustrum(camera, face.verts[1].position);
+    Vec p3 = projectToFrustrum(camera, face.verts[2].position);
 
-    Vec dir = normalised(face.verts[0].position - cam_pos);
-
+    Vec norm = Core::cross(p2 - p1, p3 - p1);
+    Vec dir = make_dir(0, 0, 1);
 
     double dot = Core::dot(dir, norm);
     return dot < 0.0;
@@ -342,23 +344,15 @@ static bool backFaceCooling(const Face& face, const Camera& camera)
 
 static bool oculusCooling(const Face& face, const Camera& camera)
 {
-    Vec p1 = camera.mvp * face.verts[0].position;
-    Vec p2 = camera.mvp * face.verts[1].position;
-    Vec p3 = camera.mvp * face.verts[2].position;
-
-    double dz = camera.far - camera.near;
-    p1.x /= p1.z; p1.y /= p1.z; p1.z = (p1.z - camera.near) / dz * 2 - 1;
-    p2.x /= p2.z; p2.y /= p2.z; p2.z = (p2.z - camera.near) / dz * 2 - 1;
-    p3.x /= p3.z; p3.y /= p3.z; p3.z = (p3.z - camera.near) / dz * 2 - 1;
+    Vec p1 = projectToFrustrum(camera, face.verts[0].position);
+    Vec p2 = projectToFrustrum(camera, face.verts[1].position);
+    Vec p3 = projectToFrustrum(camera, face.verts[2].position);
 
     unsigned int code1 = computeBitCode(p1);
     unsigned int code2 = computeBitCode(p2);
     unsigned int code3 = computeBitCode(p3);
 
-    if (code1 & code2 & code3)
-        return true;
-
-    return false;
+    return code1 & code2 & code3;
 }
 
 static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2, Pixel color)
@@ -371,16 +365,42 @@ static bool same_projected(const Vec& v1, const Vec& v2)
     return v1.x == v2.x && v1.y == v2.y;
 }
 
+static Vec projectToFrustrum(const Camera& camera, const Vec& point)
+{
+    Vec res = camera.mvp * point;
+
+    res.x /= res.z;
+    res.y /= res.z;
+    res.z = (res.z - camera.near) / (camera.far - camera.near) * 2 - 1;
+
+    // TODO: вынести функции по работе с вьюпортом
+#if USE_MIN_FIT
+    if (camera.viewport.width > camera.viewport.height)
+        res.x *= double(camera.viewport.height) / camera.viewport.width;
+    else
+        res.y *= double(camera.viewport.width) / camera.viewport.height;
+#else
+    if (camera.viewport.width > camera.viewport.height)
+        res.y *= double(camera.viewport.height) / camera.viewport.width;
+    else
+        res.x *= double(camera.viewport.width) / camera.viewport.height;
+#endif
+
+    return res;
+}
+
 static unsigned int computeBitCode(const Vec& point)
 {
     unsigned int code = 0x000000;
 
-    code |= (point.x < -1 ? 1 : 0) << 0;
-    code |= (point.x >  1 ? 1 : 0) << 1;
-    code |= (point.y < -1 ? 1 : 0) << 2;
-    code |= (point.y >  1 ? 1 : 0) << 3;
-    code |= (point.z < -1 ? 1 : 0) << 4;
-    code |= (point.z >  1 ? 1 : 0) << 5;
+    const double side = 1.0;
+
+    code |= (point.x < -side ? 1 : 0) << 0;
+    code |= (point.x >  side ? 1 : 0) << 1;
+    code |= (point.y < -side ? 1 : 0) << 2;
+    code |= (point.y >  side ? 1 : 0) << 3;
+    code |= (point.z < -side ? 1 : 0) << 4;
+    code |= (point.z >  side ? 1 : 0) << 5;
 
     return code;
 }

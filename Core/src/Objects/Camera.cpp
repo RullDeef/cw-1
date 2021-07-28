@@ -48,9 +48,16 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
     res.z = res.w;
     res.w = 1.0;
 
-    double vmin2 = std::min(camera.viewport.width, camera.viewport.height) / 2;
+    // TODO: возможно стоит вынести все махинации с вьюпортом в отдельные функции в Rect.hpp
+#if USE_MIN_FIT
+    double vmin2 = std::min<double>(camera.viewport.width, camera.viewport.height) / 2;
     res.x = camera.viewport.left + res.x * vmin2 + camera.viewport.width / 2;
     res.y = camera.viewport.top - res.y * vmin2 + camera.viewport.height / 2;
+#else
+    double vmax2 = std::max<double>(camera.viewport.width, camera.viewport.height) / 2;
+    res.x = camera.viewport.left + res.x * vmax2 + double(camera.viewport.width) / 2;
+    res.y = camera.viewport.top - res.y * vmax2 + double(camera.viewport.height) / 2;
+#endif
 
     return res;
 }

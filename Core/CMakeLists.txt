@@ -15,6 +15,8 @@ add_library(Core STATIC
         src/Scene/Scene.cpp
         src/Objects/Camera.cpp
         src/Objects/Mesh.cpp
+        src/Objects/Face.cpp
+        src/Objects/Vertex.cpp
+        src/RenderTarget/ZBuffer.cpp
         src/RenderTarget/RenderTarget.cpp
-        src/common/math/Ray.cpp
-        src/RenderTarget/ZBuffer.cpp)
+        src/common/math/Ray.cpp)

@@ -5,6 +5,10 @@
 #include "Core/common/math/Mat.hpp"
 #include "Core/common/math/Rect.hpp"
 
+// флаг для компановки рабочего окна в доступную область.
+// если 1 - рабочее окно будет расширено до пределов доступной области (не рекомендуется),
+// если 0 - рабочее окно будет обрезано по доступной области (менее багуемо).
+#define USE_MIN_FIT 0
 
 namespace Core
 {
@@ -19,7 +23,7 @@ namespace Core
         Mat mvp;
     };
 
-    Camera make_camera(double fov = 1.2217, double near = 0.1, double far = 1000.0);
+    Camera make_camera(double fov = 1.2217, double near = 80.0, double far = 1000.0);
 
     void update_viewport(Camera& camera, const Rect& viewport);
     void recalc_mvp(Camera& camera);

@@ -58,10 +58,7 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
 
             while (i3 < face_verts.size())
             {
-                Core::Face face{};
-                face.verts[0] = face_verts[i1];
-                face.verts[1] = face_verts[i2];
-                face.verts[2] = face_verts[i3];
+                Core::Face face = Core::make_face(face_verts[i1], face_verts[i2], face_verts[i3]);
                 faces.push_back(face);
                 i2++;
                 i3++;
@@ -69,46 +66,38 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
         }
     }
 
-    Core::Mesh mesh{};
-
-    mesh.faces = Core::make_vect<Core::Face>(faces.size());
-    mesh.faces.size = faces.size();
-    size_t i = 0;
+    Core::Mesh mesh = Core::make_mesh(faces.size());
     for (const auto& face : faces)
-        Core::set(mesh.faces, i++, face);
+        Core::add_face(mesh, face);
 
     size_t id = -1;
     auto object = std::unique_ptr<IObject>(new ObjectAdapter<Core::Mesh>(id, mesh, AdapterPolicy::StrongOwnership));
-    object->setName(filename.substr(0, filename.find('.')));
+    object->setName(filename.substr(filename.rfind('/') + 1, filename.find('.') - filename.rfind('/') - 1));
     return object;
 }
 
 Core::Vertex ObjLoader::extractVertex(const std::string &str, const std::vector<Core::Vec>& verts, const std::vector<Core::Vec>& norms)
 {
-    Core::Vertex res{};
-    res.position = Core::make_pos(0, 0, 0);
-    res.normal = Core::make_dir(0, 0, 0);
-    res.uv = Core::make_pos(0, 0, 0);
-
+    Core::Vec position{};
     size_t slashes = std::count(str.begin(), str.end(), '/');
 
     if (slashes == 0)
     {
-        res.position = verts[std::stoi(str) - 1];
+        position = verts[std::stoi(str) - 1];
     }
     else if (slashes == 1)
     {
         size_t pos = str.find('/');
         size_t index = std::stoi(std::string(str.begin(), str.begin() + str.find('/')));
-        res.position = verts[index - 1];
+        position = verts[index - 1];
     }
     else
     {
         size_t index = std::stoi(std::string(str.begin(), str.begin() + str.find('/')));
-        res.position = verts[index - 1];
+        position = verts[index - 1];
     }
 
-    return res;
+    return Core::make_vertex(position);
 }
 
 std::unique_ptr<Scene> ObjLoader::loadScene() {

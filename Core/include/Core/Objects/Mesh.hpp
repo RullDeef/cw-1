@@ -3,22 +3,11 @@
 
 #include "Core/common/math/Vec.hpp"
 #include "Core/common/containers/vect_t.hpp"
+#include "Core/Objects/Face.hpp"
 
 
 namespace Core
 {
-    struct Vertex
-    {
-        Vec position;
-        Vec normal;
-        Vec uv;
-    };
-
-    struct Face
-    {
-        Vertex verts[3];
-    };
-
     struct Mesh
     {
         vect_t<Face> faces;
@@ -26,6 +15,8 @@ namespace Core
 
     Mesh make_mesh(size_t faces_count);
     void destroy(Mesh& mesh);
+
+    bool add_face(Mesh& mesh, const Face& face);
 }
 
 #endif // MESH_HPP
