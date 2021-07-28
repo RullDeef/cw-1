@@ -33,6 +33,8 @@ public:
     // zoomIn & zoomOut (wheel up/down)
     void zoomCamera(double factor);
 
+    void freeFlyCamera(double forward, double right, double up);
+
 private:
     Scene::iterator cameraIterator;
     ObjectAdapter<Core::Camera> mainCamera;

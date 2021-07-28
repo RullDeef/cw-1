@@ -60,7 +60,7 @@ inline Vec operator-(const Vec& v1, const Vec& v2)
 
 inline Vec operator*(double val, const Vec& vec)
 {
-    return make_dir(val * vec.x, val * vec.y, val * vec.z, vec.w);
+    return make_dir(val * vec.x, val * vec.y, val * vec.z, val * vec.w);
 }
 
 inline Vec operator*(const Vec& vec, double val)

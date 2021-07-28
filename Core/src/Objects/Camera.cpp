@@ -28,6 +28,17 @@ void Core::recalc_mvp(Camera& camera)
     camera.mvp = camera.proj_mat * camera.model_mat;
 }
 
+/// TODO: fix this.
+Vec Core::view_dir(const Camera &camera)
+{
+    return inverse(camera.model_mat) * Core::make_dir(0, 0, 1);
+}
+
+Vec Core::view_pos(const Camera& camera)
+{
+    return inverse(camera.model_mat) * Core::make_pos(0, 0, 0);
+}
+
 Vec Core::project_point(const Camera& camera, const Vec& pos)
 {
     Vec res = camera.mvp * pos;

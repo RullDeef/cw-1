@@ -10,9 +10,11 @@ add_library(Core STATIC
         src/Core.cpp
         src/FancyRenderer.cpp
         src/FastRender.cpp
+        src/Rasterizers/RectRenderer.cpp
         src/Rasterizers/LineRenderer.cpp
         src/Scene/Scene.cpp
         src/Objects/Camera.cpp
         src/Objects/Mesh.cpp
         src/RenderTarget/RenderTarget.cpp
-        src/common/math/Ray.cpp)
+        src/common/math/Ray.cpp
+        src/RenderTarget/ZBuffer.cpp)

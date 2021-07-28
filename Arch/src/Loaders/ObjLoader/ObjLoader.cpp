@@ -66,7 +66,9 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
         Core::set(mesh.faces, i++, face);
 
     size_t id = -1;
-    return std::unique_ptr<IObject>(new ObjectAdapter<Core::Mesh>(id, mesh, AdapterPolicy::StrongOwnership));
+    auto object = std::unique_ptr<IObject>(new ObjectAdapter<Core::Mesh>(id, mesh, AdapterPolicy::StrongOwnership));
+    object->setName(filename.substr(0, filename.find('.')));
+    return object;
 }
 
 Core::Vertex ObjLoader::extractVertex(const std::string &str, const std::vector<Core::Vec>& verts, const std::vector<Core::Vec>& norms)

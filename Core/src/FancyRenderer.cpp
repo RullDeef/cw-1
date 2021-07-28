@@ -2,6 +2,7 @@
 #include "Core/common/math/Ray.hpp"
 #include "Core/common/math/Plane.hpp"
 #include "Core/Objects/Mesh.hpp"
+#include "Core/Rasterizers/RectRenderer.hpp"
 #include "Core/FancyRenderer.hpp"
 
 using namespace Core;
@@ -24,6 +25,8 @@ StatusCode Core::fancyRenderScene(RenderParams renderParams)
             rayTraceRender(renderParams.renderTarget, renderParams.scene, renderParams.camera, row, col);
         }
     }
+
+    renderRect(renderParams.renderTarget, renderParams.viewport, Color::black);
 
     return StatusCode::Success;
 }

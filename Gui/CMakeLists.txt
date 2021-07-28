@@ -25,6 +25,6 @@ add_executable(Gui
         src/Frames/ViewportFrame/ViewportFrame.cpp
         src/Frames/IFrame.cpp
         src/Managers/QtLoadManager.cpp
-        src/Managers/QtManagerFactory.cpp)
+        src/Managers/QtManagerFactory.cpp src/Frames/HierarchyFrame/ObjectListItemWidget/ObjectListItemWidget.cpp src/Frames/HierarchyFrame/ObjectListItemWidget/ObjectListItemWidget.hpp src/Frames/ViewportFrame/FreeFlyDispatcher/FreeFlyDispatcher.cpp src/Frames/ViewportFrame/FreeFlyDispatcher/FreeFlyDispatcher.hpp)
 
-target_link_libraries(Gui PRIVATE qtadvanceddocking PUBLIC Arch Core Qt5::Core Qt5::Widgets)
+target_link_libraries(Gui PRIVATE qtadvanceddocking PUBLIC Arch Core Qt5::Core Qt5::Widgets pthread)

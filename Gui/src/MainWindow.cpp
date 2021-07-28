@@ -1,5 +1,3 @@
-#include <utility>
-#include <QFileDialog>
 #include "Managers/LoadManager.hpp"
 #include "Managers/QtManagerFactory.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
@@ -9,11 +7,9 @@
 
 MainWindow::MainWindow()
 {
-    factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory(this));
     ui.setupUi(this);
-    // setCentralWidget(nullptr);
-
     dockManager = new ads::CDockManager(this);
+    factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory(this));
 
     // setup default frames
     if (1) {
@@ -23,7 +19,7 @@ MainWindow::MainWindow()
     }
 
     if (1) {
-        IFrame *frame = new HierarchyFrame(this);
+        IFrame *frame = new HierarchyFrame(*factory, this);
         dockManager->addDockWidget(ads::RightDockWidgetArea, frame);
         frames.push_back(frame);
     }
@@ -40,11 +36,20 @@ void MainWindow::setupActions()
 void MainWindow::loadObjectCommand()
 {
     factory->getLoadManager()->loadMesh();
+    for (auto frame : frames)
+    {
+        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
+            viewportFrame->update();
+        else if (auto hierarchyFrame = dynamic_cast<HierarchyFrame*>(frame))
+            hierarchyFrame->updateHierarchy();
+    }
 }
 
 void MainWindow::saveRenderCommand()
 {
     for (auto frame : frames)
+    {
         if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
             return viewportFrame->saveToImage();
+    }
 }

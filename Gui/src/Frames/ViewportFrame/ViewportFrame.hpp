@@ -5,7 +5,9 @@
 #include <QImage>
 #include <Managers/IManagerFactory.hpp>
 #include <Managers/RenderManager.hpp>
+#include <QTimer>
 #include "Frames/IFrame.hpp"
+#include "Frames/ViewportFrame/FreeFlyDispatcher/FreeFlyDispatcher.hpp"
 
 class QPaintEvent;
 class QResizeEvent;
@@ -23,11 +25,17 @@ public:
     void saveToImage();
 
 protected:
-    virtual void paintEvent(QPaintEvent* event) override;
-    virtual void resizeEvent(QResizeEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
 
-    virtual void mousePressEvent(QMouseEvent* event) override;
-    virtual void mouseMoveEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
+
+protected slots:
+    void updateFreeFly();
 
 private:
     void redraw();
@@ -35,16 +43,8 @@ private:
     QImage image;
     IManagerFactory* managerFactory;
 
-    double x_prev;
-    double y_prev;
-
-    enum class ControlState
-    {
-        DragState,
-        RotateState
-    };
-
-    ControlState state;
+    FreeFlyDispatcher freeFlyDispatcher;
+    QTimer* freeFlyTimer;
 };
 
 #endif // VIEWPORTFRAME_HPP

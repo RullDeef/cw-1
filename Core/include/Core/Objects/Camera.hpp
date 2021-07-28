@@ -24,6 +24,9 @@ namespace Core
     void update_viewport(Camera& camera, const Rect& viewport);
     void recalc_mvp(Camera& camera);
 
+    Vec view_dir(const Camera& camera);
+    Vec view_pos(const Camera& camera);
+
     Vec project_point(const Camera& camera, const Vec& pos);
 }
 

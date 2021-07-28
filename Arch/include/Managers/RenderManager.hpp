@@ -12,10 +12,12 @@ class RenderManager : public IManager
 public:
     explicit RenderManager(IManagerFactory& factory);
 
-    virtual void renderScene(Core::RenderTarget& renderTarget);
+    virtual void renderSceneFast(Core::RenderTarget& renderTarget);
+    virtual void renderSceneFancy(Core::RenderTarget& renderTarget);
 
 protected:
     Core::Scene requireScene();
+    Core::Camera requireCamera(const Core::RenderTarget& renderTarget);
     Core::Camera requireCamera(const Core::Rect &viewport);
 };
 

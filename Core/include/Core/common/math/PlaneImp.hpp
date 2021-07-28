@@ -19,7 +19,7 @@ namespace Core
 
     inline Plane make_plane(const Vec& p1, const Vec& p2, const Vec& p3)
     {
-        Vec norm = cross(p2 - p1, p3 - p1);
+        Vec norm = normalised(cross(p2 - p1, p3 - p1));
 
         Plane plane{};
 
@@ -28,12 +28,12 @@ namespace Core
         plane.c = norm.z;
         plane.d = -dot(norm, p1);
 
-        normalize(plane);
         return plane;
     }
 
     inline Plane make_plane(const Vec& pos, const Vec& norm);
 
+    // TODO: fix. Not working
     inline void normalize(Plane& plane)
     {
         double d = plane.a * plane.a + plane.b * plane.b + plane.c * plane.c;

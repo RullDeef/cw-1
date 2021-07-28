@@ -8,7 +8,7 @@
 LoadManager::LoadManager(IManagerFactory& factory)
     : IManager(factory)
 {
-    //_loadMesh("/home/rulldeef/Projects/cw-1/Models/cube.obj");
+    //_loadMesh("/home/rulldeef/Projects/cw-1/Models/Wolf.obj");
 }
 
 void LoadManager::_loadMesh(const std::string& filename)

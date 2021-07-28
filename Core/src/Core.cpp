@@ -12,9 +12,7 @@ StatusCode Core::renderScene(RenderParams renderParams)
 
     if (renderParams.renderType == RenderParams::RenderType::FastRenderType)
     {
-        // std::cout << "begin rendering..." << std::endl;
         result = fastRenderScene(renderParams);
-        // std::cout << "scene rendered!" << std::endl;
     }
     else if (renderParams.renderType == RenderParams::RenderType::FancyRenderType)
     {
