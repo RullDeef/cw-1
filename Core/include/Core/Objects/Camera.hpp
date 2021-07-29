@@ -18,6 +18,9 @@ namespace Core
         double fov;
         double near;
         double far;
+        Vec eye;
+        double pitch;
+        double yaw;
         Mat model_mat;
         Mat proj_mat;
         Mat mvp;
@@ -27,6 +30,7 @@ namespace Core
 
     void update_viewport(Camera& camera, const Rect& viewport);
     void recalc_mvp(Camera& camera);
+    void update_transformation(Camera& camera);
 
     Vec view_dir(const Camera& camera);
     Vec view_pos(const Camera& camera);

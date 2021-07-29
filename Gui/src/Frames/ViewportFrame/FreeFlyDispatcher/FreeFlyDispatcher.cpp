@@ -29,10 +29,10 @@ void FreeFlyDispatcher::keyPressed(int key)
 {
     switch (key)
     {
-        case Qt::Key_W: forward = 1; break;
-        case Qt::Key_A: right = -1; break;
-        case Qt::Key_S: forward = -1; break;
-        case Qt::Key_D: right = 1; break;
+        case Qt::Key_W: forward = -1; break;
+        case Qt::Key_A: right = 1; break;
+        case Qt::Key_S: forward = 1; break;
+        case Qt::Key_D: right = -1; break;
         default: break;
     }
 }

@@ -11,6 +11,9 @@ Camera Core::make_camera(double fov, double near, double far)
     cam.fov = fov;
     cam.near = near;
     cam.far = far;
+    cam.eye = make_pos();
+    cam.pitch = .0;
+    cam.yaw = .0;
 
     cam.model_mat = make_mat_id();
     cam.proj_mat = make_mat_perspective(fov, near, far);
@@ -25,7 +28,7 @@ void Core::update_viewport(Camera& camera, const Rect& viewport)
 
 void Core::recalc_mvp(Camera& camera)
 {
-    camera.mvp = camera.proj_mat * camera.model_mat;
+    camera.mvp = camera.proj_mat * inverse(camera.model_mat);
 }
 
 /// TODO: fix this.
@@ -60,4 +63,23 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
 #endif
 
     return res;
+}
+
+void Core::update_transformation(Camera &camera)
+{
+    double cosPitch = cos(camera.pitch);
+    double sinPitch = sin(camera.pitch);
+    double cosYaw = cos(camera.yaw);
+    double sinYaw = sin(camera.yaw);
+
+    Vec x_axis = { cosYaw, 0, -sinYaw };
+    Vec y_axis = { sinYaw * sinPitch, cosPitch, cosYaw * sinPitch };
+    Vec z_axis = { sinYaw * cosPitch, -sinPitch, cosPitch * cosYaw };
+
+    camera.model_mat = inverse({
+            x_axis.x, x_axis.y, x_axis.z, -dot(x_axis, camera.eye),
+            y_axis.x, y_axis.y, y_axis.z, -dot(y_axis, camera.eye),
+            z_axis.x, z_axis.y, z_axis.z, -dot(z_axis, camera.eye),
+            0, 0, 0, 1
+    });
 }
