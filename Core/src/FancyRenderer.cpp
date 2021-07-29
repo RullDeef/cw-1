@@ -126,6 +126,6 @@ static Ray initRay(const Camera& camera, int pixelRow, int pixelCol)
     direction.y = (camera.viewport.top + camera.viewport.height / 2) - pixelRow;
     direction.z = std::min(camera.viewport.width, camera.viewport.height) / std::tan(camera.fov);
 
-    normalize(direction);
+    normalise(direction);
     return make_ray(position, direction);
 }

@@ -17,8 +17,10 @@ namespace Core
 
     inline double length(const Vec& vec);
 
+    inline bool is_zero(const Vec& vec);
+
     inline Vec normalised(const Vec& vec);
-    inline void normalize(Vec& vec);
+    inline void normalise(Vec& vec);
 
     inline double dot(const Vec& v1, const Vec& v2);
     inline Vec cross(const Vec& v1, const Vec& v2);

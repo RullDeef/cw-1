@@ -16,6 +16,8 @@ namespace Core
     Face make_face(const Vertex* vArr);
 
     bool isValid(const Face& face);
+
+    void recalc_normal(Face& face);
 }
 
 #endif // FACE_HPP

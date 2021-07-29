@@ -17,7 +17,10 @@ public:
     virtual std::unique_ptr<Scene> loadScene() override;
 
 protected:
-    static Core::Vertex extractVertex(const std::string& str, const std::vector<Core::Vec>& verts, const std::vector<Core::Vec>& norms);
+    static Core::Vertex extractVertex(const std::string& str,
+                                      const std::vector<Core::Vec>& verts,
+                                      const std::vector<Core::Vec>& norms,
+                                      const std::vector<Core::Vec>& uvs);
 
 private:
     std::string filename;

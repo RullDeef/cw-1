@@ -23,7 +23,10 @@ Vertex Core::make_vertex(Vec position, Vec normal, Vec uv)
     Vertex vert{};
 
     vert.position = position;
-    vert.normal = normalised(normal);
+    if (!is_zero(normal))
+        vert.normal = normalised(normal);
+    else
+        vert.normal = normal;
     vert.uv = uv;
 
     return vert;
