@@ -6,7 +6,7 @@ using namespace Core;
 
 Camera Core::make_camera(double fov, double near, double far)
 {
-    Camera cam;
+    Camera cam{};
 
     cam.fov = fov;
     cam.near = near;
@@ -26,30 +26,15 @@ void Core::update_viewport(Camera& camera, const Rect& viewport)
     camera.viewport = viewport;
 }
 
-void Core::recalc_mvp(Camera& camera)
+void Core::recalc_mvp(Camera& camera, const Mat& model_mat)
 {
-    camera.mvp = camera.proj_mat * inverse(camera.model_mat);
-}
-
-/// TODO: fix this.
-Vec Core::view_dir(const Camera &camera)
-{
-    return inverse(camera.model_mat) * Core::make_dir(0, 0, 1);
-}
-
-Vec Core::view_pos(const Camera& camera)
-{
-    return inverse(camera.model_mat) * Core::make_pos(0, 0, 0);
+    camera.mvp = camera.proj_mat * inverse(camera.model_mat) * model_mat;
 }
 
 Vec Core::project_point(const Camera& camera, const Vec& pos)
 {
     Vec res = camera.mvp * pos;
-
-    res.x /= res.z;
-    res.y /= res.z;
-    res.z = res.w;
-    res.w = 1.0;
+    perspective_adjust(res);
 
     // TODO: возможно стоит вынести все махинации с вьюпортом в отдельные функции в Rect.hpp
 #if USE_MIN_FIT
@@ -60,6 +45,11 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
     double vmax2 = std::max<double>(camera.viewport.width, camera.viewport.height) / 2;
     res.x = camera.viewport.left + res.x * vmax2 + double(camera.viewport.width) / 2;
     res.y = camera.viewport.top - res.y * vmax2 + double(camera.viewport.height) / 2;
+
+    /// not working
+    // Rect outer_box = get_outer_box(camera.viewport);
+    // Rect unit_box = make_rect(2, -2, -1, -1);
+    // res = map_point(unit_box, outer_box, res);
 #endif
 
     return res;
@@ -67,14 +57,14 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
 
 void Core::update_transformation(Camera &camera)
 {
-    double cosPitch = cos(camera.pitch);
-    double sinPitch = sin(camera.pitch);
-    double cosYaw = cos(camera.yaw);
-    double sinYaw = sin(camera.yaw);
+    double cosPitch = std::cos(camera.pitch);
+    double sinPitch = std::sin(camera.pitch);
+    double cosYaw = std::cos(camera.yaw);
+    double sinYaw = std::sin(camera.yaw);
 
-    Vec x_axis = { cosYaw, 0, -sinYaw };
-    Vec y_axis = { sinYaw * sinPitch, cosPitch, cosYaw * sinPitch };
-    Vec z_axis = { sinYaw * cosPitch, -sinPitch, cosPitch * cosYaw };
+    Vec x_axis = make_dir(cosYaw, 0, -sinYaw);
+    Vec y_axis = make_dir(sinYaw * sinPitch, cosPitch, cosYaw * sinPitch);
+    Vec z_axis = make_dir(sinYaw * cosPitch, -sinPitch, cosPitch * cosYaw);
 
     camera.model_mat = inverse({
             x_axis.x, x_axis.y, x_axis.z, -dot(x_axis, camera.eye),

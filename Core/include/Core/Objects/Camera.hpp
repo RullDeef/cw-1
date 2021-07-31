@@ -29,7 +29,7 @@ namespace Core
     Camera make_camera(double fov = 1.2217, double near = 80.0, double far = 1000.0);
 
     void update_viewport(Camera& camera, const Rect& viewport);
-    void recalc_mvp(Camera& camera);
+    void recalc_mvp(Camera& camera, const Mat& model_mat);
     void update_transformation(Camera& camera);
 
     Vec view_dir(const Camera& camera);

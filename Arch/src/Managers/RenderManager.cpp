@@ -67,12 +67,7 @@ Core::Camera RenderManager::requireCamera(const Core::RenderTarget& renderTarget
 Core::Camera RenderManager::requireCamera(const Core::Rect &viewport)
 {
     Core::Camera camera = getFactory().getCameraManager()->getActiveCamera().getAdaptee();
-
     Core::update_viewport(camera, viewport);
-
-    // camera.model_mat = Core::make_mat_translation(Core::make_pos(50, -100, -400));
-
-    Core::recalc_mvp(camera);
     return camera;
 }
 

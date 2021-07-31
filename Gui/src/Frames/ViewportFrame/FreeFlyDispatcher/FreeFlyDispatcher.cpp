@@ -33,6 +33,8 @@ void FreeFlyDispatcher::keyPressed(int key)
         case Qt::Key_A: right = -1; break;
         case Qt::Key_S: forward = -1; break;
         case Qt::Key_D: right = 1; break;
+        case Qt::Key_E: up = 1; break;
+        case Qt::Key_Q: up = -1; break;
         default: break;
     }
 }
@@ -45,6 +47,8 @@ void FreeFlyDispatcher::keyReleased(int key)
         case Qt::Key_A: right = 0; break;
         case Qt::Key_S: forward = 0; break;
         case Qt::Key_D: right = 0; break;
+        case Qt::Key_E: up = 0; break;
+        case Qt::Key_Q: up = 0; break;
         default: break;
     }
 }

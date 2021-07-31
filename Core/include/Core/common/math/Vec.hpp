@@ -16,14 +16,24 @@ namespace Core
     inline Vec make_dir(double x = 0.0, double y = 0.0, double z = 0.0, double w = 0.0);
 
     inline double length(const Vec& vec);
+    inline double inv_sqrt_fast(const Vec& vec);
 
     inline bool is_zero(const Vec& vec);
 
     inline Vec normalised(const Vec& vec);
     inline void normalise(Vec& vec);
 
+    inline void perspective_adjust(Vec& vec);
+
+    inline Vec interpolate(const Vec& v1, const Vec& v2, double t);
+
     inline double dot(const Vec& v1, const Vec& v2);
     inline Vec cross(const Vec& v1, const Vec& v2);
+
+    inline Vec& operator+=(Vec& v1, const Vec& v2);
+    inline Vec& operator-=(Vec& v1, const Vec& v2);
+    inline Vec& operator*=(Vec& vec, double val);
+    inline Vec& operator/=(Vec& vec, double val);
 
     inline Vec operator+(const Vec& v1, const Vec& v2);
     inline Vec operator-(const Vec& v1, const Vec& v2);

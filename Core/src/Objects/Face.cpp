@@ -53,3 +53,14 @@ void Core::recalc_normal(Face &face)
     face.verts[1].normal = normal;
     face.verts[2].normal = normal;
 }
+
+Face Core::project(const Face &face, const Camera &camera)
+{
+    Face result = face;
+
+    result.verts[0] = project(result.verts[0], camera);
+    result.verts[1] = project(result.verts[1], camera);
+    result.verts[2] = project(result.verts[2], camera);
+
+    return result;
+}

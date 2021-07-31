@@ -14,7 +14,7 @@ namespace Core
     {
         RenderTarget& renderTarget;
         const Scene& scene;
-        const Camera& camera;
+        Camera camera;
 
         enum class RenderType
         {

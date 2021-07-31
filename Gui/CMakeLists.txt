@@ -3,6 +3,12 @@ project(Gui)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if(DEFINED ENV{DEBUG})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+endif()
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)

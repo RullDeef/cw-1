@@ -39,7 +39,7 @@ private:
     double y_prev;
 
     double flySpeed = 1.0;
-    double dragSpeed = 0.025;
+    double dragSpeed = 0.0025;
 };
 
 

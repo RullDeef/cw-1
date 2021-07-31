@@ -26,7 +26,7 @@ StatusCode Core::fancyRenderScene(RenderParams renderParams)
         }
     }
 
-    renderRect(renderParams.renderTarget, renderParams.viewport, Color::black);
+    renderRect(renderParams.renderTarget, renderParams.viewport, to_pixel(Colors::black));
 
     return StatusCode::Success;
 }
@@ -104,7 +104,7 @@ static void rayTraceRender(RenderTarget& renderTarget, const Scene& scene, const
     {
         distance = length(ray_at(ray, closest_t) - ray.position);
 
-        Pixel color = Color::white;
+        Pixel color = to_pixel(Colors::white);
 
         color.red = 255 * (0.5 + 0.5 * std::sin(distance / 5));
         color.green = 255 * (0.5 + 0.5 * std::sin(distance / 5));
@@ -113,8 +113,7 @@ static void rayTraceRender(RenderTarget& renderTarget, const Scene& scene, const
         setPixel(renderTarget, pixelRow, pixelCol, color);
     }
     else
-        setPixel(renderTarget, pixelRow, pixelCol, Color::blue);
-
+        setPixel(renderTarget, pixelRow, pixelCol, to_pixel(Colors::black));
 }
 
 static Ray initRay(const Camera& camera, int pixelRow, int pixelCol)

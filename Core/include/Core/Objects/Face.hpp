@@ -6,6 +6,8 @@
 
 namespace Core
 {
+    struct Camera;
+
     struct Face
     {
         Vertex verts[3];
@@ -18,6 +20,8 @@ namespace Core
     bool isValid(const Face& face);
 
     void recalc_normal(Face& face);
+
+    Face project(const Face& face, const Camera& camera);
 }
 
 #endif // FACE_HPP
