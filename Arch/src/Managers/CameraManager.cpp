@@ -5,7 +5,7 @@ CameraManager::CameraManager(IManagerFactory &factory)
     : IManager(factory), mainCamera(-1, Core::make_camera(), AdapterPolicy::WeakOwnership)
 {
     mainCamera.getAdaptee().
-    eye = Core::make_pos(50, -100, -400);
+    eye = Core::make_pos(-50, 100, 400);
     Core::update_transformation(mainCamera.getAdaptee());
 }
 
@@ -57,7 +57,7 @@ void CameraManager::freeFlyCamera(double forward, double right, double up)
 {
     Core::Camera& cam = getActiveCamera().getAdaptee();
 
-    Core::Vec offset = Core::make_dir(right, up, forward);
+    Core::Vec offset = Core::make_dir(right, up, -forward);
     offset = cam.model_mat * offset;
     cam.eye = cam.eye + offset;
 
