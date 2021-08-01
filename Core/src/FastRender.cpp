@@ -18,7 +18,7 @@ static bool oculusCulling(const Face& face, const Camera& camera);
 static Vec projectToFrustrum(const Camera& camera, const Vec& point);
 static unsigned int computeBitCode(const Vec& point);
 
-static Pixel recomputeColor(const Vec& normal);
+// static Pixel recomputeColor(const Vec& normal);
 static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material);
 
 
@@ -153,15 +153,15 @@ static unsigned int computeBitCode(const Vec& point)
     return code;
 }
 
-static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material)
-{
-    static Vec light_1 = normalised(make_dir(-1, 2, 1));
-    static Vec light_2 = normalised(make_dir(3, 4, -2));
-
-    auto lights = make_arr<Vec, 2>();
-    push_back(lights, light_1);
-    push_back(lights, light_2);
-
-    Color color = compute_color(material, lights, view, normal);
-    return to_pixel(color);
-}
+//static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material)
+//{
+//    static Vec light_1 = normalised(make_dir(-1, 2, 1));
+//    static Vec light_2 = normalised(make_dir(3, 4, -2));
+//
+//    auto lights = make_arr<Vec, 2>();
+//    push_back(lights, light_1);
+//    push_back(lights, light_2);
+//
+//    Color color = Colors::white; // compute_color(material, lights, view, normal);
+//    return to_pixel(color);
+//}

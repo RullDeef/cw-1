@@ -15,26 +15,26 @@ namespace Core
 
     struct RenderRegion
     {
-        unsigned int yStart;
-        unsigned int yEnd;
+        int yStart;
+        int yEnd;
 
-        unsigned int xStartLeft;
-        unsigned int xStartRight;
+        int xStartLeft;
+        int xStartRight;
+
+        double zStartLeft;
+        double zStartRight;
 
         double dxLeft;
         double dxRight;
+
+        double dzLeft;
+        double dzRight;
 
         Vertex vLeft;
         Vertex vRight;
 
         Vertex dvLeft;
         Vertex dvRight;
-
-        Vec nLeft;
-        Vec nRight;
-
-        Vec dnLeft;
-        Vec dnRight;
 
         const Mesh* meshPtr;
     };

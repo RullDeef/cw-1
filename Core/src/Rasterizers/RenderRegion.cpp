@@ -43,10 +43,13 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         RenderRegion region{};
         region.meshPtr = &mesh;
 
-        region.yStart = p1.y;
+        region.yStart = (int)p1.y;
 
-        region.xStartLeft = p1.x;
-        region.xStartRight = p1.x;
+        region.xStartLeft = (int)p1.x;
+        region.xStartRight = (int)p1.x;
+
+        region.zStartLeft = p1.z;
+        region.zStartRight = p1.z;
 
         region.vLeft = face.verts[0];
         region.vRight = face.verts[0];
@@ -54,21 +57,28 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         region.dxLeft = (p2.x - p1.x) / (p2.y - p1.y);
         region.dxRight = (p3.x - p1.x) / (p3.y - p1.y);
 
+        region.dzLeft = (p2.z - p1.z) / (p2.y - p1.y);
+        region.dzRight = (p3.z - p1.z) / (p3.y - p1.y);
+
         region.dvLeft = vertex_delta(face.verts[0], face.verts[1], p2.y - p1.y);
         region.dvRight = vertex_delta(face.verts[0], face.verts[2], p3.y - p1.y);
 
         if (p2.y < p3.y)
         {
-            region.yEnd = p2.y - 1;
+            region.yEnd = (int)p2.y - 1;
             push_back(array, normalized(region));
 
-            region.yStart = p2.y;
-            region.yEnd = p3.y;
+            region.yStart = (int)p2.y;
+            region.yEnd = (int)p3.y;
 
-            region.xStartLeft = p2.x;
-            region.xStartRight += region.dxRight * (p2.y - p1.y);
+            region.xStartLeft = (int)p2.x;
+            region.xStartRight += (int)(region.dxRight * (p2.y - p1.y));
+
+            region.zStartLeft = p2.z;
+            region.zStartRight += region.dzRight * (p2.z - p1.z);
 
             region.dxLeft = (p3.x - p2.x) / (p3.y - p2.y);
+            region.dzLeft = (p3.z - p2.z) / (p3.y - p2.y);
 
             region.vLeft = face.verts[1];
             region.vRight = interpolate(face.verts[0], face.verts[2], (p2.y - p1.y) / (p3.y - p1.y));
@@ -79,16 +89,20 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         }
         else if (p3.y < p2.y)
         {
-            region.yEnd = p3.y - 1;
+            region.yEnd = (int)p3.y - 1;
             push_back(array, normalized(region));
 
-            region.yStart = p3.y;
-            region.yEnd = p2.y;
+            region.yStart = (int)p3.y;
+            region.yEnd = (int)p2.y;
 
-            region.xStartLeft += region.dxLeft * (p3.y - p1.y);
-            region.xStartRight = p3.x;
+            region.xStartLeft += (int)(region.dxLeft * (p3.y - p1.y));
+            region.xStartRight = (int)p3.x;
+
+            region.zStartLeft += region.dzLeft * (p3.y - p1.y);
+            region.zStartRight = p3.z;
 
             region.dxRight = (p2.x - p3.x) / (p2.y - p3.y);
+            region.dzRight = (p2.z - p3.z) / (p2.y - p3.y);
 
             region.vLeft = interpolate(face.verts[0], face.verts[1], (p3.y - p1.y) / (p2.y - p1.y));
             region.vRight = face.verts[2];
@@ -99,7 +113,7 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         }
         else // if (p2.y == p3.y)
         {
-            region.yEnd = p2.y;
+            region.yEnd = (int)p2.y;
             push_back(array, normalized(region));
         }
     }
@@ -114,14 +128,20 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         RenderRegion region{};
         region.meshPtr = &mesh;
 
-        region.yStart = p1.y;
-        region.yEnd = p3.y;
+        region.yStart = (int)p1.y;
+        region.yEnd = (int)p3.y;
 
-        region.xStartLeft = p1.x;
-        region.xStartRight = p2.x;
+        region.xStartLeft = (int)p1.x;
+        region.xStartRight = (int)p2.x;
+
+        region.zStartLeft = p1.z;
+        region.zStartRight = p2.z;
 
         region.dxLeft = (p3.x - p1.x) / (p3.y - p1.y);
         region.dxRight = (p3.x - p2.x) / (p3.y - p2.y);
+
+        region.dzLeft = (p3.z - p1.z) / (p3.y - p1.y);
+        region.dzRight = (p3.z - p2.z) / (p3.y - p2.y);
 
         region.vLeft = face.verts[0];
         region.vRight = face.verts[1];
@@ -142,14 +162,20 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         RenderRegion region{};
         region.meshPtr = &mesh;
 
-        region.yStart = p1.y;
-        region.yEnd = p2.y;
+        region.yStart = (int)p1.y;
+        region.yEnd = (int)p2.y;
 
-        region.xStartLeft = p1.x;
-        region.xStartRight = p3.x;
+        region.xStartLeft = (int)p1.x;
+        region.xStartRight = (int)p3.x;
+
+        region.zStartLeft = p1.z;
+        region.zStartRight = p3.z;
 
         region.dxLeft = (p2.x - p1.x) / (p2.y - p1.y);
         region.dxRight = (p2.x - p3.x) / (p2.y - p3.y);
+
+        region.dzLeft = (p2.z - p1.z) / (p2.y - p1.y);
+        region.dzRight = (p2.z - p3.z) / (p2.y - p3.y);
 
         region.vLeft = face.verts[0];
         region.vRight = face.verts[2];
@@ -169,9 +195,11 @@ void Core::normalize(RenderRegion& region)
         || (region.xStartLeft == region.xStartRight && region.dxRight < region.dxLeft))
     {
         std::swap(region.xStartLeft, region.xStartRight);
+        std::swap(region.zStartRight, region.zStartRight);
         std::swap(region.dxLeft, region.dxRight);
-        std::swap(region.nLeft, region.nRight);
-        std::swap(region.dnLeft, region.dnRight);
+        std::swap(region.dzLeft, region.dzRight);
+        std::swap(region.vLeft, region.vRight);
+        std::swap(region.dvLeft, region.dvRight);
     }
 }
 
@@ -184,8 +212,11 @@ RenderRegion Core::normalized(const RenderRegion& region)
 
 void Core::render(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegion region, const Camera& camera)
 {
-    double xLeft = std::max(0u, region.xStartLeft);
-    double xRight = std::min(region.xStartRight, (unsigned int)renderTarget.width);
+    double xLeft = region.xStartLeft;
+    double xRight = region.xStartRight;
+
+    double zLeft = region.zStartLeft;
+    double zRight = region.zStartRight;
 
     Vec pLeft = region.vLeft.position;
     Vec pRight = region.vRight.position;
@@ -193,26 +224,40 @@ void Core::render(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegion reg
     Vec nLeft = region.vLeft.normal;
     Vec nRight = region.vRight.normal;
 
-    for (unsigned int y = region.yStart; y <= region.yEnd; y++)
+    for (int y = region.yStart; y <= region.yEnd; y++)
     {
+        double z = zLeft;
+        double dz = (zRight - zLeft) / (xRight - xLeft + 1);
+
         Vec p = pLeft;
         Vec dp = (pRight - pLeft) / (xRight - xLeft + 1);
 
         Vec n = nLeft;
         Vec dn = (nRight - nLeft) / (xRight - xLeft + 1);
 
-        for (auto x = (unsigned int)xLeft; x < xRight + 1; x++)
+        if (0 <= y && y < renderTarget.height)
         {
-            Vec view = normalised(p - camera.eye);
+            for (auto x = (int)xLeft; x < xRight + 1; x++)
+            {
+                if (0 <= x && x < renderTarget.width)
+                {
+                    Vec view = normalised(p - camera.eye);
 
-            Pixel color = recomputeColor(normalised(n), view, region.meshPtr->material);
-            updatePixel(renderTarget, zbuffer, y, x, 0.0, color);
-            n += dn;
-            p += dp;
+                    Pixel color = recomputeColor(normalised(n), view, region.meshPtr->material);
+                    updatePixel(renderTarget, zbuffer, y, x, z, color);
+                }
+
+                z += dz;
+                n += dn;
+                p += dp;
+            }
         }
 
         xLeft += region.dxLeft;
         xRight += region.dxRight;
+
+        zLeft += region.dzLeft;
+        zRight += region.dzRight;
 
         pLeft += region.dvLeft.position;
         pRight += region.dvRight.position;
@@ -257,10 +302,28 @@ static Pixel recomputeColor(const Vec& normal)
 
 static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material)
 {
-    static Vec light_1 = normalised(make_dir(-1, 2, 1));
-    static Vec light_2 = normalised(make_dir(3, 4, -2));
+    static Light light_0 = { Light::Type::Ambient };
+    light_0.ambient = {
+            make_color(1.0, 1.0, 0.2),
+            0.3
+    };
+    static Light light_1 = { Light::Type::Directional };
+    light_1.directional = (DirectionalLight) {
+        make_color(1.0, 1.0, 0.2),
+        1.0,
+        normalised(make_dir(0.2, 0.4, -0.8))
+    };
+    static Light light_2 = { Light::Type::Directional };
+    light_2.directional = (DirectionalLight) {
+            make_color(0.2, 0.8, 0.6),
+            1.0,
+            normalised(make_dir(3, 4, -2))
+    };
+    // static Vec light_1 = normalised(make_dir(-1, 2, 1));
+    // static Vec light_2 = normalised(make_dir(3, 4, -2));
 
-    auto lights = make_arr<Vec, 2>();
+    auto lights = make_arr<Light, 3>();
+    push_back(lights, light_0);
     push_back(lights, light_1);
     push_back(lights, light_2);
 

@@ -2,7 +2,9 @@
 #define MATERIAL_HPP
 
 #include "Core/common/containers/arr_t.hpp"
+#include "Core/common/containers/vect_t.hpp"
 #include "Core/common/Color.hpp"
+#include "Core/Objects/Light.hpp"
 
 
 namespace Core
@@ -19,7 +21,9 @@ namespace Core
     Material make_material();
 
     template<size_t lightCount>
-    Color compute_color(const Material& material, const arr_t<Vec, lightCount>& lights, const Vec& view, const Vec& normal);
+    Color compute_color(const Material& material, const arr_t<Light, lightCount>& lights, const Vec& view, const Vec& normal);
+
+    Color compute_color(const Material& material, const vect_t<Light>& lights, const Vec& view, const Vec& normal);
 }
 
 #include "Core/Objects/MaterialImp.hpp"
