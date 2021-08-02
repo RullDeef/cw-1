@@ -304,23 +304,21 @@ static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& 
 {
     static Light light_0 = { Light::Type::Ambient };
     light_0.ambient = {
-            make_color(1.0, 1.0, 0.2),
+            make_color(1.0, 0.0, 0.0),
             0.3
     };
     static Light light_1 = { Light::Type::Directional };
     light_1.directional = (DirectionalLight) {
-        make_color(1.0, 1.0, 0.2),
-        1.0,
+        make_color(0.0, 1.0, 0.0),
+        0.4,
         normalised(make_dir(0.2, 0.4, -0.8))
     };
     static Light light_2 = { Light::Type::Directional };
     light_2.directional = (DirectionalLight) {
-            make_color(0.2, 0.8, 0.6),
-            1.0,
+            make_color(0.0, 0.0, 1.0),
+            0.4,
             normalised(make_dir(3, 4, -2))
     };
-    // static Vec light_1 = normalised(make_dir(-1, 2, 1));
-    // static Vec light_2 = normalised(make_dir(3, 4, -2));
 
     auto lights = make_arr<Light, 3>();
     push_back(lights, light_0);

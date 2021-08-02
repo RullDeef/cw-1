@@ -63,3 +63,13 @@ void CameraManager::freeFlyCamera(double forward, double right, double up)
 
     Core::update_transformation(cam);
 }
+
+Core::Ray CameraManager::createRay(int x, int y)
+{
+    Core::Camera& cam = getActiveCamera().getAdaptee();
+
+    Core::Vec pos = cam.eye;
+    Core::Vec dir = Core::make_dir(0, 0, 1); /// TODO: implement
+
+    return Core::make_ray(pos, dir);
+}

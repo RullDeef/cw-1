@@ -17,6 +17,8 @@ public:
 
     virtual void accept(IObjectVisitor& visitor) override;
 
+    virtual bool intersects(double& t, const Core::Ray& ray) override;
+
 private:
     Core::Mesh mesh;
     AdapterPolicy policy;

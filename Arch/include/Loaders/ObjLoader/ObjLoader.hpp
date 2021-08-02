@@ -22,6 +22,8 @@ protected:
                                       const std::vector<Core::Vec>& norms,
                                       const std::vector<Core::Vec>& uvs);
 
+    /// TODO: static std::map<std::string, Core::Material> loadMaterials(const std::string& filename);
+
 private:
     std::string filename;
 };

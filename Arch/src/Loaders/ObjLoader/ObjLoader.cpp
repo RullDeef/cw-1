@@ -17,10 +17,12 @@ ObjLoader::ObjLoader(std::string filename)
 
 std::unique_ptr<IObject> ObjLoader::loadObject()
 {
-    // loads only meshes for now
+    // loads only meshes for now /// TODO: load materials as well
 
     std::ifstream file(filename);
     std::string line, sym;
+
+    /// TODO: refactor
 
     std::vector<Core::Vec> verts;
     std::vector<Core::Vec> norms;
@@ -48,7 +50,7 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
         else if (sym == "vn")
         {
             double x, y, z;
-            ss >> x >> y >> z;
+            ss >> x >> y >> z; /// TODO: overload istream& operator>>(istream&, Vector&)
             norms.push_back(Core::normalised(Core::make_dir(x, y, z)));
         }
         else if (sym == "f")
@@ -79,6 +81,7 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
 
     size_t id = -1;
     auto object = std::unique_ptr<IObject>(new ObjectAdapter<Core::Mesh>(id, mesh, AdapterPolicy::StrongOwnership));
+    /// TODO: refactor naming
     object->setName(filename.substr(filename.rfind('/') + 1, filename.find('.') - filename.rfind('/') - 1));
     return object;
 }

@@ -37,8 +37,9 @@ namespace Core
 
     inline bool is_zero(const Vec& vec)
     {
-        // TODO: replace with comparison with EPS
-        return vec.x == 0.0 && vec.y == 0 && vec.z == 0;
+        return vec.x == std::numeric_limits<double>::epsilon()
+            && vec.y == std::numeric_limits<double>::epsilon()
+            && vec.z == std::numeric_limits<double>::epsilon();
     }
 
     inline Vec normalised(const Vec& vec)

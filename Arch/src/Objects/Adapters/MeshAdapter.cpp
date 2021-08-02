@@ -30,3 +30,11 @@ void ObjectAdapter<Core::Mesh>::accept(IObjectVisitor& visitor)
 {
     visitor.visit(*this);
 }
+
+bool ObjectAdapter<Core::Mesh>::intersects(double &t, const Core::Ray &ray)
+{
+    /// TODO: implement
+
+    t = 10;
+    return true;
+}

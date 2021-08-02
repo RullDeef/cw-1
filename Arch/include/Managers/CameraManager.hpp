@@ -1,6 +1,7 @@
 #ifndef CAMERAMANAGER_HPP
 #define CAMERAMANAGER_HPP
 
+#include "Core/common/math/Ray.hpp"
 #include "Core/Objects/Camera.hpp"
 #include "Objects/ObjectAdapter.hpp"
 #include "Scene/Scene.hpp"
@@ -25,6 +26,8 @@ public:
     void zoomCamera(double factor);
 
     void freeFlyCamera(double forward, double right, double up);
+
+    Core::Ray createRay(int x, int y);
 
 private:
     Scene::iterator cameraIterator;

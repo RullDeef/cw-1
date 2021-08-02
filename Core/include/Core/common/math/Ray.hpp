@@ -3,6 +3,7 @@
 
 #include "Core/common/math/Vec.hpp"
 #include "Core/common/math/Plane.hpp"
+#include "Core/common/math/Sphere.hpp"
 #include "Core/Objects/Mesh.hpp"
 
 
@@ -18,6 +19,7 @@ namespace Core
 
     Vec ray_at(const Ray& ray, double t);
 
+    bool ray_intersects(double& t, const Ray& ray, const Sphere& sphere);
     bool ray_intersects(double& t, const Ray& ray, const Plane& plane);
     bool ray_intersects(double& t, const Ray& ray, const Face& face);
 }

@@ -48,7 +48,7 @@ static void rayTraceRender(RenderTarget& renderTarget, const Scene& scene, const
 
     Ray ray = initRay(camera, pixelRow, pixelCol);
 
-    double closest_t = 1000000; // TODO: change to inf.
+    double closest_t = std::numeric_limits<double>::infinity();
     size_t closest_i = -1;
     list_node<Mesh>* closest_mesh = nullptr;
 

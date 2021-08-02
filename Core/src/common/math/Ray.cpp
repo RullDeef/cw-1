@@ -18,6 +18,13 @@ Vec Core::ray_at(const Ray &ray, double t)
     return ray.position + t * ray.direction;
 }
 
+bool Core::ray_intersects(double& t, const Ray& ray, const Sphere& sphere)
+{
+    /// TODO: implement
+
+    return false;
+}
+
 bool Core::ray_intersects(double& t, const Ray& ray, const Plane& plane)
 {
     double dot_pos = ray.position.x * plane.a + ray.position.y * plane.b + ray.position.z * plane.c + plane.d;

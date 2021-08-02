@@ -45,6 +45,18 @@ namespace Core
         return res;
     }
 
+    inline Color operator*(const Color& c1, const Color& c2)
+    {
+        Color res{};
+
+        res.red = c1.red * c2.red;
+        res.green = c1.green * c2.green;
+        res.blue = c1.blue * c2.blue;
+        res.alpha = std::max(c1.alpha, c2.alpha);
+
+        return res;
+    }
+
     inline Color operator*(const Color& col, double value)
     {
         Color res{};

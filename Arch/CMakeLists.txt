@@ -24,6 +24,9 @@ add_library(Arch STATIC
         src/Loaders/ObjLoader/ObjLoader.cpp
         src/Scene/Scene.cpp
         src/Objects/Adapters/MeshAdapter.cpp
-        src/Objects/IObject.cpp)
+        src/Objects/Adapters/CameraAdapter.cpp
+        src/Objects/IObject.cpp
+        src/Visitors/Transformer.cpp
+        src/Managers/ObjectManager.cpp)
 
 link_libraries(Arch Core)

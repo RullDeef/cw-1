@@ -19,3 +19,13 @@ void IObject::setName(const std::string &newName)
 {
     name = newName;
 }
+
+bool IObject::isSelected() const noexcept
+{
+    return selected;
+}
+
+void IObject::setSelected(bool newSelected) noexcept
+{
+    selected = newSelected;
+}

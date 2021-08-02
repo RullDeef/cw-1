@@ -21,6 +21,7 @@ namespace Core
     inline Color to_color(const Pixel& pixel);
 
     inline Color operator+(const Color& c1, const Color& c2);
+    inline Color operator*(const Color& c1, const Color& c2);
     inline Color operator*(const Color& col, double value);
     inline Color operator*(double value, const Color& col);
 

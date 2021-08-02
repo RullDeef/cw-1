@@ -1,3 +1,6 @@
+
+#include <Objects/Adapters/CameraAdapter.hpp>
+
 #include "Objects/ObjectAdapter.hpp"
 #include "Visitors/IObjectVisitor.hpp"
 

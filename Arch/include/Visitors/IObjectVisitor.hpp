@@ -7,8 +7,11 @@ namespace Core
 {
     class Mesh;
     class Camera;
-    class LightSource;
+    class Light;
 }
+
+template<typename T>
+class ObjectAdapter;
 
 
 class IObjectVisitor
@@ -18,7 +21,7 @@ public:
 
     virtual void visit(ObjectAdapter<Core::Mesh>& mesh) = 0;
     virtual void visit(ObjectAdapter<Core::Camera>& camera) = 0;
-    virtual void visit(ObjectAdapter<Core::LightSource>& lightSource) = 0;
+    virtual void visit(ObjectAdapter<Core::Light>& lightSource) = 0;
 };
 
 #endif // IOBJECTVISITOR_HPP

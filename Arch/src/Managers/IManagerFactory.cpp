@@ -3,6 +3,7 @@
 #include "Managers/RenderManager.hpp"
 #include "Managers/LoadManager.hpp"
 #include "Managers/CameraManager.hpp"
+#include "Managers/ObjectManager.hpp"
 
 
 std::shared_ptr<SceneManager> IManagerFactory::getSceneManager()
@@ -24,4 +25,11 @@ std::shared_ptr<CameraManager> IManagerFactory::getCameraManager()
     if (!cameraManager)
         cameraManager = std::make_shared<CameraManager>(*this);
     return cameraManager;
+}
+
+std::shared_ptr<ObjectManager> IManagerFactory::getObjectManager()
+{
+    if (!objectManager)
+        objectManager = std::make_shared<ObjectManager>(*this);
+    return objectManager;
 }
