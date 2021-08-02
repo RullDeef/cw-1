@@ -47,7 +47,7 @@ void Core::recalc_normal(Face &face)
     Vec v1 = face.verts[1].position - face.verts[0].position;
     Vec v2 = face.verts[2].position - face.verts[0].position;
 
-    Vec normal = normalised(cross(v1, v2));
+    Vec normal = normalized(cross(v1, v2));
 
     face.verts[0].normal = normal;
     face.verts[1].normal = normal;

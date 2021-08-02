@@ -28,11 +28,12 @@ add_executable(Gui
         src/main.cpp
         src/MainWindow.cpp
         src/Frames/HierarchyFrame/HierarchyFrame.cpp
-        src/Frames/HierarchyFrame/ObjectListItemWidget/ObjectListItemWidget.cpp
         src/Frames/ViewportFrame/ViewportFrame.cpp
         src/Frames/ViewportFrame/FreeFlyDispatcher/FreeFlyDispatcher.cpp
         src/Frames/IFrame.cpp
         src/Managers/QtLoadManager.cpp
-        src/Managers/QtManagerFactory.cpp)
+        src/Managers/QtManagerFactory.cpp
+        src/ItemModels/ObjectModel.cpp
+        src/Frames/HierarchyFrame/ObjectView/ObjectView.cpp src/Frames/HierarchyFrame/CheckBoxDelegate/CheckBoxDelegate.cpp src/Frames/HierarchyFrame/CheckBoxDelegate/CheckBoxDelegate.hpp)
 
 target_link_libraries(Gui PRIVATE qtadvanceddocking PUBLIC Arch Core Qt5::Core Qt5::Widgets pthread)

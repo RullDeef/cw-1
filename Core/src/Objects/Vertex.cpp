@@ -25,7 +25,7 @@ Vertex Core::make_vertex(Vec position, Vec normal, Vec uv)
 
     vert.position = position;
     if (!is_zero(normal))
-        vert.normal = normalised(normal);
+        vert.normal = normalized(normal);
     else
         vert.normal = normal;
     vert.uv = uv;

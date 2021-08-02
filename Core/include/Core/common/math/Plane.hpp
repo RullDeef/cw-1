@@ -8,13 +8,11 @@ namespace Core
 {
     struct Plane
     {
-        double a;
-        double b;
-        double c;
-        double d;
+        Vec position;
+        Vec normal;
     };
 
-    inline Plane make_plane(double a, double b, double c, double d);
+    // inline Plane make_plane(double a, double b, double c, double d);
     inline Plane make_plane(const Vec& p1, const Vec& p2, const Vec& p3);
     inline Plane make_plane(const Vec& pos, const Vec& norm);
 

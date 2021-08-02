@@ -241,9 +241,9 @@ void Core::render(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegion reg
             {
                 if (0 <= x && x < renderTarget.width)
                 {
-                    Vec view = normalised(p - camera.eye);
+                    Vec view = normalized(p - camera.eye);
 
-                    Pixel color = recomputeColor(normalised(n), view, region.meshPtr->material);
+                    Pixel color = recomputeColor(normalized(n), view, region.meshPtr->material);
                     updatePixel(renderTarget, zbuffer, y, x, z, color);
                 }
 
@@ -274,8 +274,8 @@ static bool same_projected(const Vec& v1, const Vec& v2)
 
 static Pixel recomputeColor(const Vec& normal)
 {
-    static Vec light_1 = normalised(make_dir(-1, 2, 1));
-    static Vec light_2 = normalised(make_dir(3, 4, -2));
+    static Vec light_1 = normalized(make_dir(-1, 2, 1));
+    static Vec light_2 = normalized(make_dir(3, 4, -2));
 
     double lit_factor_1 = dot(normal, light_1);
     double lit_factor_2 = dot(normal, light_2);
@@ -309,15 +309,15 @@ static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& 
     };
     static Light light_1 = { Light::Type::Directional };
     light_1.directional = (DirectionalLight) {
-        make_color(0.0, 1.0, 0.0),
-        0.4,
-        normalised(make_dir(0.2, 0.4, -0.8))
+            make_color(0.0, 1.0, 0.0),
+            0.4,
+            normalized(make_dir(0.2, 0.4, -0.8))
     };
     static Light light_2 = { Light::Type::Directional };
     light_2.directional = (DirectionalLight) {
             make_color(0.0, 0.0, 1.0),
             0.4,
-            normalised(make_dir(3, 4, -2))
+            normalized(make_dir(3, 4, -2))
     };
 
     auto lights = make_arr<Light, 3>();

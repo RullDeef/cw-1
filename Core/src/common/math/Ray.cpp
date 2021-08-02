@@ -20,18 +20,26 @@ Vec Core::ray_at(const Ray &ray, double t)
 
 bool Core::ray_intersects(double& t, const Ray& ray, const Sphere& sphere)
 {
-    /// TODO: implement
+    Vec h = sphere.position - ray.position;
+
+    double dh = dot(ray.direction, h);
+    double D_4 = dh * dh - dot(h, h) + sphere.radius * sphere.radius;
+
+    if (D_4 > 0.0)
+    {
+        t = dh - std::sqrt(D_4);
+        return t > 0.0;
+    }
 
     return false;
 }
 
 bool Core::ray_intersects(double& t, const Ray& ray, const Plane& plane)
 {
-    double dot_pos = ray.position.x * plane.a + ray.position.y * plane.b + ray.position.z * plane.c + plane.d;
-    double dot_dir = ray.direction.x * plane.a + ray.direction.y * plane.b + ray.direction.z * plane.c;
+    double wn = dot(plane.position - ray.position, plane.normal);
+    double dn = dot(ray.direction, plane.normal);
 
-    t = - dot_pos / dot_dir;
-
+    t = wn / dn;
     return t > 0;
 }
 

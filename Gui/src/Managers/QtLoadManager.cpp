@@ -11,7 +11,8 @@ QtLoadManager::QtLoadManager(IManagerFactory &factory, QWidget *dialogParent)
 void QtLoadManager::loadMesh()
 {
     std::string filename = getFilename();
-    _loadMesh(filename);
+    if (!filename.empty())
+        _loadMesh(filename);
 }
 
 std::string QtLoadManager::getFilename()

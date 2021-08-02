@@ -53,32 +53,32 @@ static void rayTraceRender(RenderTarget& renderTarget, const Scene& scene, const
     list_node<Mesh>* closest_mesh = nullptr;
 
     /// test ray to plane
-    if (0) {
-        Vec pos = make_pos(0, 0, -1);
-        Vec dir = normalised(make_dir(1, 1, 1));
-        Ray ray = make_ray(pos, dir);
-
-        Plane plane = make_plane(-1, -1, 0, 4);
-        double t;
-        bool i = ray_intersects(t, ray, plane);
-    }
+//    if (0) {
+//        Vec pos = make_pos(0, 0, -1);
+//        Vec dir = normalized(make_dir(1, 1, 1));
+//        Ray ray = make_ray(pos, dir);
+//
+//        Plane plane = make_plane(-1, -1, 0, 4);
+//        double t;
+//        bool i = ray_intersects(t, ray, plane);
+//    }
 
     /// test ray to triangle
-    if (0) {
-        Vec pos = make_pos(0, 0, 0);
-        Vec dir = normalised(make_dir(1, 1, 1));
-        Ray ray = make_ray(pos, dir);
-
-        Face face{};
-        face.verts[0].position = make_pos(1, 0, 0);
-        face.verts[1].position = make_pos(0, 1, 0);
-        face.verts[2].position = make_pos(0, 0, 1);
-
-        double t;
-        bool i = ray_intersects(t, ray, face);
-
-        t = 0.0;
-    }
+//    if (0) {
+//        Vec pos = make_pos(0, 0, 0);
+//        Vec dir = normalized(make_dir(1, 1, 1));
+//        Ray ray = make_ray(pos, dir);
+//
+//        Face face{};
+//        face.verts[0].position = make_pos(1, 0, 0);
+//        face.verts[1].position = make_pos(0, 1, 0);
+//        face.verts[2].position = make_pos(0, 0, 1);
+//
+//        double t;
+//        bool i = ray_intersects(t, ray, face);
+//
+//        t = 0.0;
+//    }
 
     // cast ray to first closest intersection
     for (auto meshNode = scene.meshList.head; meshNode; meshNode = meshNode->next)
@@ -125,6 +125,6 @@ static Ray initRay(const Camera& camera, int pixelRow, int pixelCol)
     direction.y = (camera.viewport.top + camera.viewport.height / 2) - pixelRow;
     direction.z = std::min(camera.viewport.width, camera.viewport.height) / std::tan(camera.fov);
 
-    normalise(direction);
+    normalize(direction);
     return make_ray(position, direction);
 }

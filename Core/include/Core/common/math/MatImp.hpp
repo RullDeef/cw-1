@@ -83,11 +83,17 @@ inline Mat make_mat_perspective(double fov, double near, double far)
 {
     double s = 1 / std::tan(fov / 2);
 
+//    return Mat {
+//        s, 0, 0, 0,
+//        0, s, 0, 0,
+//        0, 0, far / (near - far), -1,
+//        0, 0, near * far / (near - far), 0
+//    };
     return Mat {
-        s, 0, 0, 0,
-        0, s, 0, 0,
-        0, 0, far / (near - far), -1,
-        0, 0, near * far / (near - far), 0
+            s, 0, 0, 0,
+            0, s, 0, 0,
+            0, 0, far / (far - near), - near * far / (far - near),
+            0, 0, 1, 0
     };
 }
 

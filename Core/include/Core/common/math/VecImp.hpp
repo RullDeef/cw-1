@@ -42,22 +42,22 @@ namespace Core
             && vec.z == std::numeric_limits<double>::epsilon();
     }
 
-    inline Vec normalised(const Vec& vec)
+    inline Vec normalized(const Vec& vec)
     {
         double f = inv_sqrt_fast(vec);
         return make_dir(f * vec.x, f * vec.y, f * vec.z, vec.w);
     }
 
-    inline void normalise(Vec& vec)
+    inline void normalize(Vec& vec)
     {
-        vec = normalised(vec);
+        vec = normalized(vec);
     }
 
     inline void perspective_adjust(Vec& vec)
     {
-        vec.x /= vec.z;
-        vec.y /= vec.z;
-        vec.z = vec.w;
+        vec.x /= vec.w;
+        vec.y /= vec.w;
+        vec.z /= vec.w;
         vec.w = 1.0;
     }
 

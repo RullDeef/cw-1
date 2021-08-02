@@ -20,8 +20,8 @@ namespace Core
 
     inline bool is_zero(const Vec& vec);
 
-    inline Vec normalised(const Vec& vec);
-    inline void normalise(Vec& vec);
+    inline Vec normalized(const Vec& vec);
+    inline void normalize(Vec& vec);
 
     inline void perspective_adjust(Vec& vec);
 

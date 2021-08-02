@@ -89,7 +89,7 @@ static bool backFaceCulling(const Face& face, const Camera& camera)
     Vec p3 = projectToFrustrum(camera, face.verts[2].position);
 
     Vec norm = Core::cross(p2 - p1, p3 - p1);
-    Vec dir = make_dir(0, 0, 1);
+    Vec dir = make_dir(0, 0, -1);
 
     double dot = Core::dot(dir, norm);
     return dot < 0.0;
@@ -116,10 +116,7 @@ static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Ve
 static Vec projectToFrustrum(const Camera& camera, const Vec& point)
 {
     Vec res = camera.mvp * point;
-
-    res.x /= res.z;
-    res.y /= res.z;
-    res.z = (res.z - camera.near) / (camera.far - camera.near) * 2 - 1;
+    perspective_adjust(res);
 
     // TODO: вынести функции по работе с вьюпортом
 #if USE_MIN_FIT
@@ -141,22 +138,20 @@ static unsigned int computeBitCode(const Vec& point)
 {
     unsigned int code = 0x000000;
 
-    const double side = 1.0;
-
-    code |= (point.x < -side ? 1 : 0) << 0;
-    code |= (point.x >  side ? 1 : 0) << 1;
-    code |= (point.y < -side ? 1 : 0) << 2;
-    code |= (point.y >  side ? 1 : 0) << 3;
-    code |= (point.z < -side ? 1 : 0) << 4;
-    code |= (point.z >  side ? 1 : 0) << 5;
+    code |= (point.x < -1.0 ? 1 : 0) << 0;
+    code |= (point.x >  1.0 ? 1 : 0) << 1;
+    code |= (point.y < -1.0 ? 1 : 0) << 2;
+    code |= (point.y >  1.0 ? 1 : 0) << 3;
+    code |= (point.z <  0.0 ? 1 : 0) << 4;
+    code |= (point.z >  1.0 ? 1 : 0) << 5;
 
     return code;
 }
 
 //static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material)
 //{
-//    static Vec light_1 = normalised(make_dir(-1, 2, 1));
-//    static Vec light_2 = normalised(make_dir(3, 4, -2));
+//    static Vec light_1 = normalized(make_dir(-1, 2, 1));
+//    static Vec light_2 = normalized(make_dir(3, 4, -2));
 //
 //    auto lights = make_arr<Vec, 2>();
 //    push_back(lights, light_1);

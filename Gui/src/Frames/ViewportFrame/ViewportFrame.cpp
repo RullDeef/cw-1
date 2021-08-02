@@ -1,10 +1,9 @@
-#include <utility>
 #include <QPaintEvent>
-#include <QKeyEvent>
 #include <QFileDialog>
 #include <QPainter>
 #include <QApplication>
 #include "Managers/CameraManager.hpp"
+#include "Managers/ObjectManager.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
 #include <QTimer>
 
@@ -41,36 +40,16 @@ void ViewportFrame::resizeEvent(QResizeEvent *event)
 
 void ViewportFrame::mousePressEvent(QMouseEvent *event)
 {
-    freeFlyDispatcher.mousePressed(event->x(), event->y());
+    if (event->button() == Qt::LeftButton)
+        freeFlyDispatcher.mousePressed(event->x(), event->y());
+    else
+        managerFactory->getObjectManager()->toggleSelection(event->x(), event->y());
 
-//    if (QApplication::keyboardModifiers().testFlag(Qt::ShiftModifier))
-//        state = ControlState::RotateState;
-//    else
-//        state = ControlState::DragState;
-
-    // redraw();
     QWidget::mousePressEvent(event);
 }
 
 void ViewportFrame::mouseMoveEvent(QMouseEvent *event)
 {
-//    double dx = event->x() - x_prev;
-//    double dy = event->y() - y_prev;
-//
-//    x_prev = event->x();
-//    y_prev = event->y();
-//
-//    if (state == ControlState::DragState)
-//    {
-//        double scale = 0.25;
-//        managerFactory->getCameraManager()->dragCamera(scale * dx, -scale * dy);
-//    }
-//    else if (state == ControlState::RotateState)
-//    {
-//        double scale = 0.0025;
-//        managerFactory->getCameraManager()->rotateCamera(-scale * dx, -scale * dy);
-//    }
-
     freeFlyDispatcher.mouseMoved(event->x(), event->y());
 
     QWidget::mouseMoveEvent(event);

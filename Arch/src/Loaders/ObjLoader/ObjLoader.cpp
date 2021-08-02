@@ -51,7 +51,7 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
         {
             double x, y, z;
             ss >> x >> y >> z; /// TODO: overload istream& operator>>(istream&, Vector&)
-            norms.push_back(Core::normalised(Core::make_dir(x, y, z)));
+            norms.push_back(Core::normalized(Core::make_dir(x, y, z)));
         }
         else if (sym == "f")
         {

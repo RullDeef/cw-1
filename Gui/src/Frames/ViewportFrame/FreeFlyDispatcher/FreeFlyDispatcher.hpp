@@ -1,12 +1,8 @@
-//
-// Created by rulldeef on 7/28/21.
-//
-
-#ifndef CW_1_FREEFLYDISPATCHER_HPP
-#define CW_1_FREEFLYDISPATCHER_HPP
-
+#ifndef FREEFLYDISPATCHER_HPP
+#define FREEFLYDISPATCHER_HPP
 
 #include <Managers/IManagerFactory.hpp>
+
 
 class FreeFlyDispatcher
 {
@@ -35,12 +31,12 @@ private:
     int up = 0;
 
     bool dragging = false;
-    double x_prev;
-    double y_prev;
+    double x_prev = 0.0;
+    double y_prev = 0.0;
 
     double flySpeed = 1.0;
     double dragSpeed = 0.0025;
 };
 
 
-#endif //CW_1_FREEFLYDISPATCHER_HPP
+#endif // FREEFLYDISPATCHER_HPP

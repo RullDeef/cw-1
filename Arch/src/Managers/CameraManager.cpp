@@ -1,12 +1,15 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "Managers/CameraManager.hpp"
 
 
 CameraManager::CameraManager(IManagerFactory &factory)
     : IManager(factory), mainCamera(-1, Core::make_camera(), AdapterPolicy::WeakOwnership)
 {
-    mainCamera.getAdaptee().
-    eye = Core::make_pos(-50, 100, 400);
-    Core::update_transformation(mainCamera.getAdaptee());
+    Core::Camera& cam = mainCamera.getAdaptee();
+    cam.eye = Core::make_pos(0, 100, 400);
+    cam.yaw = M_PI;
+    Core::update_transformation(cam);
 }
 
 ObjectAdapter<Core::Camera> &CameraManager::getActiveCamera()
@@ -34,16 +37,16 @@ void CameraManager::rotateCamera(double dx, double dy)
 {
     Core::Camera& cam = getActiveCamera().getAdaptee();
 
-    double d_yaw = -dx;
-    double d_pitch = -dy;
+    double d_yaw = dx;
+    double d_pitch = dy;
 
     cam.pitch += d_pitch;
     cam.yaw += d_yaw;
 
-    if (cam.pitch < -3.141592 / 2)
-        cam.pitch = -3.141592 / 2;
-    if (cam.pitch > 3.141592 / 2)
-        cam.pitch = 3.141592 / 2;
+    if (cam.pitch < -M_PI_2)
+        cam.pitch = -M_PI_2;
+    if (cam.pitch > M_PI_2)
+        cam.pitch = M_PI_2;
 
     Core::update_transformation(cam);
 }
@@ -57,7 +60,7 @@ void CameraManager::freeFlyCamera(double forward, double right, double up)
 {
     Core::Camera& cam = getActiveCamera().getAdaptee();
 
-    Core::Vec offset = Core::make_dir(right, up, -forward);
+    Core::Vec offset = Core::make_dir(right, up, forward);
     offset = cam.model_mat * offset;
     cam.eye = cam.eye + offset;
 
@@ -68,8 +71,18 @@ Core::Ray CameraManager::createRay(int x, int y)
 {
     Core::Camera& cam = getActiveCamera().getAdaptee();
 
+    double max_v = std::max(cam.viewport.width, cam.viewport.height);
+
+    double dir_x = (2 * x - cam.viewport.width) / max_v;
+    double dir_y = (cam.viewport.height - 2 * y) / max_v;
+    double dir_z = 1.0 / std::tan(cam.fov / 2);
+
     Core::Vec pos = cam.eye;
-    Core::Vec dir = Core::make_dir(0, 0, 1); /// TODO: implement
+    Core::Vec dir = Core::make_dir(dir_x, dir_y, dir_z);
+    Core::normalize(dir);
+
+    Core::Mat view = cam.model_mat;
+    dir = view * dir;
 
     return Core::make_ray(pos, dir);
 }

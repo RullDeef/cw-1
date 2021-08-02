@@ -2,6 +2,8 @@
 #define HEIRARCHYFRAME_HPP
 
 #include <list>
+#include <ItemModels/ObjectModel.hpp>
+#include <Frames/HierarchyFrame/ObjectView/ObjectView.hpp>
 #include "Managers/IManagerFactory.hpp"
 #include "Frames/IFrame.hpp"
 #include "Objects/IObject.hpp"
@@ -12,17 +14,19 @@ class HierarchyFrame : public IFrame
     Q_OBJECT
 
 public:
-    HierarchyFrame(IManagerFactory& managerFactory, QWidget* parent = nullptr);
+    explicit HierarchyFrame(IManagerFactory& managerFactory, QWidget* parent = nullptr);
     virtual ~HierarchyFrame() = default;
 
     void updateHierarchy();
 
-private:
+protected:
     void displayObject(std::shared_ptr<IObject> object);
 
-    void clearLayout(QLayout* layout);
-
+private:
     IManagerFactory& managerFactory;
+
+    ObjectModel* objectModel = nullptr;
+    ObjectView* objectView = nullptr;
 };
 
 #endif // HEIRARCHYFRAME_HPP
