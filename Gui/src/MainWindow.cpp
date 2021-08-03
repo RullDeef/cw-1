@@ -1,3 +1,5 @@
+#include <Frames/InspectorFrame/InspectorFrame.hpp>
+#include <Frames/SettingsFrame/SettingsFrame.hpp>
 #include "Managers/LoadManager.hpp"
 #include "Managers/QtManagerFactory.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
@@ -13,16 +15,30 @@ MainWindow::MainWindow()
 
     // setup default frames
     if (1) {
+        IFrame *frame = new HierarchyFrame(*factory, this);
+        dockManager->addDockWidget(ads::RightDockWidgetArea, frame);
+        frames.push_back(frame);
+    }
+
+    if (1) {
+        IFrame *frame = new SettingsFrame(*factory, this);
+        dockManager->addDockWidget(ads::BottomDockWidgetArea, frame);
+        frames.push_back(frame);
+    }
+
+    if (1) {
         IFrame *frame = new ViewportFrame(*factory, this);
         dockManager->addDockWidget(ads::LeftDockWidgetArea, frame);
         frames.push_back(frame);
     }
 
     if (1) {
-        IFrame *frame = new HierarchyFrame(*factory, this);
-        dockManager->addDockWidget(ads::RightDockWidgetArea, frame);
+        IFrame *frame = new InspectorFrame(*factory, this);
+        dockManager->addDockWidget(ads::LeftDockWidgetArea, frame);
         frames.push_back(frame);
     }
+
+
 
     setupActions();
 }
