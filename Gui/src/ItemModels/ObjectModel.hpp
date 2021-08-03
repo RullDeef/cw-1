@@ -9,8 +9,11 @@
 class ObjectModel : public QAbstractTableModel
 {
 public:
+    explicit ObjectModel(QObject* parent = nullptr);
     explicit ObjectModel(std::shared_ptr<Scene> scene, QObject* parent = nullptr);
     virtual ~ObjectModel() = default;
+
+    void setScene(std::shared_ptr<Scene> newScene);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;

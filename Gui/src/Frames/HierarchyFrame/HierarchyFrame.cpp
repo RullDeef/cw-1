@@ -7,17 +7,15 @@
 HierarchyFrame::HierarchyFrame(IManagerFactory &managerFactory, QWidget *parent)
         : IFrame(u8"Иерархия объектов", parent), managerFactory(managerFactory)
 {
+    objectModel = new ObjectModel();
     objectView = new ObjectView();
+    objectView->setModel(objectModel);
     setWidget(objectView);
 }
 
 void HierarchyFrame::updateHierarchy()
 {
     auto scene = managerFactory.getSceneManager()->getActiveScene();
-
-    delete objectModel;
-    objectModel = new ObjectModel(scene);
-
-    objectView->setModel(objectModel);
-    objectView->update();
+    objectModel->setScene(scene);
+    //objectView->repaint();
 }

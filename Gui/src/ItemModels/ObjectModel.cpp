@@ -3,13 +3,30 @@
 #include "Objects/IObject.hpp"
 
 
+ObjectModel::ObjectModel(QObject *parent)
+    : QAbstractTableModel(parent)
+{
+}
+
 ObjectModel::ObjectModel(std::shared_ptr<Scene> scene, QObject *parent)
     : QAbstractTableModel(parent), scene(std::move(scene))
 {
 }
 
+void ObjectModel::setScene(std::shared_ptr<Scene> newScene)
+{
+    beginResetModel();
+    scene = std::move(newScene);
+    endResetModel();
+
+    emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
+}
+
 int ObjectModel::rowCount(const QModelIndex &parent) const
 {
+    if (!scene)
+        return 0;
+
     return std::distance(scene->begin(), scene->end());
 }
 
@@ -20,10 +37,7 @@ int ObjectModel::columnCount(const QModelIndex &parent) const
 
 QVariant ObjectModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
-        return QVariant();
-
-    if (role != Qt::DisplayRole)
+    if (!scene || !index.isValid() || role != Qt::DisplayRole)
         return QVariant();
 
     auto objectIter = scene->begin();
