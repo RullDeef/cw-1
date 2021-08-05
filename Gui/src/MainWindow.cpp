@@ -11,7 +11,7 @@ MainWindow::MainWindow()
 {
     ui.setupUi(this);
     dockManager = new ads::CDockManager(this);
-    factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory(this));
+    factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory());
 
     // setup default frames
     if (1) {
@@ -51,7 +51,7 @@ void MainWindow::setupActions()
 
 void MainWindow::loadObjectCommand()
 {
-    factory->getLoadManager()->loadMesh();
+    factory->getLoadManager()->loadObject<Mesh>();
     for (auto frame : frames)
     {
         if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
@@ -63,9 +63,10 @@ void MainWindow::loadObjectCommand()
 
 void MainWindow::saveRenderCommand()
 {
-    for (auto frame : frames)
-    {
-        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
-            return viewportFrame->saveToImage();
-    }
+
+//    for (auto frame : frames)
+//    {
+//        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
+//            return viewportFrame->saveToImage();
+//    }
 }

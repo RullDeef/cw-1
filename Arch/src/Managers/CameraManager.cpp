@@ -4,27 +4,23 @@
 
 
 CameraManager::CameraManager(IManagerFactory &factory)
-    : IManager(factory), mainCamera(-1, Core::make_camera(), AdapterPolicy::WeakOwnership)
+    : IManager(factory)
 {
-    Core::Camera& cam = mainCamera.getAdaptee();
+    // TODO: refactor
+    Core::Camera cam = mainCamera;
     cam.eye = Core::make_pos(0, 100, 400);
     cam.yaw = M_PI;
     Core::update_transformation(cam);
 }
 
-ObjectAdapter<Core::Camera> &CameraManager::getActiveCamera()
-{
-    return mainCamera;
-}
-
-const ObjectAdapter<Core::Camera> &CameraManager::getActiveCamera() const
+Camera& CameraManager::getActiveCamera()
 {
     return mainCamera;
 }
 
 void CameraManager::dragCamera(double dx, double dy)
 {
-    Core::Camera& cam = getActiveCamera().getAdaptee();
+    Core::Camera cam = getActiveCamera();
 
     Core::Vec offset = Core::make_dir(dx, -dy, 0);
     offset = cam.model_mat * offset;
@@ -35,7 +31,7 @@ void CameraManager::dragCamera(double dx, double dy)
 
 void CameraManager::rotateCamera(double dx, double dy)
 {
-    Core::Camera& cam = getActiveCamera().getAdaptee();
+    Core::Camera cam = getActiveCamera();
 
     double d_yaw = dx;
     double d_pitch = dy;
@@ -58,7 +54,7 @@ void CameraManager::zoomCamera(double factor)
 
 void CameraManager::freeFlyCamera(double forward, double right, double up)
 {
-    Core::Camera& cam = getActiveCamera().getAdaptee();
+    Core::Camera cam = getActiveCamera();
 
     Core::Vec offset = Core::make_dir(right, up, forward);
     offset = cam.model_mat * offset;
@@ -69,7 +65,7 @@ void CameraManager::freeFlyCamera(double forward, double right, double up)
 
 Core::Ray CameraManager::createRay(int x, int y)
 {
-    Core::Camera& cam = getActiveCamera().getAdaptee();
+    Core::Camera cam = getActiveCamera();
 
     double max_v = std::max(cam.viewport.width, cam.viewport.height);
 
@@ -85,4 +81,12 @@ Core::Ray CameraManager::createRay(int x, int y)
     dir = view * dir;
 
     return Core::make_ray(pos, dir);
+}
+
+void CameraManager::onActiveCameraSwitch(Camera& activeCamera)
+{
+}
+
+void CameraManager::onCameraChange(Camera& camera)
+{
 }

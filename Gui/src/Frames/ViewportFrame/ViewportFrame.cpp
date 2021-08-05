@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QApplication>
 #include "Managers/CameraManager.hpp"
-#include "Managers/ObjectManager.hpp"
+#include "Managers/SelectionManager.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
 #include <QTimer>
 
@@ -43,7 +43,7 @@ void ViewportFrame::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
         freeFlyDispatcher.mousePressed(event->x(), event->y());
     else
-        managerFactory->getObjectManager()->toggleSelection(event->x(), event->y());
+        managerFactory->getSelectionManager()->toggleSelection(event->x(), event->y());
 
     QWidget::mousePressEvent(event);
 }

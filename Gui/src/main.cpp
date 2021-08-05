@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <Managers/QtManagerFactory.hpp>
 #include "MainWindow.hpp"
 
 

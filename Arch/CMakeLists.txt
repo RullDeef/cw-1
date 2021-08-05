@@ -29,6 +29,11 @@ add_library(Arch STATIC
         src/Objects/Adapters/CameraAdapter.cpp
         src/Objects/IObject.cpp
         src/Visitors/Transformer.cpp
-        src/Managers/ObjectManager.cpp include/Math/Vector.hpp src/Math/Vector.cpp include/Math/Matrix.hpp src/Math/Matrix.cpp include/Math/Ray.hpp include/RenderTarget/RenderTarget.hpp src/Math/Ray.cpp src/RenderTarget/RenderTarget.cpp)
+        src/Math/Vector.cpp
+        src/Math/Matrix.cpp
+        src/Math/Ray.cpp
+        src/RenderTarget/RenderTarget.cpp
+        src/Managers/SelectionManager.cpp
+        )
 
 link_libraries(Arch Core)

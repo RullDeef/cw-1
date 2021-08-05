@@ -38,6 +38,6 @@ add_executable(Gui
         src/Frames/HierarchyFrame/CheckBoxDelegate/CheckBoxDelegate.cpp
         src/Frames/InspectorFrame/InspectorFrame.cpp
         src/Frames/InspectorFrame/InspectorWidget/InspectorWidget.cpp
-        src/Frames/InspectorFrame/InspectorWidget/InspectorWidget.ui src/Frames/SettingsFrame/SettingsFrame.cpp src/Frames/SettingsFrame/SettingsFrame.hpp src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.cpp src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.hpp src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.ui)
+        src/Frames/InspectorFrame/InspectorWidget/InspectorWidget.ui src/Frames/SettingsFrame/SettingsFrame.cpp src/Frames/SettingsFrame/SettingsFrame.hpp src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.cpp src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.hpp src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.ui src/Managers/QtSceneManager.cpp src/Managers/QtSceneManager.hpp src/Managers/QtCameraManager.cpp src/Managers/QtCameraManager.hpp src/Managers/QtRenderManager.cpp src/Managers/QtRenderManager.hpp src/Managers/QtSelectionManager.cpp src/Managers/QtSelectionManager.hpp)
 
 target_link_libraries(Gui PRIVATE qtadvanceddocking PUBLIC Arch Core Qt5::Core Qt5::Widgets pthread)

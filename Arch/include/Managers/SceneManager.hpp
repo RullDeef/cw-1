@@ -2,6 +2,7 @@
 #define SCENEMANAGER_HPP
 
 #include <memory>
+#include <list>
 #include "Objects/IObject.hpp"
 #include "Scene/Scene.hpp"
 #include "Managers/IManager.hpp"
@@ -12,12 +13,28 @@ class SceneManager : public IManager
 public:
     explicit SceneManager(IManagerFactory& factory);
 
-    std::shared_ptr<Scene> getActiveScene();
+    void addScene(const std::shared_ptr<Scene>& scene);
+    void removeScene(const std::shared_ptr<Scene>& scene);
 
-    void addObject(std::shared_ptr<IObject> object);
+    void setActiveScene(const std::shared_ptr<Scene>& scene);
+    Scene& getActiveScene();
+
+    void addObject(const std::shared_ptr<IObject>& object);
+    void removeObject(std::shared_ptr<IObject> object);
+    void removeObject(size_t objectId);
+
+protected:
+    virtual void onAddScene(std::shared_ptr<Scene> scene);
+    virtual void onBeforeRemoveScene(std::shared_ptr<Scene> scene);
+
+    virtual void onActiveSceneChange(std::shared_ptr<Scene> scene);
+
+    virtual void onAddObject(std::shared_ptr<IObject> object);
+    virtual void onBeforeRemoveObject(std::shared_ptr<IObject> object);
 
 private:
-    std::shared_ptr<Scene> activeScene;
+    std::list<std::shared_ptr<Scene>> scenes;
+    std::list<std::shared_ptr<Scene>>::iterator activeScene;
 };
 
 
