@@ -12,6 +12,11 @@ Vector::Vector(const Vector& v)
 {
 }
 
+Vector::Vector(const Core::Vec& vec)
+    : x(vec.x), y(vec.y), z(vec.z), w(vec.w)
+{
+}
+
 double Vector::length() const
 {
     return std::hypot(x, y, z);

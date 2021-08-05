@@ -8,6 +8,7 @@ class Vector
 public:
     explicit Vector(double x = 0.0, double y = 0.0, double z = 0.0, double w = 1.0);
     Vector(const Vector& v);
+    Vector(const Core::Vec& vec);
     double length() const;
     double getX() const;
     double getY() const;
@@ -32,7 +33,7 @@ public:
     double operator*(const Vector& v) const;
     Vector operator/(double val) const;
     Vector operator-() const;
-    explicit operator Core::Vec() const;
+    operator Core::Vec() const;
 
 private:
     double x;

@@ -14,6 +14,7 @@ namespace Core
         size_t height;
     };
 
+    RenderTarget make_render_target(unsigned char* data, size_t w, size_t h);
     bool isValid(const RenderTarget& renderTarget);
 
     Pixel getPixel(const RenderTarget& renderTarget, size_t row, size_t col);
