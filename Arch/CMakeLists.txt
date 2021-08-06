@@ -17,6 +17,7 @@ include_directories(include)
 
 add_library(Arch STATIC
         src/Arch.cpp
+        src/Managers/SelectionManager.cpp
         src/Managers/LoadManager.cpp
         src/Managers/RenderManager.cpp
         src/Managers/CameraManager.cpp
@@ -29,11 +30,10 @@ add_library(Arch STATIC
         src/Objects/Adapters/CameraAdapter.cpp
         src/Objects/IObject.cpp
         src/Visitors/Transformer.cpp
-        src/Math/Vector.cpp
-        src/Math/Matrix.cpp
-        src/Math/Ray.cpp
         src/RenderTarget/RenderTarget.cpp
-        src/Managers/SelectionManager.cpp
-        )
+        src/Math/Ray.cpp
+        src/Math/Rect.cpp
+        src/Math/Matrix.cpp
+        src/Math/Vector.cpp)
 
 link_libraries(Arch Core)
