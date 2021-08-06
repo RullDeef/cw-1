@@ -48,7 +48,7 @@ void SelectionManager::applyVisitor(IObjectVisitor &visitor)
 std::shared_ptr<IObject> SelectionManager::rayCast(int x, int y)
 {
     auto ray = getFactory().getCameraManager()->createRay(x, y);
-    auto scene = getFactory().getSceneManager()->getActiveScene();
+    Scene& scene = getFactory().getSceneManager()->getActiveScene();
 
     return rayCast(scene, ray);
 }
@@ -73,7 +73,7 @@ std::shared_ptr<IObject> SelectionManager::rayCast(const Scene &scene, const Ray
 
 void SelectionManager::setAllObjectsSelection(bool selected)
 {
-    auto scene = getFactory().getSceneManager()->getActiveScene();
+    Scene& scene = getFactory().getSceneManager()->getActiveScene();
     for (const auto& object : scene)
         object->setSelected(selected);
 }
@@ -82,7 +82,7 @@ std::list<std::shared_ptr<IObject>> SelectionManager::getSelectedObjects()
 {
     std::list<std::shared_ptr<IObject>> objects;
 
-    auto scene = getFactory().getSceneManager()->getActiveScene();
+    Scene& scene = getFactory().getSceneManager()->getActiveScene();
     for (const auto& object : scene)
         if (object->isSelected())
             objects.push_back(object);

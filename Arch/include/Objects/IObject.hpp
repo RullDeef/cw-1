@@ -2,11 +2,7 @@
 #define IOBJECT_HPP
 
 #include <string>
-
-namespace Core
-{
-    struct Ray;
-};
+#include "Math/Ray.hpp"
 
 class IObjectVisitor;
 
@@ -27,7 +23,7 @@ public:
 
     virtual void accept(IObjectVisitor& visitor) = 0;
 
-    virtual bool intersects(double& t, const Core::Ray& ray) = 0;
+    virtual bool intersects(double& t, const Ray& ray) = 0;
 
 private:
     const size_t id;

@@ -11,10 +11,13 @@ class LoadManager : public IManager
 public:
     explicit LoadManager(IManagerFactory& factory);
 
+    void loadEmptyScene();
+
     void loadScene();
 
-    template<typename T>
-    void loadObject();
+    void loadMesh();
+    void loadCamera();
+    void loadLight();
 
 protected:
     void setLoader(std::shared_ptr<ILoader> newLoader);
@@ -27,7 +30,5 @@ protected:
 private:
     std::shared_ptr<ILoader> loader;
 };
-
-#include "Managers/LoadManagerImp.hpp"
 
 #endif // LOADMANAGER_HPP

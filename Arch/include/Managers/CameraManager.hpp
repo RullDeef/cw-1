@@ -1,7 +1,7 @@
 #ifndef CAMERAMANAGER_HPP
 #define CAMERAMANAGER_HPP
 
-#include "Core/common/math/Ray.hpp"
+#include "Math/Ray.hpp"
 #include "Objects/Camera.hpp"
 #include "Scene/Scene.hpp"
 #include "Managers/IManager.hpp"
@@ -25,7 +25,7 @@ public:
 
     void freeFlyCamera(double forward, double right, double up);
 
-    Core::Ray createRay(int x, int y); /// TODO: make Ray class
+    Ray createRay(int x, int y);
 
 protected:
     virtual void onActiveCameraSwitch(Camera& activeCamera);

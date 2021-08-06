@@ -23,8 +23,8 @@ public:
     double dot(const Vector& v) const;
     Vector cross(const Vector& v) const;
 
-    Vector& operator+=(Vector& v);
-    Vector& operator-=(Vector& v);
+    Vector& operator+=(const Vector& v);
+    Vector& operator-=(const Vector& v);
     Vector& operator*=(double val);
     Vector& operator/=(double val);
     Vector operator+(const Vector& v) const;

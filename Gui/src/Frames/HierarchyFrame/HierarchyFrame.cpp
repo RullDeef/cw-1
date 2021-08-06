@@ -15,7 +15,7 @@ HierarchyFrame::HierarchyFrame(IManagerFactory &managerFactory, QWidget *parent)
 
 void HierarchyFrame::updateHierarchy()
 {
-    auto scene = managerFactory.getSceneManager()->getActiveScene();
+    Scene& scene = managerFactory.getSceneManager()->getActiveScene();
     objectModel->setScene(scene);
     //objectView->repaint();
 }

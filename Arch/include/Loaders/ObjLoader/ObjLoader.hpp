@@ -11,10 +11,11 @@ namespace Core { class Vertex; class Vec; }
 class ObjLoader : public ILoader
 {
 public:
-    explicit ObjLoader(std::string  filename);
+    virtual std::unique_ptr<Scene> loadScene(const std::string& filename) override;
 
-    virtual std::unique_ptr<IObject> loadObject() override;
-    virtual std::unique_ptr<Scene> loadScene() override;
+    virtual std::unique_ptr<IObject> loadMesh(const std::string& filename) override;
+    virtual std::unique_ptr<IObject> loadCamera(const std::string& filename) override;
+    virtual std::unique_ptr<IObject> loadLight(const std::string& filename) override;
 
 protected:
     static Core::Vertex extractVertex(const std::string& str,
@@ -23,9 +24,6 @@ protected:
                                       const std::vector<Core::Vec>& uvs);
 
     /// TODO: static std::map<std::string, Core::Material> loadMaterials(const std::string& filename);
-
-private:
-    std::string filename;
 };
 
 #endif // OBJLOADER_HPP

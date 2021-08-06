@@ -1,11 +1,13 @@
 #include <QPaintEvent>
 #include <QFileDialog>
 #include <QPainter>
+#include <QLayout>
 #include <QApplication>
 #include "Managers/CameraManager.hpp"
 #include "Managers/SelectionManager.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
 #include <QTimer>
+#include <Managers/QtRenderManager.hpp>
 
 
 ViewportFrame::ViewportFrame(IManagerFactory &managerFactory, QWidget *parent)
@@ -13,29 +15,17 @@ ViewportFrame::ViewportFrame(IManagerFactory &managerFactory, QWidget *parent)
 {
     setFocusPolicy(Qt::FocusPolicy::StrongFocus);
 
+    auto renderManager = dynamic_cast<QtRenderManager*>(managerFactory.getRenderManager().get());
+    // setLayout(new QVBoxLayout());
+    setWidget(renderManager->getViewWidget());
+
     freeFlyTimer = new QTimer(this);
     connect(freeFlyTimer, &QTimer::timeout, this, &ViewportFrame::updateFreeFly);
     freeFlyTimer->start(1);
 
     freeFlyDispatcher.enable();
-}
 
-void ViewportFrame::paintEvent(QPaintEvent *event)
-{
-    {
-        QPainter painter(this);
-        redraw();
-        painter.drawImage(0, 0, image);
-    }
-
-    ads::CDockWidget::paintEvent(event);
-    update();
-}
-
-void ViewportFrame::resizeEvent(QResizeEvent *event)
-{
-    image = QImage(width(), height(), QImage::Format_ARGB32);
-    redraw();
+    // setMouseTracking(true);
 }
 
 void ViewportFrame::mousePressEvent(QMouseEvent *event)
@@ -53,8 +43,7 @@ void ViewportFrame::mouseMoveEvent(QMouseEvent *event)
     freeFlyDispatcher.mouseMoved(event->x(), event->y());
 
     QWidget::mouseMoveEvent(event);
-    redraw();
-    repaint();
+    managerFactory->getRenderManager()->renderActiveScene();
 }
 
 void ViewportFrame::keyPressEvent(QKeyEvent *event)
@@ -76,25 +65,15 @@ void ViewportFrame::keyReleaseEvent(QKeyEvent *event)
     QWidget::keyReleaseEvent(event);
 }
 
-
-void ViewportFrame::redraw()
-{
-    Core::RenderTarget renderTarget{};
-    renderTarget.width = image.width();
-    renderTarget.height = image.height();
-    renderTarget.data = (Core::Pixel *) image.bits();
-
-    managerFactory->getRenderManager()->renderSceneFast(renderTarget);
-}
-
 void ViewportFrame::saveToImage()
 {
     QString filename = QFileDialog::getSaveFileName(this, u8"Выберите файл", nullptr, nullptr, nullptr,
                                                     QFileDialog::DontUseNativeDialog);
-    image.save(filename);
+    dynamic_cast<RenderWidget*>(widget())->getImage().save(filename);
 }
 
 void ViewportFrame::updateFreeFly()
 {
-    freeFlyDispatcher.update();
+    if (freeFlyDispatcher.update())
+        managerFactory->getRenderManager()->renderActiveScene();
 }

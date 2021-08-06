@@ -6,6 +6,10 @@
 #include "Managers/QtSelectionManager.hpp"
 
 
+QtManagerFactory::QtManagerFactory()
+{
+}
+
 std::shared_ptr<SceneManager> QtManagerFactory::getSceneManager()
 {
     if (!sceneManager)

@@ -2,6 +2,8 @@
 #define ARCH_RECT_HPP
 
 #include "Core/common/math/Rect.hpp"
+#include "Math/Vector.hpp"
+
 
 class Rect
 {
@@ -10,6 +12,9 @@ public:
     Rect(const Core::Rect& rect);
 
     operator Core::Rect() const;
+
+    Vector innerQuad(int x, int y) const;
+    Vector outerQuad(int x, int y) const;
 
 private:
     int top;

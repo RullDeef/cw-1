@@ -25,9 +25,6 @@ public:
     void saveToImage();
 
 protected:
-    void paintEvent(QPaintEvent* event) override;
-    void resizeEvent(QResizeEvent* event) override;
-
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
 
@@ -40,7 +37,6 @@ protected slots:
 private:
     void redraw();
 
-    QImage image;
     IManagerFactory* managerFactory;
 
     FreeFlyDispatcher freeFlyDispatcher;

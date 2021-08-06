@@ -38,32 +38,28 @@ MainWindow::MainWindow()
         frames.push_back(frame);
     }
 
-
-
     setupActions();
 }
 
 void MainWindow::setupActions()
 {
+    connect(ui.createNewScene, &QAction::triggered, this, &MainWindow::createNewSceneCommand);
     connect(ui.loadObject, &QAction::triggered, this, &MainWindow::loadObjectCommand);
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
 }
 
+void MainWindow::createNewSceneCommand()
+{
+    factory->getLoadManager()->loadEmptyScene();
+}
+
 void MainWindow::loadObjectCommand()
 {
-    factory->getLoadManager()->loadObject<Mesh>();
-    for (auto frame : frames)
-    {
-        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
-            viewportFrame->update();
-        else if (auto hierarchyFrame = dynamic_cast<HierarchyFrame*>(frame))
-            hierarchyFrame->updateHierarchy();
-    }
+    factory->getLoadManager()->loadMesh();
 }
 
 void MainWindow::saveRenderCommand()
 {
-
 //    for (auto frame : frames)
 //    {
 //        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))

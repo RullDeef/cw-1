@@ -2,15 +2,12 @@
 #define SELECTIONMANAGER_HPP
 
 #include <list>
-#include <Objects/Camera.hpp>
-#include <Scene/Scene.hpp>
+#include "Math/Ray.hpp"
+#include "Objects/Camera.hpp"
 #include "Objects/IObject.hpp"
+#include "Scene/Scene.hpp"
 #include "Managers/IManager.hpp"
 
-class IObjectVisitor;
-
-/// TODO: implement ray wrapper
-class Ray;
 
 class SelectionManager : public IManager
 {

@@ -92,13 +92,13 @@ Vector Vector::operator-() const
     return Vector(-x, -y, -z, w);
 }
 
-Vector &Vector::operator+=(Vector &v)
+Vector &Vector::operator+=(const Vector &v)
 {
     *this = *this + v;
     return *this;
 }
 
-Vector &Vector::operator-=(Vector &v)
+Vector &Vector::operator-=(const Vector &v)
 {
     *this = *this - v;
     return *this;

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include "Managers/IManagerFactory.hpp"
+#include "Managers/RenderManager.hpp"
 #include "Managers/SceneManager.hpp"
 
 
@@ -44,7 +45,7 @@ Scene& SceneManager::getActiveScene()
 
 void SceneManager::addObject(const std::shared_ptr<IObject>& object)
 {
-    auto scene = getActiveScene();
+    Scene& scene = getActiveScene();
     scene.insert(scene.end(), object);
     onAddObject(object);
 }
@@ -59,10 +60,12 @@ void SceneManager::onBeforeRemoveScene(std::shared_ptr<Scene> scene)
 
 void SceneManager::onActiveSceneChange(std::shared_ptr<Scene> scene)
 {
+    getFactory().getRenderManager()->renderActiveScene();
 }
 
 void SceneManager::onAddObject(std::shared_ptr<IObject> object)
 {
+    getFactory().getRenderManager()->renderActiveScene();
 }
 
 void SceneManager::onBeforeRemoveObject(std::shared_ptr<IObject> object)

@@ -18,6 +18,8 @@ public:
     static Matrix scale(const Vector& factors);
     static Matrix perspective(double fov, double near, double far);
 
+    static Matrix fpsModel(const Vector& eye, double pitch, double yaw);
+
     double det() const;
     Matrix operator*(const Matrix& right) const;
     Matrix operator*(double val) const;

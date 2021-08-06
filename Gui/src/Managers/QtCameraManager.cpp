@@ -8,10 +8,14 @@ QtCameraManager::QtCameraManager(IManagerFactory &factory)
 
 void QtCameraManager::onActiveCameraSwitch(Camera &activeCamera)
 {
+    CameraManager::onActiveCameraSwitch(activeCamera);
+
     emit activeCameraSwitchSignal(activeCamera);
 }
 
 void QtCameraManager::onCameraChange(Camera &camera)
 {
+    CameraManager::onCameraChange(camera);
+
     emit cameraChangeSignal(camera);
 }

@@ -9,9 +9,9 @@ class Transformer : public IObjectVisitor
 public:
     Transformer(double dx, double dy, double dz);
 
-    void visit(ObjectAdapter<Core::Mesh>& mesh) override;
-    void visit(ObjectAdapter<Core::Camera>& camera) override;
-    void visit(ObjectAdapter<Core::Light>& lightSource) override;
+    void visit(ObjectAdapter<Mesh>& mesh) override;
+    void visit(ObjectAdapter<Camera>& camera) override;
+    void visit(ObjectAdapter<Light>& lightSource) override;
 
 private:
     double dx;

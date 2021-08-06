@@ -7,6 +7,12 @@ Scene::Scene()
 {
 }
 
+Scene::Scene(Scene &&temp) noexcept
+    : objects(std::move(temp.objects)), rawScene(temp.rawScene)
+{
+    temp.rawScene = Core::make_scene();
+}
+
 Scene::~Scene()
 {
     Core::destroy(rawScene);
@@ -16,8 +22,9 @@ void Scene::insert(containter_t::const_iterator pos, const std::shared_ptr<IObje
 {
     objects.insert(pos, object);
 
-    if (auto adapter = dynamic_cast<ObjectAdapter<Core::Mesh>*>(object.get()))
-        Core::append(rawScene, adapter->getAdaptee());
+    /// TODO: remove black magic
+    if (auto adapter = dynamic_cast<ObjectAdapter<Mesh>*>(object.get()))
+        Core::append(rawScene, Core::Mesh(adapter->getAdaptee()));
 }
 
 void Scene::erase(containter_t::const_iterator pos)

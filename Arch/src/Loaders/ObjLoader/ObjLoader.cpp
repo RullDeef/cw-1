@@ -10,14 +10,13 @@
 #include "Loaders/ObjLoader/ObjLoader.hpp"
 
 
-ObjLoader::ObjLoader(std::string filename)
-    : filename(std::move(filename))
-{
+std::unique_ptr<Scene> ObjLoader::loadScene(const std::string& filename) {
+    return std::make_unique<Scene>();
 }
 
-std::unique_ptr<IObject> ObjLoader::loadObject()
+std::unique_ptr<IObject> ObjLoader::loadMesh(const std::string& filename)
 {
-    // loads only meshes for now /// TODO: load materials as well
+    /// TODO: load materials as well
 
     std::ifstream file(filename);
     std::string line, sym;
@@ -80,7 +79,7 @@ std::unique_ptr<IObject> ObjLoader::loadObject()
         Core::add_face(mesh, face);
 
     size_t id = -1;
-    auto object = std::unique_ptr<IObject>(new ObjectAdapter<Core::Mesh>(id, mesh, AdapterPolicy::StrongOwnership));
+    auto object = std::unique_ptr<IObject>(new ObjectAdapter<Mesh>(id, Mesh(mesh)));
     /// TODO: refactor naming
     object->setName(filename.substr(filename.rfind('/') + 1, filename.find('.') - filename.rfind('/') - 1));
     return object;
@@ -129,6 +128,12 @@ Core::Vertex ObjLoader::extractVertex(const std::string &str, const std::vector<
     }
 }
 
-std::unique_ptr<Scene> ObjLoader::loadScene() {
-    return std::make_unique<Scene>();
+std::unique_ptr<IObject> ObjLoader::loadCamera(const std::string &filename)
+{
+    return nullptr;
+}
+
+std::unique_ptr<IObject> ObjLoader::loadLight(const std::string &filename)
+{
+    return nullptr;
 }

@@ -7,6 +7,9 @@
 
 class QtManagerFactory : public IManagerFactory
 {
+public:
+    QtManagerFactory();
+
 protected:
     std::shared_ptr<SceneManager> getSceneManager() override;
     std::shared_ptr<CameraManager> getCameraManager() override;

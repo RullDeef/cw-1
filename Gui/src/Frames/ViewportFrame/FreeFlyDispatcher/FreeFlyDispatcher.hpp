@@ -13,7 +13,7 @@ public:
     void enable();
     void disable();
 
-    void update();
+    bool update();
 
     void keyPressed(int key);
     void keyReleased(int key);

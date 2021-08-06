@@ -28,12 +28,13 @@ add_library(Arch STATIC
         src/Scene/Scene.cpp
         src/Objects/Adapters/MeshAdapter.cpp
         src/Objects/Adapters/CameraAdapter.cpp
+        src/Objects/Camera.cpp
         src/Objects/IObject.cpp
         src/Visitors/Transformer.cpp
         src/RenderTarget/RenderTarget.cpp
         src/Math/Ray.cpp
         src/Math/Rect.cpp
         src/Math/Matrix.cpp
-        src/Math/Vector.cpp)
+        src/Math/Vector.cpp src/Builders/EmptySceneBuilder.cpp src/Objects/Mesh.cpp)
 
 link_libraries(Arch Core)

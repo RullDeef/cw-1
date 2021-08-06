@@ -281,6 +281,39 @@ Matrix::operator Core::Mat() const
     return res;
 }
 
+Matrix Matrix::fpsModel(const Vector& eye, double pitch, double yaw)
+{
+    double cosPitch = std::cos(pitch);
+    double sinPitch = std::sin(pitch);
+    double cosYaw = std::cos(yaw);
+    double sinYaw = std::sin(yaw);
+
+    Vector x_axis = Vector(cosYaw, 0, -sinYaw);
+    Vector y_axis = Vector(sinYaw * sinPitch, cosPitch, cosYaw * sinPitch);
+    Vector z_axis = Vector(sinYaw * cosPitch, -sinPitch, cosPitch * cosYaw);
+
+    Matrix res;
+
+    res.data[0] = x_axis.getX();
+    res.data[1] = x_axis.getY();
+    res.data[2] = x_axis.getZ();
+    res.data[3] = -(x_axis * eye);
+
+    res.data[4] = y_axis.getX();
+    res.data[5] = y_axis.getY();
+    res.data[6] = y_axis.getZ();
+    res.data[7] = -(y_axis * eye);
+
+    res.data[8] = z_axis.getX();
+    res.data[9] = z_axis.getY();
+    res.data[10] = z_axis.getZ();
+    res.data[11] = -(z_axis * eye);
+
+    res.data[15] = 1;
+
+    return res.inverse();
+}
+
 Matrix operator*(double val, const Matrix &mat)
 {
     return mat * val;

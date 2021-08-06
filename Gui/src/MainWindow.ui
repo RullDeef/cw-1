@@ -49,7 +49,14 @@
     </property>
     <addaction name="saveRender"/>
    </widget>
+   <widget class="QMenu" name="sceneMenu">
+    <property name="title">
+     <string>Сцена</string>
+    </property>
+    <addaction name="createNewScene"/>
+   </widget>
    <addaction name="windowMenu"/>
+   <addaction name="sceneMenu"/>
    <addaction name="objectMenu"/>
    <addaction name="renderMenu"/>
   </widget>
@@ -77,6 +84,11 @@
   <action name="saveRender">
    <property name="text">
     <string>Сохранить как...</string>
+   </property>
+  </action>
+  <action name="createNewScene">
+   <property name="text">
+    <string>Новая</string>
    </property>
   </action>
  </widget>

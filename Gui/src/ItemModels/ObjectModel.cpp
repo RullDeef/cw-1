@@ -8,15 +8,15 @@ ObjectModel::ObjectModel(QObject *parent)
 {
 }
 
-ObjectModel::ObjectModel(std::shared_ptr<Scene> scene, QObject *parent)
-    : QAbstractTableModel(parent), scene(std::move(scene))
+ObjectModel::ObjectModel(Scene& scene, QObject *parent)
+    : QAbstractTableModel(parent), scene(&scene)
 {
 }
 
-void ObjectModel::setScene(std::shared_ptr<Scene> newScene)
+void ObjectModel::setScene(Scene& newScene)
 {
     beginResetModel();
-    scene = std::move(newScene);
+    scene = &newScene;
     endResetModel();
 
     emit dataChanged(index(0, 0), index(rowCount(), columnCount()));

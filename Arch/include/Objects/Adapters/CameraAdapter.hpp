@@ -1,28 +1,26 @@
 #ifndef CAMERAADAPTER_HPP
 #define CAMERAADAPTER_HPP
 
-#include "Core/Objects/Camera.hpp"
+#include "Math/Ray.hpp"
+#include "Objects/Camera.hpp"
 #include "Objects/ObjectAdapter.hpp"
 
 
 template<>
-class ObjectAdapter<Core::Camera> : public IObject
+class ObjectAdapter<Camera> : public IObject
 {
 public:
-    ObjectAdapter(size_t id, Core::Camera camera, AdapterPolicy policy);
+    ObjectAdapter(size_t id, Camera camera);
     virtual ~ObjectAdapter() = default;
 
-    Core::Camera& getAdaptee();
-    const Core::Camera& getAdaptee() const;
+    Camera& getAdaptee();
+    const Camera& getAdaptee() const;
 
     virtual void accept(IObjectVisitor& visitor) override;
-
-    virtual bool intersects(double& t, const Core::Ray& ray) override;
+    virtual bool intersects(double& t, const Ray& ray) override;
 
 private:
-    Core::Camera camera;
-    AdapterPolicy policy;
+    Camera camera;
 };
-
 
 #endif // CAMERAADAPTER_HPP
