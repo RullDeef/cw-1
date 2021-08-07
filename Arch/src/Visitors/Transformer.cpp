@@ -7,10 +7,10 @@ Transformer::Transformer(double dx, double dy, double dz)
 {
 }
 
-void Transformer::visit(ObjectAdapter<Core::Mesh> &mesh)
+void Transformer::visit(ObjectAdapter<Mesh> &mesh)
 {
-    Core::Mesh& adaptee = mesh.getAdaptee();
-    auto mat = Core::make_mat_translation(dx, dy, dz);
+    Mesh& adaptee = mesh.getAdaptee();
+    // auto mat = Core::make_mat_translation(dx, dy, dz);
 
-    adaptee.model_mat = mat * adaptee.model_mat;
+    // adaptee.model_mat = mat * adaptee.model_mat;
 }

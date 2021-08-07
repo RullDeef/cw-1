@@ -302,6 +302,9 @@ static Pixel recomputeColor(const Vec& normal)
 
 static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material)
 {
+    /// TODO: microfix for testing
+    return recomputeColor(normal);
+
     static Light light_0 = { Light::Type::Ambient };
     light_0.ambient = {
             make_color(1.0, 0.0, 0.0),

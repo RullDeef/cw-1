@@ -11,7 +11,7 @@ MainWindow::MainWindow()
 {
     ui.setupUi(this);
     dockManager = new ads::CDockManager(this);
-    factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory(this));
+    factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory());
 
     // setup default frames
     if (1) {
@@ -45,27 +45,26 @@ MainWindow::MainWindow()
 
 void MainWindow::setupActions()
 {
+    connect(ui.createNewScene, &QAction::triggered, this, &MainWindow::createNewSceneCommand);
     connect(ui.loadObject, &QAction::triggered, this, &MainWindow::loadObjectCommand);
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
+}
+
+void MainWindow::createNewSceneCommand()
+{
+    factory->getLoadManager()->loadEmptyScene();
 }
 
 void MainWindow::loadObjectCommand()
 {
     factory->getLoadManager()->loadMesh();
-    for (auto frame : frames)
-    {
-        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
-            viewportFrame->update();
-        else if (auto hierarchyFrame = dynamic_cast<HierarchyFrame*>(frame))
-            hierarchyFrame->updateHierarchy();
-    }
 }
 
 void MainWindow::saveRenderCommand()
 {
-    for (auto frame : frames)
-    {
-        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
-            return viewportFrame->saveToImage();
-    }
+//    for (auto frame : frames)
+//    {
+//        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
+//            return viewportFrame->saveToImage();
+//    }
 }

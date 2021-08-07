@@ -18,11 +18,18 @@ void FreeFlyDispatcher::disable()
     enabled = false;
 }
 
-void FreeFlyDispatcher::update()
+bool FreeFlyDispatcher::update()
 {
     if (enabled)
+    {
         managerFactory.getCameraManager()->freeFlyCamera
-            (flySpeed * forward, flySpeed * right, flySpeed * up);
+                (flySpeed * forward, flySpeed * right, flySpeed * up);
+
+        if (forward != 0 || right != 0 || up != 0)
+            return true;
+    }
+
+    return false;
 }
 
 void FreeFlyDispatcher::keyPressed(int key)

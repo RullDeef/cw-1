@@ -1,8 +1,9 @@
 #ifndef LOADMANAGER_HPP
 #define LOADMANAGER_HPP
 
-#include "SceneManager.hpp"
 #include "IManager.hpp"
+#include "Loaders/ILoader.hpp"
+#include "Scene/Scene.hpp"
 
 
 class LoadManager : public IManager
@@ -10,11 +11,24 @@ class LoadManager : public IManager
 public:
     explicit LoadManager(IManagerFactory& factory);
 
-    virtual void loadMesh() = 0;
+    void loadEmptyScene();
+
+    void loadScene();
+
+    void loadMesh();
+    void loadCamera();
+    void loadLight();
 
 protected:
-    virtual void _loadMesh(const std::string& filename);
-};
+    void setLoader(std::shared_ptr<ILoader> newLoader);
 
+    virtual std::string requestFilename() = 0;
+
+    virtual void onSceneLoad(std::shared_ptr<Scene> scene);
+    virtual void onObjectLoad(std::shared_ptr<IObject> object);
+
+private:
+    std::shared_ptr<ILoader> loader;
+};
 
 #endif // LOADMANAGER_HPP

@@ -1,27 +1,26 @@
 #ifndef MESHADAPTER_HPP
 #define MESHADAPTER_HPP
 
-#include "Core/Objects/Mesh.hpp"
+#include "Objects/Mesh.hpp"
 #include "Objects/ObjectAdapter.hpp"
 
 
 template<>
-class ObjectAdapter<Core::Mesh> : public IObject
+class ObjectAdapter<Mesh> : public IObject
 {
 public:
-    ObjectAdapter(size_t id, Core::Mesh mesh, AdapterPolicy policy);
+    ObjectAdapter(size_t id, Mesh mesh);
     virtual ~ObjectAdapter();
 
-    Core::Mesh& getAdaptee();
-    const Core::Mesh& getAdaptee() const;
+    Mesh& getAdaptee();
+    const Mesh& getAdaptee() const;
 
     virtual void accept(IObjectVisitor& visitor) override;
 
-    virtual bool intersects(double& t, const Core::Ray& ray) override;
+    virtual bool intersects(double& t, const Ray& ray) override;
 
 private:
-    Core::Mesh mesh;
-    AdapterPolicy policy;
+    Mesh mesh;
 };
 
 #endif // MESHADAPTER_HPP

@@ -1,20 +1,26 @@
 #ifndef QTLOADMANAGER_HPP
 #define QTLOADMANAGER_HPP
 
-#include "Managers/LoadManager.hpp"
+#include <QObject>
+#include <Managers/LoadManager.hpp>
 
 
-class QtLoadManager : public LoadManager
+class QtLoadManager : public QObject, public LoadManager
 {
-public:
-    explicit QtLoadManager(IManagerFactory& factory, QWidget* dialogParent);
+    Q_OBJECT
 
-    virtual void loadMesh() override;
+public:
+    explicit QtLoadManager(IManagerFactory& factory);
+
+signals:
+    void sceneLoadSignal(std::shared_ptr<Scene> scene);
+    void objectLoadSignal(std::shared_ptr<IObject> object);
 
 protected:
-    std::string getFilename();
+    std::string requestFilename() override;
 
-    QWidget* dialogParent;
+    void onSceneLoad(std::shared_ptr<Scene> scene) override;
+    void onObjectLoad(std::shared_ptr<IObject> object) override;
 };
 
 #endif // QTLOADMANAGER_HPP

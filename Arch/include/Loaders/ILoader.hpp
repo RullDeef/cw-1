@@ -12,8 +12,11 @@ class ILoader
 public:
     virtual ~ILoader() = default;
 
-    virtual std::unique_ptr<IObject> loadObject() = 0;
-    virtual std::unique_ptr<Scene> loadScene() = 0;
+    virtual std::unique_ptr<Scene> loadScene(const std::string& filename) = 0;
+
+    virtual std::unique_ptr<IObject> loadMesh(const std::string& filename) = 0;
+    virtual std::unique_ptr<IObject> loadCamera(const std::string& filename) = 0;
+    virtual std::unique_ptr<IObject> loadLight(const std::string& filename) = 0;
 };
 
 #endif // ILOADER_HPP

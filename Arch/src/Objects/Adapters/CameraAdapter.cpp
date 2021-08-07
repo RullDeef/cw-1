@@ -1,33 +1,31 @@
 #include <Core/common/math/Sphere.hpp>
-#include "Core/common/math/Ray.hpp"
 #include "Objects/Adapters/CameraAdapter.hpp"
 
 
-ObjectAdapter<Core::Camera>::ObjectAdapter(size_t id, Core::Camera camera, AdapterPolicy policy)
-        : IObject(id), camera(camera), policy(policy)
+ObjectAdapter<Camera>::ObjectAdapter(size_t id, Camera camera)
+        : IObject(id), camera(camera)
 {
 }
 
-Core::Camera& ObjectAdapter<Core::Camera>::getAdaptee()
-{
-    return camera;
-}
-
-const Core::Camera& ObjectAdapter<Core::Camera>::getAdaptee() const
+Camera& ObjectAdapter<Camera>::getAdaptee()
 {
     return camera;
 }
 
-void ObjectAdapter<Core::Camera>::accept(IObjectVisitor& visitor)
+const Camera& ObjectAdapter<Camera>::getAdaptee() const
+{
+    return camera;
+}
+
+void ObjectAdapter<Camera>::accept(IObjectVisitor& visitor)
 {
     visitor.visit(*this);
 }
 
-bool ObjectAdapter<Core::Camera>::intersects(double &t, const Core::Ray &ray)
+bool ObjectAdapter<Camera>::intersects(double &t, const Ray &ray)
 {
-    const double radius = 1.0; /// TODO: magic constant
-    Core::Sphere sphere = Core::make_sphere(camera.eye, radius);
+    constexpr auto radius = 1.0;
+    auto center = camera.getPosition();
 
-    return Core::ray_intersects(t, ray, sphere);
+    return ray.intersectsSphere(t, center, radius);
 }
-

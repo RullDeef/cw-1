@@ -4,6 +4,7 @@
 #include "Core/common/math/Vec.hpp"
 #include "Core/common/math/Plane.hpp"
 #include "Core/common/math/Sphere.hpp"
+#include "Core/Objects/Face.hpp"
 #include "Core/Objects/Mesh.hpp"
 
 
@@ -22,6 +23,7 @@ namespace Core
     bool ray_intersects(double& t, const Ray& ray, const Sphere& sphere);
     bool ray_intersects(double& t, const Ray& ray, const Plane& plane);
     bool ray_intersects(double& t, const Ray& ray, const Face& face);
+    bool ray_intersects(double& t, const Ray& ray, const Mesh& mesh);
 }
 
 #endif // RAY_HPP

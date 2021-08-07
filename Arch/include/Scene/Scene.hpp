@@ -19,7 +19,13 @@ public:
 
 public:
     Scene();
+    Scene(const Scene&) = delete;
+    Scene(Scene&& temp) noexcept;
+
     virtual ~Scene();
+
+    Scene& operator=(const Scene&) = delete;
+    Scene& operator=(Scene&&) = delete;
 
     void insert(const_iterator pos, const objptr_t& object);
     void erase(const_iterator pos);

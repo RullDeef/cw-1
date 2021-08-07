@@ -1,9 +1,8 @@
 #ifndef CAMERAMANAGER_HPP
 #define CAMERAMANAGER_HPP
 
-#include "Core/common/math/Ray.hpp"
-#include "Core/Objects/Camera.hpp"
-#include "Objects/ObjectAdapter.hpp"
+#include "Math/Ray.hpp"
+#include "Objects/Camera.hpp"
 #include "Scene/Scene.hpp"
 #include "Managers/IManager.hpp"
 
@@ -13,8 +12,7 @@ class CameraManager : public IManager
 public:
     explicit CameraManager(IManagerFactory& factory);
 
-    ObjectAdapter<Core::Camera>& getActiveCamera();
-    const ObjectAdapter<Core::Camera>& getActiveCamera() const;
+    Camera& getActiveCamera();
 
     // translates camera along view plane
     void dragCamera(double dx, double dy);
@@ -27,11 +25,14 @@ public:
 
     void freeFlyCamera(double forward, double right, double up);
 
-    Core::Ray createRay(int x, int y);
+    Ray createRay(int x, int y);
+
+protected:
+    virtual void onActiveCameraSwitch(Camera& activeCamera);
+    virtual void onCameraChange(Camera& camera);
 
 private:
-    Scene::iterator cameraIterator;
-    ObjectAdapter<Core::Camera> mainCamera;
+    Camera mainCamera;
 };
 
 #endif // CAMERAMANAGER_HPP

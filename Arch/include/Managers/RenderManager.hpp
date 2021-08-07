@@ -1,10 +1,11 @@
 #ifndef RENDERMANAGER_HPP
 #define RENDERMANAGER_HPP
 
-#include "Core/RenderTarget/RenderTarget.hpp"
-#include "Core/Objects/Camera.hpp"
-#include "Core/Scene/Scene.hpp"
+#include "RenderTarget/RenderTarget.hpp"
+#include "Objects/Camera.hpp"
+#include "Scene/Scene.hpp"
 #include "IManager.hpp"
+#include "Math/Rect.hpp"
 
 
 class RenderManager : public IManager
@@ -12,13 +13,17 @@ class RenderManager : public IManager
 public:
     explicit RenderManager(IManagerFactory& factory);
 
-    virtual void renderSceneFast(Core::RenderTarget& renderTarget);
-    virtual void renderSceneFancy(Core::RenderTarget& renderTarget);
+    void renderActiveScene();
+
+    virtual Rect getActiveViewport() = 0;
 
 protected:
-    Core::Scene requireScene();
-    Core::Camera requireCamera(const Core::RenderTarget& renderTarget);
-    Core::Camera requireCamera(const Core::Rect &viewport);
+    void renderScene(Scene &scene, Camera &camera);
+
+    virtual RenderTarget getRenderTarget() = 0;
+
+    virtual void onBeforeSceneRender(Scene& scene, Camera& camera);
+    virtual void onSceneRender(Scene& scene, Camera& camera);
 };
 
 #endif // RENDERMANAGER_HPP

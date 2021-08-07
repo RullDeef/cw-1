@@ -17,9 +17,11 @@ public:
     MainWindow();
     ~MainWindow() = default;
 
-protected:
-    virtual void loadObjectCommand();
-    virtual void saveRenderCommand();
+protected slots:
+    void createNewSceneCommand();
+
+    void loadObjectCommand();
+    void saveRenderCommand();
 
 private:
     void setupActions();
