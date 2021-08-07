@@ -25,9 +25,12 @@ add_library(Arch STATIC
         src/Managers/IManagerFactory.cpp
         src/Managers/IManager.cpp
         src/Loaders/ObjLoader/ObjLoader.cpp
+        src/Loaders/ObjLoader/ObjFace.cpp
+        src/Builders/EmptySceneBuilder.cpp
         src/Scene/Scene.cpp
         src/Objects/Adapters/MeshAdapter.cpp
         src/Objects/Adapters/CameraAdapter.cpp
+        src/Objects/Mesh.cpp
         src/Objects/Camera.cpp
         src/Objects/IObject.cpp
         src/Visitors/Transformer.cpp
@@ -35,6 +38,6 @@ add_library(Arch STATIC
         src/Math/Ray.cpp
         src/Math/Rect.cpp
         src/Math/Matrix.cpp
-        src/Math/Vector.cpp src/Builders/EmptySceneBuilder.cpp src/Objects/Mesh.cpp)
+        src/Math/Vector.cpp)
 
 link_libraries(Arch Core)

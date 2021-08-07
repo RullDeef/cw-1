@@ -2,6 +2,7 @@
 #define ARCH_MESH_HPP
 
 #include <Core/Objects/Mesh.hpp>
+#include "Math/Ray.hpp"
 
 
 class Mesh
@@ -12,10 +13,12 @@ public:
     Mesh(Mesh&& temp) noexcept;
     ~Mesh();
 
-    explicit operator Core::Mesh() const;
+    operator Core::Mesh() const;
 
     Mesh& operator=(const Mesh&) = delete;
     Mesh& operator=(Mesh&&) = delete;
+
+    bool intersects(double& t, const Ray& ray) const;
 
 private:
     Core::Mesh mesh;

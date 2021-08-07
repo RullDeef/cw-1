@@ -1,5 +1,4 @@
 #include <utility>
-#include <stdexcept>
 #include "Objects/IObject.hpp"
 #include "Loaders/ILoader.hpp"
 #include "Managers/IManagerFactory.hpp"
@@ -45,7 +44,7 @@ void LoadManager::loadMesh()
     std::string filename = requestFilename();
     std::shared_ptr<IObject> object = loader->loadMesh(filename);
 
-    /// may be error here (SceneManager doesnt imported)
+    /// may be error here (SceneManager is not imported)
     getFactory().getSceneManager()->addObject(object);
 
     onObjectLoad(object);
@@ -53,14 +52,22 @@ void LoadManager::loadMesh()
 
 void LoadManager::loadCamera()
 {
-    /// TODO: implement
-    throw std::runtime_error("not implemented");
+    std::string filename = requestFilename();
+    std::shared_ptr<IObject> object = loader->loadCamera(filename);
+
+    getFactory().getSceneManager()->addObject(object);
+
+    onObjectLoad(object);
 }
 
 void LoadManager::loadLight()
 {
-    /// TODO: implement
-    throw std::runtime_error("not implemented");
+    std::string filename = requestFilename();
+    std::shared_ptr<IObject> object = loader->loadLight(filename);
+
+    getFactory().getSceneManager()->addObject(object);
+
+    onObjectLoad(object);
 }
 
 void LoadManager::setLoader(std::shared_ptr<ILoader> newLoader)

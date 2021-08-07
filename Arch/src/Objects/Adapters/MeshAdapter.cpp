@@ -29,24 +29,5 @@ void ObjectAdapter<Mesh>::accept(IObjectVisitor& visitor)
 
 bool ObjectAdapter<Mesh>::intersects(double &t, const Ray &ray)
 {
-    return false;
-    /// TODO: move to mesh wrapper class
-//    double tMin = std::numeric_limits<double>::infinity();
-//    bool intersects = false;
-//
-//    for (size_t i = 0; i < mesh.faces.size; i++)
-//    {
-//        Core::Face face{};
-//        if (Core::get(mesh.faces, i, face))
-//        {
-//            if (Core::ray_intersects(t, ray, face))
-//            {
-//                intersects = true;
-//                tMin = std::min(tMin, t);
-//            }
-//        }
-//    }
-//
-//    t = tMin;
-//    return intersects;
+    return mesh.intersects(t, ray);
 }

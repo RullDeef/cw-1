@@ -12,6 +12,8 @@ public:
 
     operator Core::Ray() const;
 
+    bool intersectsSphere(double& t, const Vector& center, double radius) const;
+
 private:
     Vector position;
     Vector direction;

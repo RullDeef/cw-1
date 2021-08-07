@@ -67,3 +67,25 @@ bool Core::ray_intersects(double& t, const Ray& ray, const Face& face)
     }
     return false;
 }
+
+bool Core::ray_intersects(double& t, const Ray& ray, const Mesh& mesh)
+{
+    double tMin = std::numeric_limits<double>::infinity();
+    bool intersects = false;
+
+    for (size_t i = 0; i < mesh.faces.size; i++)
+    {
+        Face face{};
+        if (get(mesh.faces, i, face))
+        {
+            if (ray_intersects(t, ray, face))
+            {
+                intersects = true;
+                tMin = std::min(tMin, t);
+            }
+        }
+    }
+
+    t = tMin;
+    return intersects;
+}

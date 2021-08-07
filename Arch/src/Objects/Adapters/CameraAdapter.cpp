@@ -24,10 +24,8 @@ void ObjectAdapter<Camera>::accept(IObjectVisitor& visitor)
 
 bool ObjectAdapter<Camera>::intersects(double &t, const Ray &ray)
 {
-    return false;
-//    const double radius = 1.0; /// TODO: move this into Camera class
-//    Core::Sphere sphere = Core::make_sphere(camera.eye, radius);
-//
-//    return Core::ray_intersects(t, ray, sphere);
-}
+    constexpr auto radius = 1.0;
+    auto center = camera.getPosition();
 
+    return ray.intersectsSphere(t, center, radius);
+}

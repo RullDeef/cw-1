@@ -18,6 +18,11 @@ Camera::operator Core::Camera() const
     return cam;
 }
 
+Vector Camera::getPosition() const
+{
+    return eye;
+}
+
 Matrix Camera::getModelMatrix() const
 {
     Matrix res = Matrix::fpsModel(eye, pitch, yaw);

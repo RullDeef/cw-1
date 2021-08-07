@@ -15,6 +15,7 @@ public:
 
     operator Core::Camera() const;
 
+    Vector getPosition() const;
     Matrix getModelMatrix() const;
 
     void translate(const Vector& offset);

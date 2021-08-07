@@ -21,3 +21,8 @@ Mesh::operator Core::Mesh() const
 {
     return mesh;
 }
+
+bool Mesh::intersects(double &t, const Ray &ray) const
+{
+    return Core::ray_intersects(t, ray, *this);
+}

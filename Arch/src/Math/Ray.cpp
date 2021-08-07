@@ -14,3 +14,9 @@ Ray::operator Core::Ray() const
 {
     return Core::make_ray(position, direction);
 }
+
+bool Ray::intersectsSphere(double &t, const Vector &center, double radius) const
+{
+    auto sphere = Core::make_sphere(center, radius);
+    return Core::ray_intersects(t, *this, sphere);
+}
