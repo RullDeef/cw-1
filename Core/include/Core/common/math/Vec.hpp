@@ -30,6 +30,8 @@ namespace Core
     inline double dot(const Vec& v1, const Vec& v2);
     inline Vec cross(const Vec& v1, const Vec& v2);
 
+    inline double get(const Vec& v, int component);
+
     inline Vec& operator+=(Vec& v1, const Vec& v2);
     inline Vec& operator-=(Vec& v1, const Vec& v2);
     inline Vec& operator*=(Vec& vec, double val);

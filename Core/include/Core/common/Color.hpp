@@ -21,8 +21,10 @@ namespace Core
     inline Color to_color(const Pixel& pixel);
 
     inline Color operator+(const Color& c1, const Color& c2);
+    inline Color operator-(const Color& c1, const Color& c2);
     inline Color operator*(const Color& c1, const Color& c2);
     inline Color operator*(const Color& col, double value);
+    inline Color operator/(const Color& col, double value);
     inline Color operator*(double value, const Color& col);
 
     inline Color& operator+=(Color& c1, const Color& c2);
@@ -31,6 +33,8 @@ namespace Core
     {
         const Color black { 0.0, 0.0, 0.0, 1.0 };
         const Color white { 1.0, 1.0, 1.0, 1.0 };
+
+        const Color orange { 1.0, 0.5, 0.0, 1.0 };
     }
 }
 

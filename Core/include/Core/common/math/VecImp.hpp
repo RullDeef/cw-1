@@ -83,6 +83,20 @@ namespace Core
         return res;
     }
 
+    inline double get(const Vec& v, int component)
+    {
+        if (component == 0)
+            return v.x;
+        else if (component == 1)
+            return v.y;
+        else if (component == 2)
+            return v.z;
+        else if (component == 3)
+            return v.w;
+        else
+            return 0.0;
+    }
+
     inline Vec& operator+=(Vec& v1, const Vec& v2)
     {
         v1 = v1 + v2;

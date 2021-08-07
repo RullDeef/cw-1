@@ -8,6 +8,8 @@ namespace Core
         Success,
         InvalidRenderType,
         InvalidRenderViewport,
+
+        UnsupportedLightingModelType,
     };
 }
 

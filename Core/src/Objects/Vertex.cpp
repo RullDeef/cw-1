@@ -33,6 +33,15 @@ Vertex Core::make_vertex(Vec position, Vec normal, Vec uv)
     return vert;
 }
 
+Vertex Core::project_frustrum(const Vertex& vertex, const Camera& camera)
+{
+    Vertex result = vertex;
+
+    result.position = project_frustrum(camera, vertex.position);
+
+    return result;
+}
+
 Vertex Core::project(const Vertex &vertex, const Camera &camera)
 {
     Vertex result = vertex;
@@ -62,4 +71,68 @@ Vertex Core::interpolate(const Vertex &v1, const Vertex &v2, double t)
     res.normal = interpolate(v1.normal, v2.normal, t);
 
     return res;
+}
+
+vect_t<Vertex> Core::clip_polygon(const vect_t<Vertex>& points)
+{
+    vect_t<Vertex> result_1 = clip_polygon(points, 0);
+    if (result_1.size == 0)
+        return result_1;
+
+    vect_t<Vertex> result_2 = clip_polygon(result_1, 1);
+    destroy(result_1);
+    if (result_2.size == 0)
+        return result_2;
+
+    vect_t<Vertex> result_3 = clip_polygon(result_2, 2);
+    destroy(result_2);
+
+    return result_3;
+}
+
+vect_t<Vertex> Core::clip_polygon(const vect_t<Vertex>& points, int component)
+{
+    vect_t<Vertex> result_1 = clip_polygon(points, component, 1.0);
+
+    if (result_1.size == 0)
+        return result_1;
+
+    vect_t<Vertex> result_2 = clip_polygon(result_1, component, -1.0);
+    destroy(result_1);
+
+    return result_2;
+}
+
+vect_t<Vertex> Core::clip_polygon(const vect_t<Vertex>& points, int component, double scale)
+{
+    auto result = make_vect<Vertex>(points.size);
+
+    Vertex prevVert{};
+    get(points, points.size - 1, prevVert);
+    double prevVal = scale * get(prevVert.position, component);
+    bool prevInside = prevVal <= prevVert.position.w;
+
+    for (size_t i = 0; i < points.size; i++)
+    {
+        Vertex currVert{};
+        get(points, i, currVert);
+        double currVal = scale * get(currVert.position, component);
+        bool currInside = currVal <= currVert.position.w;
+
+        if (prevInside ^ currInside)
+        {
+            double factor = (prevVert.position.w - prevVal) / ((prevVert.position.w - prevVal) - (currVert.position.w - currVal));
+            Vertex intersection = interpolate(prevVert, currVert, factor);
+            push_back(result, intersection);
+        }
+
+        if (currInside)
+            push_back(result, currVert);
+
+        prevVert = currVert;
+        prevVal = currVal;
+        prevInside = currInside;
+    }
+
+    return result;
 }

@@ -21,6 +21,7 @@ namespace Core
 
     void recalc_normal(Face& face);
 
+    Face project_frustrum(const Face& face, const Camera& camera);
     Face project(const Face& face, const Camera& camera);
 }
 

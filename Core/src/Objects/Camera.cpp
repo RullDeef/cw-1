@@ -31,9 +31,14 @@ void Core::recalc_mvp(Camera& camera, const Mat& model_mat)
     camera.mvp = camera.proj_mat * inverse(camera.model_mat) * model_mat;
 }
 
-Vec Core::project_point(const Camera& camera, const Vec& pos)
+Vec Core::project_frustrum(const Camera& camera, const Vec& pos)
 {
-    Vec res = camera.mvp * pos;
+    return camera.mvp * pos;
+}
+
+Vec Core::viewport_adjust(const Camera& camera, const Vec& pos)
+{
+    Vec res = pos;
     perspective_adjust(res);
 
     // TODO: возможно стоит вынести все махинации с вьюпортом в отдельные функции в Rect.hpp
@@ -53,6 +58,12 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
 #endif
 
     return res;
+}
+
+Vec Core::project_point(const Camera& camera, const Vec& pos)
+{
+    Vec res = project_frustrum(camera, pos);
+    return viewport_adjust(camera, res);
 }
 
 void Core::update_transformation(Camera &camera)
