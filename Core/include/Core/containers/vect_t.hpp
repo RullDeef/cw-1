@@ -48,6 +48,6 @@ namespace Core
     bool push_front(vect_t<T>& vect, const T& value);
 }
 
-#include "Core/common/containers/vect_t_imp.hpp"
+#include "vect_t_imp.hpp"
 
 #endif // VECT_T_HPP

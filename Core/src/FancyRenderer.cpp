@@ -1,6 +1,6 @@
 #include <cmath>
-#include "Core/common/math/Ray.hpp"
-#include "Core/common/math/Plane.hpp"
+#include "Core/math/Ray.hpp"
+#include "Core/math/Plane.hpp"
 #include "Core/Objects/Mesh.hpp"
 #include "Core/Rasterizers/RectRenderer.hpp"
 #include "Core/FancyRenderer.hpp"

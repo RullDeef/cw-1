@@ -2,7 +2,7 @@
 #include "Core/FastRender.hpp"
 #include "Core/Rasterizers/LineRenderer.hpp"
 #include "Core/RenderTarget/ZBuffer.hpp"
-#include "Core/common/math/Mat.hpp"
+#include "Core/math/Mat.hpp"
 
 using namespace Core;
 

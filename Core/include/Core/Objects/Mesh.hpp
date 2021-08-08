@@ -1,9 +1,9 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
-#include "Core/common/math/Vec.hpp"
-#include "Core/common/math/Mat.hpp"
-#include "Core/common/containers/vect_t.hpp"
+#include "Core/math/Vec.hpp"
+#include "Core/math/Mat.hpp"
+#include "Core/containers/vect_t.hpp"
 #include "Core/Objects/Face.hpp"
 #include "Core/Objects/Material.hpp"
 
@@ -25,6 +25,15 @@ namespace Core
     void destroy(Mesh& mesh);
 
     bool add_face(Mesh& mesh, const Face& face);
+
+    /// =============================================================
+
+//    struct Mesh
+//    {
+//        Transform transform;
+//        Geometry geometry;
+//        Material material;
+//    };
 }
 
 #endif // MESH_HPP

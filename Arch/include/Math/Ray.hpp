@@ -1,7 +1,7 @@
 #ifndef ARCH_RAY_HPP
 #define ARCH_RAY_HPP
 
-#include <Core/common/math/Ray.hpp>
+#include <Core/math/Ray.hpp>
 #include "Math/Vector.hpp"
 
 class Ray

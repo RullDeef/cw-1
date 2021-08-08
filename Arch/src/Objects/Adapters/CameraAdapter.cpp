@@ -1,4 +1,4 @@
-#include <Core/common/math/Sphere.hpp>
+#include <Core/math/Sphere.hpp>
 #include "Objects/Adapters/CameraAdapter.hpp"
 
 

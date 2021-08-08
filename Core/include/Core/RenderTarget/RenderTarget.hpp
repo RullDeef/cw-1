@@ -2,7 +2,7 @@
 #define RENDERTARGET_HPP
 
 #include <cstddef>
-#include "Core/common/math/Rect.hpp"
+#include "Core/math/Rect.hpp"
 #include "Core/common/Pixel.hpp"
 
 

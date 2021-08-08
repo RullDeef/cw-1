@@ -1,7 +1,7 @@
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
 
-#include <Core/common/math/Mat.hpp>
+#include <Core/math/Mat.hpp>
 #include "Math/Vector.hpp"
 
 class Matrix

@@ -1,9 +1,9 @@
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
 
-#include "Core/common/containers/arr_t.hpp"
-#include "Core/common/containers/vect_t.hpp"
-#include "Core/common/math/Vec.hpp"
+#include "Core/containers/arr_t.hpp"
+#include "Core/containers/vect_t.hpp"
+#include "Core/math/Vec.hpp"
 
 
 namespace Core

@@ -2,7 +2,7 @@
 #define RECTRENDERER_HPP
 
 #include "Core/common/StatusCodes.hpp"
-#include "Core/common/math/Rect.hpp"
+#include "Core/math/Rect.hpp"
 #include "Core/RenderTarget/RenderTarget.hpp"
 
 

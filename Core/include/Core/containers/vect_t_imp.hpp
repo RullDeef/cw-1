@@ -1,7 +1,7 @@
 #ifndef VECT_T_IMP_HPP
 #define VECT_T_IMP_HPP
 
-#include "Core/common/containers/vect_t.hpp"
+#include "vect_t.hpp"
 
 
 namespace Core

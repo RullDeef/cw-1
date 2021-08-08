@@ -30,6 +30,6 @@ namespace Core
     void push_back(list_t<T>& list, const T& value);
 }
 
-#include "Core/common/containers/list_t_imp.hpp"
+#include "list_t_imp.hpp"
 
 #endif // LIST_T_HPP

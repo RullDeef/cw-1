@@ -1,6 +1,6 @@
 #include <exception>
 #include "Core/Objects/Camera.hpp"
-#include "Core/common/math/Ray.hpp"
+#include "Core/math/Ray.hpp"
 
 using namespace Core;
 

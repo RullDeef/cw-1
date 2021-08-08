@@ -1,7 +1,7 @@
 #ifndef RECT_HPP
 #define RECT_HPP
 
-#include "Core/common/math/Vec.hpp"
+#include "Vec.hpp"
 
 
 namespace Core

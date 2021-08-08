@@ -1,7 +1,7 @@
 #ifndef SPHEREIMP_HPP
 #define SPHEREIMP_HPP
 
-#include "Core/common/math/Sphere.hpp"
+#include "Sphere.hpp"
 
 
 namespace Core

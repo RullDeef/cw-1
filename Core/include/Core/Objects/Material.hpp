@@ -1,9 +1,9 @@
 #ifndef MATERIAL_HPP
 #define MATERIAL_HPP
 
-#include "Core/common/containers/arr_t.hpp"
-#include "Core/common/containers/vect_t.hpp"
-#include "Core/common/Color.hpp"
+#include "Core/containers/arr_t.hpp"
+#include "Core/containers/vect_t.hpp"
+#include "Core/Color.hpp"
 #include "Core/Objects/Light.hpp"
 
 

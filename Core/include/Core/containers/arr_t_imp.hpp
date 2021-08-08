@@ -1,7 +1,7 @@
 #ifndef ARR_T_IMP_HPP
 #define ARR_T_IMP_HPP
 
-#include "Core/common/containers/arr_t.hpp"
+#include "arr_t.hpp"
 
 
 namespace Core

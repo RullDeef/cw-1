@@ -1,7 +1,7 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
-#include "Core/common/math/Vec.hpp"
+#include "Core/math/Vec.hpp"
 #include "Core/common/Pixel.hpp"
 
 

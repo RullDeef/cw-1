@@ -1,7 +1,7 @@
 #ifndef POINTLIGHT_HPP
 #define POINTLIGHT_HPP
 
-#include "Core/common/math/Vec.hpp"
+#include "Core/math/Vec.hpp"
 #include "Core/common/Color.hpp"
 
 namespace Core

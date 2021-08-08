@@ -38,6 +38,6 @@ add_library(Arch STATIC
         src/Math/Ray.cpp
         src/Math/Rect.cpp
         src/Math/Matrix.cpp
-        src/Math/Vector.cpp)
+        src/Math/Vector.cpp src/Objects/Material.cpp)
 
 link_libraries(Arch Core)

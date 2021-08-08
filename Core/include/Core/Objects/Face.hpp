@@ -2,7 +2,7 @@
 #define FACE_HPP
 
 #include "Core/Objects/Vertex.hpp"
-#include "Core/common/containers/arr_t.hpp"
+#include "Core/containers/arr_t.hpp"
 
 
 namespace Core

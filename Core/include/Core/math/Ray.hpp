@@ -1,9 +1,9 @@
 #ifndef RAY_HPP
 #define RAY_HPP
 
-#include "Core/common/math/Vec.hpp"
-#include "Core/common/math/Plane.hpp"
-#include "Core/common/math/Sphere.hpp"
+#include "Vec.hpp"
+#include "Plane.hpp"
+#include "Sphere.hpp"
 #include "Core/Objects/Face.hpp"
 #include "Core/Objects/Mesh.hpp"
 

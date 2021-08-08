@@ -1,4 +1,4 @@
-#include <Core/common/math/Ray.hpp>
+#include <Core/math/Ray.hpp>
 #include "Managers/IManagerFactory.hpp"
 #include "Managers/SelectionManager.hpp"
 #include "Managers/CameraManager.hpp"

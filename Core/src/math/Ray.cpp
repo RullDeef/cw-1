@@ -1,4 +1,4 @@
-#include "Core/common/math/Ray.hpp"
+#include "Core/math/Ray.hpp"
 
 using namespace Core;
 

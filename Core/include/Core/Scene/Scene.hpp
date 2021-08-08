@@ -1,7 +1,7 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
-#include "Core/common/containers/list_t.hpp"
+#include "Core/containers/list_t.hpp"
 #include "Core/Objects/Mesh.hpp"
 
 

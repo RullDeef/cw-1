@@ -1,9 +1,9 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-#include "Core/common/math/Vec.hpp"
-#include "Core/common/math/Mat.hpp"
-#include "Core/common/math/Rect.hpp"
+#include "Core/math/Vec.hpp"
+#include "Core/math/Mat.hpp"
+#include "Core/math/Rect.hpp"
 
 // флаг для компановки рабочего окна в доступную область.
 // если 1 - рабочее окно будет расширено до пределов доступной области (не рекомендуется),

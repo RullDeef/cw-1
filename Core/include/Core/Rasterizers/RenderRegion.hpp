@@ -1,8 +1,8 @@
 #ifndef RENDERREGION_HPP
 #define RENDERREGION_HPP
 
-#include "Core/common/containers/arr_t.hpp"
-#include "Core/common/math/Vec.hpp"
+#include "Core/containers/arr_t.hpp"
+#include "Core/math/Vec.hpp"
 #include "Core/RenderTarget/RenderTarget.hpp"
 #include "Core/RenderTarget/ZBuffer.hpp"
 #include "Core/Objects/Face.hpp"

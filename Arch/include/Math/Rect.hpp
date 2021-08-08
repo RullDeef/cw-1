@@ -1,7 +1,7 @@
 #ifndef ARCH_RECT_HPP
 #define ARCH_RECT_HPP
 
-#include "Core/common/math/Rect.hpp"
+#include "Core/math/Rect.hpp"
 #include "Math/Vector.hpp"
 
 

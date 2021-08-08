@@ -38,6 +38,6 @@ namespace Core
     bool push_front(arr_t<T, capacity>& arr, const T& value);
 }
 
-#include "Core/common/containers/arr_t_imp.hpp"
+#include "arr_t_imp.hpp"
 
 #endif // ARR_T_HPP

@@ -1,7 +1,7 @@
 #ifndef RENDERPARAMS_HPP
 #define RENDERPARAMS_HPP
 
-#include "Core/common/math/Rect.hpp"
+#include "Core/math/Rect.hpp"
 #include "Core/RenderTarget/RenderTarget.hpp"
 #include "Core/Objects/Camera.hpp"
 #include "Core/Scene/Scene.hpp"

@@ -3,6 +3,7 @@
 
 #include <Core/Objects/Mesh.hpp>
 #include "Math/Ray.hpp"
+#include "Objects/Material.hpp"
 
 
 class Mesh
@@ -18,12 +19,18 @@ public:
     Mesh& operator=(const Mesh&) = delete;
     Mesh& operator=(Mesh&&) = delete;
 
-    void setSelected(bool state);
+    Material& getMaterial();
+    [[nodiscard]] const Material& getMaterial() const;
 
+    void setMaterial(const Material& newMaterial);
+
+    void setSelected(bool state);
     bool intersects(double& t, const Ray& ray) const;
 
 private:
     Core::Mesh mesh;
+
+    Material material;
 };
 
 #endif // ARCH_MESH_HPP

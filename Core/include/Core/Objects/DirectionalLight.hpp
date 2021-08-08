@@ -1,7 +1,7 @@
 #ifndef DIRECTIONALLIGHT_HPP
 #define DIRECTIONALLIGHT_HPP
 
-#include "Core/common/math/Vec.hpp"
+#include "Core/math/Vec.hpp"
 #include "Core/common/Color.hpp"
 
 
