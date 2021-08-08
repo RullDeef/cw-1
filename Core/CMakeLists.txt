@@ -29,4 +29,4 @@ add_library(Core STATIC
         src/Objects/Vertex.cpp
         src/RenderTarget/ZBuffer.cpp
         src/RenderTarget/RenderTarget.cpp
-        src/common/math/Ray.cpp)
+        src/common/math/Ray.cpp src/RenderParams.cpp)

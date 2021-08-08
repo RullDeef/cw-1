@@ -54,12 +54,15 @@ Scene::const_iterator Scene::end() const
     return objects.end();
 }
 
-Core::Scene& Scene::getRawScene()
+Core::Scene Scene::getRawScene()
 {
-    return rawScene;
-}
+    auto raw = Core::make_scene();
 
-const Core::Scene& Scene::getRawScene() const
-{
-    return rawScene;
+    for (auto& object : objects)
+    {
+        if (auto adapter = dynamic_cast<ObjectAdapter<Mesh>*>(object.get()))
+            Core::append(raw, Core::Mesh(adapter->getAdaptee()));
+    }
+
+    return raw;
 }

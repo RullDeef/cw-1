@@ -31,6 +31,45 @@ void Core::recalc_mvp(Camera& camera, const Mat& model_mat)
     camera.mvp = camera.proj_mat * inverse(camera.model_mat) * model_mat;
 }
 
+Vec Core::project_viewport_frustrum(const Camera& camera, const Vec& point)
+{
+    Vec res = camera.mvp * point;
+
+    // TODO: вынести функции по работе с вьюпортом
+#if USE_MIN_FIT
+    if (camera.viewport.width > camera.viewport.height)
+        res.x *= double(camera.viewport.height) / camera.viewport.width;
+    else
+        res.y *= double(camera.viewport.width) / camera.viewport.height;
+#else
+    if (camera.viewport.width > camera.viewport.height)
+        res.y *= double(camera.viewport.height) / camera.viewport.width;
+    else
+        res.x *= double(camera.viewport.width) / camera.viewport.height;
+#endif
+
+    return res;
+}
+
+Vec Core::adjust(const Camera& camera, const Vec& pos)
+{
+    Vec res = pos;
+
+#if USE_MIN_FIT
+    if (camera.viewport.width > camera.viewport.height)
+        res.x /= double(camera.viewport.height) / camera.viewport.width;
+    else
+        res.y /= double(camera.viewport.width) / camera.viewport.height;
+#else
+    if (camera.viewport.width > camera.viewport.height)
+        res.y /= double(camera.viewport.height) / camera.viewport.width;
+    else
+        res.x /= double(camera.viewport.width) / camera.viewport.height;
+#endif
+
+    return viewport_adjust(camera, res);
+}
+
 Vec Core::project_frustrum(const Camera& camera, const Vec& pos)
 {
     return camera.mvp * pos;
@@ -58,6 +97,11 @@ Vec Core::viewport_adjust(const Camera& camera, const Vec& pos)
 #endif
 
     return res;
+}
+
+Vec Core::unproject_frustrum(const Camera& camera, const Vec& pos)
+{
+    return inverse(camera.mvp) * pos;
 }
 
 Vec Core::project_point(const Camera& camera, const Vec& pos)

@@ -2,29 +2,11 @@
 #define CORE_HPP
 
 #include "Core/common/StatusCodes.hpp"
-#include "Core/common/math/Rect.hpp"
-#include "Core/RenderTarget/RenderTarget.hpp"
-#include "Core/Objects/Camera.hpp"
-#include "Core/Scene/Scene.hpp"
+#include "Core/RenderParams.hpp"
 
 
 namespace Core
 {
-    struct RenderParams
-    {
-        RenderTarget& renderTarget;
-        const Scene& scene;
-        Camera camera;
-
-        enum class RenderType
-        {
-            FastRenderType,
-            FancyRenderType
-        } renderType;
-
-        Rect viewport;
-    };
-
     StatusCode renderScene(RenderParams renderParams);
 }
 

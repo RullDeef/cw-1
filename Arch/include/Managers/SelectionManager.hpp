@@ -17,6 +17,8 @@ public:
 
     void setResetBeforeToggle(bool value);
 
+    void select(std::shared_ptr<IObject> object);
+
     void toggleSelection(int x, int y);
     void clearSelection();
     void selectAll();

@@ -24,3 +24,8 @@ RenderTarget Core::make_render_target(unsigned char *data, size_t w, size_t h)
 
     return res;
 }
+
+Rect Core::get_viewport(const RenderTarget& renderTarget)
+{
+    return make_rect(renderTarget.width, renderTarget.height);
+}

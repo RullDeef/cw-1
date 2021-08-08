@@ -17,6 +17,11 @@ Mesh::~Mesh()
     Core::destroy(mesh);
 }
 
+void Mesh::setSelected(bool state)
+{
+    mesh.wireframe = state;
+}
+
 Mesh::operator Core::Mesh() const
 {
     return mesh;

@@ -32,6 +32,8 @@ namespace Core
 
     inline double get(const Vec& v, int component);
 
+    inline unsigned int bit_code(const Vec& point);
+
     inline Vec& operator+=(Vec& v1, const Vec& v2);
     inline Vec& operator-=(Vec& v1, const Vec& v2);
     inline Vec& operator*=(Vec& vec, double val);

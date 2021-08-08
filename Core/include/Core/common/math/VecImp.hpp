@@ -97,6 +97,20 @@ namespace Core
             return 0.0;
     }
 
+    inline unsigned int bit_code(const Vec& point)
+    {
+        unsigned int code = 0x000000;
+
+        code |= (point.x < -point.w ? 1 : 0) << 0;
+        code |= (point.x >  point.w ? 1 : 0) << 1;
+        code |= (point.y < -point.w ? 1 : 0) << 2;
+        code |= (point.y >  point.w ? 1 : 0) << 3;
+        code |= (point.z < -point.w ? 1 : 0) << 4;
+        code |= (point.z >  point.w ? 1 : 0) << 5;
+
+        return code;
+    }
+
     inline Vec& operator+=(Vec& v1, const Vec& v2)
     {
         v1 = v1 + v2;

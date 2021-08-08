@@ -18,6 +18,8 @@ public:
     Mesh& operator=(const Mesh&) = delete;
     Mesh& operator=(Mesh&&) = delete;
 
+    void setSelected(bool state);
+
     bool intersects(double& t, const Ray& ray) const;
 
 private:

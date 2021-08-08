@@ -5,6 +5,7 @@
 #include "Managers/SceneManager.hpp"
 #include "Managers/LoadManager.hpp"
 #include "Managers/RenderManager.hpp"
+#include "Managers/SelectionManager.hpp"
 #include "Builders/EmptySceneBuidler.hpp"
 
 
@@ -44,8 +45,8 @@ void LoadManager::loadMesh()
     std::string filename = requestFilename();
     std::shared_ptr<IObject> object = loader->loadMesh(filename);
 
-    /// may be error here (SceneManager is not imported)
     getFactory().getSceneManager()->addObject(object);
+    getFactory().getSelectionManager()->select(object);
 
     onObjectLoad(object);
 }

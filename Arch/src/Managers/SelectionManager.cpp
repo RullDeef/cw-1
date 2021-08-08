@@ -3,6 +3,7 @@
 #include "Managers/SelectionManager.hpp"
 #include "Managers/CameraManager.hpp"
 #include "Managers/SceneManager.hpp"
+#include "Managers/RenderManager.hpp"
 
 
 SelectionManager::SelectionManager(IManagerFactory &managerFactory) : IManager(managerFactory)
@@ -12,6 +13,16 @@ SelectionManager::SelectionManager(IManagerFactory &managerFactory) : IManager(m
 void SelectionManager::setResetBeforeToggle(bool value)
 {
     resetBeforeToggle = value;
+}
+
+void SelectionManager::select(std::shared_ptr<IObject> object)
+{
+    if (resetBeforeToggle)
+        clearSelection();
+
+    object->setSelected(true);
+
+    onSelectionChanged(getSelectedObjects());
 }
 
 void SelectionManager::toggleSelection(int x, int y)
@@ -92,6 +103,7 @@ std::list<std::shared_ptr<IObject>> SelectionManager::getSelectedObjects()
 
 void SelectionManager::onSelectionChanged(std::list<std::shared_ptr<IObject>> selection)
 {
+    getFactory().getRenderManager()->renderActiveScene();
 }
 
 void SelectionManager::onBeforeApplyVisitor(std::list<std::shared_ptr<IObject>> selection)

@@ -32,17 +32,10 @@ void RenderManager::renderActiveScene()
 
 void RenderManager::renderScene(Scene &scene, Camera &camera)
 {
-    Core::RenderTarget renderTarget = getRenderTarget();
-    Core::Rect viewport = getActiveViewport();
-
-    Core::Camera cam = camera;
-    Core::update_viewport(cam, viewport);
-
-    Core::renderScene({
-        renderTarget, scene.getRawScene(), cam,
-        Core::RenderParams::RenderType::FastRenderType,
-        viewport
-    });
+    Core::Scene rawScene = scene.getRawScene();
+    Core::RenderParams params = Core::make_render_params(getRenderTarget(), rawScene, camera);
+    Core::renderScene(params);
+    Core::destroy(rawScene);
 }
 
 void RenderManager::onBeforeSceneRender(Scene &scene, Camera &camera)
@@ -51,7 +44,4 @@ void RenderManager::onBeforeSceneRender(Scene &scene, Camera &camera)
 
 void RenderManager::onSceneRender(Scene &scene, Camera &camera)
 {
-    int a;
-    a = a;
-    a++;
 }

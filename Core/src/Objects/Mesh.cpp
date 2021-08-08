@@ -11,6 +11,9 @@ Mesh Core::make_mesh(size_t faces_count)
     mesh.material = make_material();
     mesh.faces = make_vect<Face>(faces_count);
 
+    mesh.fill = true;
+    mesh.wireframe = false;
+
     return mesh;
 }
 

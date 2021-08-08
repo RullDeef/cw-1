@@ -39,13 +39,6 @@ namespace Core
         const Mesh* meshPtr;
     };
 
-    enum struct LightingModelType
-    {
-        FlatModelType,
-        GouraudModelType,
-        PhongModelType
-    };
-
     // создаёт одну или две области для отображения из полигона и его проекции
     arr_t<RenderRegion, 2> make_render_regions(const Mesh& mesh, Face face, Face projection);
 

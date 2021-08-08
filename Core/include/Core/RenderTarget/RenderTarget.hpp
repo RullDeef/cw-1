@@ -2,6 +2,7 @@
 #define RENDERTARGET_HPP
 
 #include <cstddef>
+#include "Core/common/math/Rect.hpp"
 #include "Core/common/Pixel.hpp"
 
 
@@ -16,6 +17,8 @@ namespace Core
 
     RenderTarget make_render_target(unsigned char* data, size_t w, size_t h);
     bool isValid(const RenderTarget& renderTarget);
+
+    Rect get_viewport(const RenderTarget& renderTarget);
 
     Pixel getPixel(const RenderTarget& renderTarget, size_t row, size_t col);
     void setPixel(const RenderTarget& renderTarget, size_t row, size_t col, Pixel pixel);

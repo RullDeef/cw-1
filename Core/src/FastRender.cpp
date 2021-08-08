@@ -8,21 +8,18 @@ using namespace Core;
 
 static void makeBG(RenderTarget& renderTarget);
 
-static StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Mesh& mesh, Camera& camera);
-static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera);
+static StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Mesh& mesh, Camera& camera,
+                             RenderParams::LightingModelType lighting, FaceCullingType cullingType);
+static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera,
+                                      FaceCullingType cullingType);
 
 static StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face,
-                             const Camera &camera, LightingModelType lighting);
+                             const Camera &camera, RenderParams::LightingModelType lighting);
+static StatusCode renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face,
+                                    const Camera &camera, RenderParams::LightingModelType lighting);
 static StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera);
 
 static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2, Pixel color);
-
-static bool backFaceCulling(const Face& face, const Camera& camera);
-static bool occlusionCulling(const Face& face, const Camera& camera);
-
-// clipping functions
-static Vec projectToFrustrum(const Camera& camera, const Vec& point);
-static unsigned int computeBitCode(const Vec& point, double near, double far);
 
 static Pixel recomputeColor(const Vec& normal);
 static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material);
@@ -36,7 +33,14 @@ StatusCode Core::fastRenderScene(RenderParams renderParams)
     makeBG(renderParams.renderTarget);
 
     for (auto node = renderParams.scene.meshList.head; node; node = node->next)
-        renderWireframeMesh(renderParams.renderTarget, node->value, renderParams.camera);
+        if (node->value.fill)
+            renderMesh(renderParams.renderTarget, zbuffer, node->value, renderParams.camera,
+                       renderParams.sceneLightingModel, renderParams.faceCullingType);
+
+    for (auto node = renderParams.scene.meshList.head; node; node = node->next)
+        if (node->value.wireframe)
+            renderWireframeMesh(renderParams.renderTarget, node->value, renderParams.camera,
+                                renderParams.faceCullingType);
 
     destroy(zbuffer);
     return StatusCode::Success;
@@ -56,7 +60,8 @@ static void makeBG(RenderTarget& renderTarget)
     }
 }
 
-static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera)
+static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera,
+                                      FaceCullingType cullingType)
 {
     recalc_mvp(camera, mesh.model_mat);
 
@@ -64,13 +69,17 @@ static StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& me
     {
         const Face* face;
         at(mesh.faces, i, face);
-        renderWireframeFace(renderTarget, *face, camera);
+
+        if (!culling(*face, camera, cullingType))
+            renderWireframeFace(renderTarget, *face, camera);
     }
 
     return StatusCode::Success;
 }
 
-static StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Mesh& mesh, Camera& camera)
+static StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer,
+                             const Mesh& mesh, Camera& camera, RenderParams::LightingModelType lighting,
+                             FaceCullingType cullingType)
 {
     recalc_mvp(camera, mesh.model_mat);
 
@@ -78,7 +87,9 @@ static StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const
     {
         const Face* face;
         at(mesh.faces, i, face);
-        renderFace(renderTarget, zbuffer, mesh, *face, camera, LightingModelType::PhongModelType);
+
+        if (!culling(*face, camera, cullingType))
+            renderFace(renderTarget, zbuffer, mesh, *face, camera, lighting);
     }
 
     return StatusCode::Success;
@@ -86,19 +97,22 @@ static StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const
 
 static StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera)
 {
-    // if (occlusionCulling(face, camera) || backFaceCulling(face, camera))
-    //     return StatusCode::Success;
-
     Pixel color = to_pixel(Colors::orange);
     Face projection = project_frustrum(face, camera);
 
-    vect_t<Vertex> vertices = make_vect<Vertex>(3);
-    vertices.size = 3;
-    set(vertices, 0, projection.verts[0]);
-    set(vertices, 1, projection.verts[1]);
-    set(vertices, 2, projection.verts[2]);
+    arr_t<Vertex, 3> vertices = make_arr<Vertex, 3>();
+    push_back(vertices, projection.verts[0]);
+    push_back(vertices, projection.verts[1]);
+    push_back(vertices, projection.verts[2]);
 
-    auto clipped = clip_polygon(vertices);
+    double x_aspect = 1.0; /// TODO: extract method
+    double y_aspect = 1.0;
+    if (camera.viewport.width < camera.viewport.height)
+        x_aspect *= double(camera.viewport.height) / camera.viewport.width;
+    else
+        y_aspect *= double(camera.viewport.width) / camera.viewport.height;
+
+    auto clipped = clip_polygon(vertices, x_aspect, y_aspect);
     if (clipped.size >= 3)
     {
         Vertex v1, v2, v3;
@@ -119,21 +133,39 @@ static StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, con
         }
     }
 
-    destroy(clipped);
-    destroy(vertices);
     return StatusCode::Success;
 }
 
-static StatusCode
-renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera,
-           LightingModelType lighting)
+static StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face,
+                             const Camera &camera, RenderParams::LightingModelType lighting)
 {
-    if (occlusionCulling(face, camera) || backFaceCulling(face, camera))
-        return StatusCode::Success;
+    double x_aspect = 1.0;
+    double y_aspect = 1.0;
+    if (camera.viewport.width < camera.viewport.height)
+        x_aspect *= double(camera.viewport.height) / camera.viewport.width;
+    else
+        y_aspect *= double(camera.viewport.width) / camera.viewport.height;
 
+    Face projection = project_frustrum(face, camera);
+    auto projections = clip_face(projection, x_aspect, y_aspect);
+
+    for (size_t i = 0; i < projections.size; i++)
+    {
+        Face clip_face = unproject_frustrum(projections.data[i], camera);
+
+        /// TODO: do not ignore status code
+        renderClippedFace(renderTarget, zbuffer, mesh, clip_face, camera, lighting);
+    }
+
+    return StatusCode::Success;
+}
+
+static StatusCode renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face,
+                                    const Camera &camera, RenderParams::LightingModelType lighting)
+{
     Face projection = project(face, camera);
 
-    if (lighting == LightingModelType::FlatModelType)
+    if (lighting == RenderParams::LightingModelType::FlatModelType)
     {
 //        auto regions = make_flat_render_regions(mesh, face, projection);
 //
@@ -145,7 +177,7 @@ renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face 
 //                renderFlat(renderTarget, zbuffer, *region, camera);
 //        }
     }
-    else if (lighting == LightingModelType::GouraudModelType)
+    else if (lighting == RenderParams::LightingModelType::GouraudModelType)
     {
         auto regions = make_render_regions(mesh, face, projection);
 
@@ -156,7 +188,7 @@ renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face 
                 renderGouraud(renderTarget, zbuffer, *region, camera);
         }
     }
-    else if (lighting == LightingModelType::PhongModelType)
+    else if (lighting == RenderParams::LightingModelType::PhongModelType)
     {
         auto regions = make_render_regions(mesh, face, projection);
 
@@ -173,70 +205,9 @@ renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face 
     return StatusCode::Success;
 }
 
-static bool backFaceCulling(const Face& face, const Camera& camera)
-{
-    Vec p1 = projectToFrustrum(camera, face.verts[0].position);
-    Vec p2 = projectToFrustrum(camera, face.verts[1].position);
-    Vec p3 = projectToFrustrum(camera, face.verts[2].position);
-
-    Vec norm = Core::cross(p2 - p1, p3 - p1);
-    Vec dir = make_dir(0, 0, -1);
-
-    double dot = Core::dot(dir, norm);
-    return dot < 0.0;
-}
-
-static bool occlusionCulling(const Face& face, const Camera& camera)
-{
-    Vec p1 = projectToFrustrum(camera, face.verts[0].position);
-    Vec p2 = projectToFrustrum(camera, face.verts[1].position);
-    Vec p3 = projectToFrustrum(camera, face.verts[2].position);
-
-    unsigned int code1 = computeBitCode(p1, camera.near, camera.far);
-    unsigned int code2 = computeBitCode(p2, camera.near, camera.far);
-    unsigned int code3 = computeBitCode(p3, camera.near, camera.far);
-
-    return code1 & code2 & code3;
-}
-
 static StatusCode renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2, Pixel color)
 {
     return renderLine(renderTarget, p1.x, p1.y, p2.x, p2.y, color);
-}
-
-static Vec projectToFrustrum(const Camera& camera, const Vec& point)
-{
-    Vec res = camera.mvp * point;
-    //perspective_adjust(res);
-
-    // TODO: вынести функции по работе с вьюпортом
-#if USE_MIN_FIT
-    if (camera.viewport.width > camera.viewport.height)
-        res.x *= double(camera.viewport.height) / camera.viewport.width;
-    else
-        res.y *= double(camera.viewport.width) / camera.viewport.height;
-#else
-    if (camera.viewport.width > camera.viewport.height)
-        res.y *= double(camera.viewport.height) / camera.viewport.width;
-    else
-        res.x *= double(camera.viewport.width) / camera.viewport.height;
-#endif
-
-    return res;
-}
-
-static unsigned int computeBitCode(const Vec& point, double near, double far)
-{
-    unsigned int code = 0x000000;
-
-    code |= (point.x < -point.w ? 1 : 0) << 0;
-    code |= (point.x >  point.w ? 1 : 0) << 1;
-    code |= (point.y < -point.w ? 1 : 0) << 2;
-    code |= (point.y >  point.w ? 1 : 0) << 3;
-    code |= (point.z <  near ? 1 : 0) << 4;
-    code |= (point.z >  far ? 1 : 0) << 5;
-
-    return code;
 }
 
 //static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material)

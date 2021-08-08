@@ -14,16 +14,19 @@ ObjectAdapter<Mesh>::~ObjectAdapter()
 
 Mesh& ObjectAdapter<Mesh>::getAdaptee()
 {
+    mesh.setSelected(isSelected());
     return mesh;
 }
 
 const Mesh& ObjectAdapter<Mesh>::getAdaptee() const
 {
+    ((Mesh&)mesh).setSelected(isSelected());
     return mesh;
 }
 
 void ObjectAdapter<Mesh>::accept(IObjectVisitor& visitor)
 {
+    mesh.setSelected(isSelected());
     visitor.visit(*this);
 }
 

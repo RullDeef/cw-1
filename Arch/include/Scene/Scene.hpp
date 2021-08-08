@@ -36,8 +36,7 @@ public:
     const_iterator begin() const;
     const_iterator end() const;
 
-    Core::Scene& getRawScene();
-    const Core::Scene& getRawScene() const;
+    Core::Scene getRawScene();
 
 private:
     containter_t objects;

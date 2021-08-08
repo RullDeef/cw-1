@@ -35,8 +35,14 @@ namespace Core
     Vec view_dir(const Camera& camera);
     Vec view_pos(const Camera& camera);
 
+    Vec project_viewport_frustrum(const Camera& camera, const Vec& pos);
+    Vec adjust(const Camera& camera, const Vec& pos);
+
     Vec project_frustrum(const Camera& camera, const Vec& pos);
     Vec viewport_adjust(const Camera& camera, const Vec& pos);
+
+    Vec unproject_frustrum(const Camera& camera, const Vec& pos);
+
     Vec project_point(const Camera& camera, const Vec& pos);
 }
 

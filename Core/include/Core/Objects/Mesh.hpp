@@ -15,6 +15,9 @@ namespace Core
         Mat model_mat;
         Material material;
         vect_t<Face> faces;
+
+        bool wireframe;
+        bool fill;
     };
 
     Mesh make_mesh(size_t faces_count);
