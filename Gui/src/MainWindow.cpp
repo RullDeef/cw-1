@@ -1,5 +1,6 @@
 #include <Frames/InspectorFrame/InspectorFrame.hpp>
 #include <Frames/SettingsFrame/SettingsFrame.hpp>
+#include <Managers/SelectionManager.hpp>
 #include "Managers/LoadManager.hpp"
 #include "Managers/QtManagerFactory.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
@@ -50,6 +51,10 @@ void MainWindow::setupActions()
     connect(ui.addCamera, &QAction::triggered, this, &MainWindow::addCameraCommand);
     connect(ui.addLightSource, &QAction::triggered, this, &MainWindow::addLightSourceCommand);
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
+
+    connect(ui.deleteSelected, &QAction::triggered, this, &MainWindow::deleteSelected);
+    connect(ui.selectAll, &QAction::triggered, this, &MainWindow::selectAll);
+    connect(ui.invertSelection, &QAction::triggered, this, &MainWindow::invertSelection);
 }
 
 void MainWindow::createNewSceneCommand()
@@ -79,4 +84,19 @@ void MainWindow::saveRenderCommand()
 //        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
 //            return viewportFrame->saveToImage();
 //    }
+}
+
+void MainWindow::deleteSelected()
+{
+    factory->getSelectionManager()->deleteSelected();
+}
+
+void MainWindow::selectAll()
+{
+    factory->getSelectionManager()->selectAll();
+}
+
+void MainWindow::invertSelection()
+{
+    // factory->getSelectionManager()->invertSelection();
 }

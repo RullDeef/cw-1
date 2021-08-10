@@ -26,6 +26,8 @@ public:
     void selectAll();
     void applyVisitor(IObjectVisitor& visitor);
 
+    void deleteSelected();
+
 protected:
     virtual void onSelectionChanged(std::list<std::shared_ptr<IObject>> selection);
     virtual void onBeforeApplyVisitor(std::list<std::shared_ptr<IObject>> selection);

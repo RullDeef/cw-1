@@ -50,6 +50,12 @@
     </widget>
     <addaction name="loadObject"/>
     <addaction name="menu"/>
+    <addaction name="separator"/>
+    <addaction name="action_2"/>
+    <addaction name="separator"/>
+    <addaction name="deleteSelected"/>
+    <addaction name="selectAll"/>
+    <addaction name="invertSelection"/>
    </widget>
    <widget class="QMenu" name="renderMenu">
     <property name="title">
@@ -107,6 +113,38 @@
   <action name="addLightSource">
    <property name="text">
     <string>Источник света</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Выделение</string>
+   </property>
+  </action>
+  <action name="deleteSelected">
+   <property name="text">
+    <string>Удалить</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="selectAll">
+   <property name="text">
+    <string>Выделить всё</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="invertSelection">
+   <property name="text">
+    <string>Обратить</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+A</string>
    </property>
   </action>
  </widget>

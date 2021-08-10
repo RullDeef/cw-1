@@ -40,11 +40,15 @@ void SelectionManager::toggleSelection(int x, int y)
 void SelectionManager::clearSelection()
 {
     setAllObjectsSelection(false);
+
+    onSelectionChanged(getSelectedObjects());
 }
 
 void SelectionManager::selectAll()
 {
     setAllObjectsSelection(true);
+
+    onSelectionChanged(getSelectedObjects());
 }
 
 void SelectionManager::applyVisitor(IObjectVisitor &visitor)
@@ -54,6 +58,15 @@ void SelectionManager::applyVisitor(IObjectVisitor &visitor)
     for (auto& object : selected)
         object->accept(visitor);
     onApplyVisitor(selected);
+}
+
+void SelectionManager::deleteSelected()
+{
+    auto selection = getSelectedObjects();
+    for (auto object : selection)
+        getFactory().getSceneManager()->removeObject(object);
+
+    onSelectionChanged(getSelectedObjects());
 }
 
 std::shared_ptr<IObject> SelectionManager::rayCast(int x, int y)

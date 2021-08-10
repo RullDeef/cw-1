@@ -50,6 +50,29 @@ void SceneManager::addObject(const std::shared_ptr<IObject>& object)
     onAddObject(object);
 }
 
+void SceneManager::removeObject(std::shared_ptr<IObject> object)
+{
+    Scene& scene = getActiveScene();
+    auto iter = std::find(scene.begin(), scene.end(), object);
+    if (iter != scene.end())
+    {
+        onBeforeRemoveObject(object);
+        scene.erase(iter);
+    }
+}
+
+void SceneManager::removeObject(size_t objectId)
+{
+    Scene& scene = getActiveScene();
+    auto iter = std::find_if(scene.begin(), scene.end(),
+     [objectId](const std::shared_ptr<IObject>& obj) { return obj->getId() == objectId; });
+    if (iter != scene.end())
+    {
+        onBeforeRemoveObject(*iter);
+        scene.erase(iter);
+    }
+}
+
 void SceneManager::onAddScene(std::shared_ptr<Scene> scene)
 {
 }
@@ -70,4 +93,5 @@ void SceneManager::onAddObject(std::shared_ptr<IObject> object)
 
 void SceneManager::onBeforeRemoveObject(std::shared_ptr<IObject> object)
 {
+    getFactory().getRenderManager()->renderActiveScene();
 }

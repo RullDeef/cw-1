@@ -27,6 +27,11 @@ protected slots:
 
     void saveRenderCommand();
 
+    /* Selection */
+    void deleteSelected();
+    void selectAll();
+    void invertSelection();
+
 private:
     void setupActions();
 
