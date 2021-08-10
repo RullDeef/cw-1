@@ -2,6 +2,7 @@
 #define ARCH_MESH_HPP
 
 #include <Core/Objects/Mesh.hpp>
+#include <Math/Matrix.hpp>
 #include "Math/Ray.hpp"
 #include "Objects/Material.hpp"
 
@@ -23,6 +24,9 @@ public:
     [[nodiscard]] const Material& getMaterial() const;
 
     void setMaterial(const Material& newMaterial);
+
+    Matrix getModelMatrix() const;
+    void setModelMatrix(const Matrix& matrix);
 
     void setSelected(bool state);
     bool intersects(double& t, const Ray& ray) const;

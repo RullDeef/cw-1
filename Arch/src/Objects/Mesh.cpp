@@ -34,6 +34,16 @@ const Material &Mesh::getMaterial() const
     return material;
 }
 
+Matrix Mesh::getModelMatrix() const
+{
+    return mesh.model_mat;
+}
+
+void Mesh::setModelMatrix(const Matrix &matrix)
+{
+    mesh.model_mat = matrix;
+}
+
 void Mesh::setMaterial(const Material &newMaterial)
 {
     material = newMaterial;

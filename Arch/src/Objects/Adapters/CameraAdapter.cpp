@@ -29,3 +29,15 @@ bool ObjectAdapter<Camera>::intersects(double &t, const Ray &ray)
 
     return ray.intersectsSphere(t, center, radius);
 }
+
+void ObjectAdapter<Camera>::onTransformChange()
+{
+    IObject::onTransformChange();
+
+    double pitch = getRotation().getX();
+    double yaw = getRotation().getY();
+
+    camera.setPosition(getPosition());
+    camera.setPitch(pitch);
+    camera.setYaw(yaw);
+}

@@ -23,10 +23,35 @@ Vector Camera::getPosition() const
     return eye;
 }
 
+double Camera::getPitch() const
+{
+    return pitch;
+}
+
+double Camera::getYaw() const
+{
+    return yaw;
+}
+
 Matrix Camera::getModelMatrix() const
 {
     Matrix res = Matrix::fpsModel(eye, pitch, yaw);
     return res;
+}
+
+void Camera::setPosition(const Vector& newPosition)
+{
+    eye = newPosition;
+}
+
+void Camera::setPitch(double newPitch)
+{
+    pitch = newPitch;
+}
+
+void Camera::setYaw(double newYaw)
+{
+    yaw = newYaw;
 }
 
 void Camera::translate(const Vector& offset)

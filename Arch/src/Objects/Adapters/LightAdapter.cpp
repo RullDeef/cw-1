@@ -29,3 +29,10 @@ bool ObjectAdapter<Light>::intersects(double& t, const Ray& ray)
     return ray.intersectsSphere(t, center, radius);
 }
 
+void ObjectAdapter<Light>::onTransformChange()
+{
+    IObject::onTransformChange();
+
+    light.setPosition(getPosition());
+    light.setDirection(Matrix::rotate(getRotation()) * Vector(1, 0, 0));
+}

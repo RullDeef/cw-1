@@ -57,3 +57,18 @@ const Vector& Light::getPosition() const
 {
     return position;
 }
+
+const Vector &Light::getDirection() const
+{
+    return direction;
+}
+
+void Light::setPosition(const Vector &newPosition)
+{
+    position = newPosition;
+}
+
+void Light::setDirection(const Vector &newDirection)
+{
+    direction = newDirection;
+}

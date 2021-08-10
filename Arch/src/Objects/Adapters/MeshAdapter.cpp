@@ -38,3 +38,10 @@ void ObjectAdapter<Mesh>::onSelectionChange()
 
     mesh.setSelected(isSelected());
 }
+
+void ObjectAdapter<Mesh>::onTransformChange()
+{
+    IObject::onTransformChange();
+
+    mesh.setModelMatrix(getTransform());
+}

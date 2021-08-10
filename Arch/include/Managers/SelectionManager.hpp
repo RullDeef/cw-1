@@ -15,27 +15,27 @@ public:
     explicit SelectionManager(IManagerFactory& managerFactory);
     virtual ~SelectionManager() = default;
 
+    std::list<std::shared_ptr<IObject>> getSelectedObjects();
+
     void setResetBeforeToggle(bool value);
 
     void select(std::shared_ptr<IObject> object);
-
     void toggleSelection(int x, int y);
     void clearSelection();
-    void selectAll();
 
+    void selectAll();
     void applyVisitor(IObjectVisitor& visitor);
 
 protected:
     virtual void onSelectionChanged(std::list<std::shared_ptr<IObject>> selection);
     virtual void onBeforeApplyVisitor(std::list<std::shared_ptr<IObject>> selection);
-    virtual void onApplyVisitor(std::list<std::shared_ptr<IObject>> selection);
 
+    virtual void onApplyVisitor(std::list<std::shared_ptr<IObject>> selection);
 private:
     std::shared_ptr<IObject> rayCast(int x, int y);
-    std::shared_ptr<IObject> rayCast(const Scene& scene, const Ray& ray);
 
+    std::shared_ptr<IObject> rayCast(const Scene& scene, const Ray& ray);
     void setAllObjectsSelection(bool selected);
-    std::list<std::shared_ptr<IObject>> getSelectedObjects();
 
     bool resetBeforeToggle = true;
 };

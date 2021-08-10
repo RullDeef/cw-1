@@ -19,6 +19,9 @@ public:
     virtual void accept(IObjectVisitor& visitor) override;
     virtual bool intersects(double& t, const Ray& ray) override;
 
+protected:
+    void onTransformChange() override;
+
 private:
     Camera camera;
 };

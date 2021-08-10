@@ -20,7 +20,11 @@ public:
 
     operator Core::Light() const;
 
-    const Vector& getPosition() const;
+    [[nodiscard]] const Vector& getPosition() const;
+    [[nodiscard]] const Vector& getDirection() const;
+
+    void setPosition(const Vector& newPosition);
+    void setDirection(const Vector& newDirection);
 
 private:
     Type type;

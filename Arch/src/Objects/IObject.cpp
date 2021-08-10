@@ -31,3 +31,40 @@ void IObject::setSelected(bool newSelected) noexcept
     selected = newSelected;
     onSelectionChange();
 }
+
+const Vector &IObject::getPosition() const noexcept
+{
+    return position;
+}
+
+const Vector &IObject::getRotation() const noexcept
+{
+    return rotation;
+}
+
+const Vector &IObject::getScale() const noexcept
+{
+    return scale;
+}
+Matrix IObject::getTransform() const
+{
+    return Matrix::trsModel(position, rotation, scale);
+}
+
+void IObject::setPosition(const Vector &value)
+{
+    position = value;
+    onTransformChange();
+}
+
+void IObject::setRotation(const Vector &value)
+{
+    rotation = value;
+    onTransformChange();
+}
+
+void IObject::setScale(const Vector &value)
+{
+    scale = value;
+    onTransformChange();
+}

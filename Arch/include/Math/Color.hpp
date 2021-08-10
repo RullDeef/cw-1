@@ -19,6 +19,16 @@ public:
     inline operator Core::Color() const { return Core::make_color(red, green, blue, alpha); }
     inline operator Core::Pixel() const { return Core::to_pixel(*this); }
 
+    inline double getRed() const noexcept { return red; }
+    inline double getGreen() const noexcept { return green; }
+    inline double getBlue() const noexcept { return blue; }
+    inline double getAlpha() const noexcept { return alpha; }
+
+    inline int getRedByte() const noexcept { return 255 * red; }
+    inline int getGreenByte() const noexcept { return 255 * green; }
+    inline int getBlueByte() const noexcept { return 255 * blue; }
+    inline int getAlphaByte() const noexcept { return 255 * alpha; }
+
     constexpr static Color transparent() noexcept { return Color(0.0, 0.0, 0.0, 0.0); }
     constexpr static Color black() noexcept { return Color(0.0, 0.0, 0.0, 1.0); }
     constexpr static Color white() noexcept { return Color(1.0, 1.0, 1.0, 1.0); }

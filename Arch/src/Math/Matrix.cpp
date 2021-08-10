@@ -65,6 +65,15 @@ Matrix Matrix::rotate(const Vector &axis, double angle)
     return res;
 }
 
+Matrix Matrix::rotate(const Vector& angles)
+{
+    auto mx = rotate(Vector(1, 0, 0), angles.getX());
+    auto my = rotate(Vector(0, 1, 0), angles.getY());
+    auto mz = rotate(Vector(0, 0, 1), angles.getZ());
+
+    return mz * my * mx;
+}
+
 Matrix Matrix::scale(double fx, double fy, double fz)
 {
     Matrix res = identity();
@@ -273,7 +282,7 @@ Matrix Matrix::inverse() const
 
 Matrix::operator Core::Mat() const
 {
-    Core::Mat res;
+    Core::Mat res{};
 
     for (int i = 0; i < 16; i++)
         res.data[i] = data[i];
@@ -312,6 +321,11 @@ Matrix Matrix::fpsModel(const Vector& eye, double pitch, double yaw)
     res.data[15] = 1;
 
     return res.inverse();
+}
+
+Matrix Matrix::trsModel(const Vector& position, const Vector& rotation, const Vector& scale)
+{
+    return Matrix::scale(scale) * rotate(rotation) * translate(position);
 }
 
 Matrix operator*(double val, const Matrix &mat)

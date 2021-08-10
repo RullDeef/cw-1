@@ -21,6 +21,7 @@ public:
 
 protected:
     void onSelectionChange() override;
+    void onTransformChange() override;
 
 private:
     Mesh mesh;

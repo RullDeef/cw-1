@@ -15,8 +15,14 @@ public:
 
     operator Core::Camera() const;
 
-    Vector getPosition() const;
-    Matrix getModelMatrix() const;
+    [[nodiscard]] Vector getPosition() const;
+    [[nodiscard]] double getPitch() const;
+    [[nodiscard]] double getYaw() const;
+    [[nodiscard]] Matrix getModelMatrix() const;
+
+    void setPosition(const Vector& newPosition);
+    void setPitch(double newPitch);
+    void setYaw(double newYaw);
 
     void translate(const Vector& offset);
     void rotate(double dPitch, double dYaw);
