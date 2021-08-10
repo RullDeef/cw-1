@@ -21,17 +21,11 @@ Scene::~Scene()
 void Scene::insert(containter_t::const_iterator pos, const std::shared_ptr<IObject> &object)
 {
     objects.insert(pos, object);
-
-    /// TODO: remove black magic
-    if (auto adapter = dynamic_cast<ObjectAdapter<Mesh>*>(object.get()))
-        Core::append(rawScene, Core::Mesh(adapter->getAdaptee()));
 }
 
 void Scene::erase(containter_t::const_iterator pos)
 {
     objects.erase(pos);
-
-    // TODO: update raw scene here
 }
 
 Scene::iterator Scene::begin()
@@ -54,15 +48,17 @@ Scene::const_iterator Scene::end() const
     return objects.end();
 }
 
-Core::Scene Scene::getRawScene()
+Scene::operator Core::Scene() const
 {
-    auto raw = Core::make_scene();
+    Core::clear_scene((Core::Scene&)rawScene);
 
     for (auto& object : objects)
     {
         if (auto adapter = dynamic_cast<ObjectAdapter<Mesh>*>(object.get()))
-            Core::append(raw, Core::Mesh(adapter->getAdaptee()));
+            Core::append((Core::Scene&)rawScene, Core::Mesh(adapter->getAdaptee()));
+        else if (auto adapter = dynamic_cast<ObjectAdapter<Light>*>(object.get()))
+            Core::append((Core::Scene&)rawScene, adapter->getAdaptee());
     }
 
-    return raw;
+    return rawScene;
 }

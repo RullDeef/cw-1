@@ -30,4 +30,4 @@ add_library(Core STATIC
         src/RenderTarget/ZBuffer.cpp
         src/RenderTarget/RenderTarget.cpp
         src/math/Ray.cpp
-        src/RenderParams.cpp)
+        src/RenderParams.cpp src/Objects/Light.cpp)

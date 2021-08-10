@@ -1,13 +1,15 @@
 
 #include <Objects/Adapters/CameraAdapter.hpp>
+#include <Objects/Adapters/LightAdapter.hpp>
+
 
 #include "Objects/ObjectAdapter.hpp"
 #include "Visitors/IObjectVisitor.hpp"
 
 
 template<typename T>
-ObjectAdapter<T>::ObjectAdapter(size_t id, T adaptee, AdapterPolicy policy)
-    : adaptee(adaptee), IObject(id), policy(policy)
+ObjectAdapter<T>::ObjectAdapter(size_t id, T adaptee)
+    : adaptee(adaptee), IObject(id)
 {
 }
 

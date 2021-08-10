@@ -1,7 +1,8 @@
 #ifndef ARCH_COLOR_HPP
 #define ARCH_COLOR_HPP
 
-#include "Core/Color.hpp"
+#include <Core/common/Color.hpp>
+#include "Math/Vector.hpp"
 
 
 class Color
@@ -9,9 +10,12 @@ class Color
 public:
     constexpr explicit Color(double red = 0.0, double green = 0.0, double blue = 0.0, double alpha = 1.0) noexcept
         : red(red), green(green), blue(blue), alpha(alpha) {}
-    Color(const Core::Color& col) noexcept
+    Color(const Vector& v) noexcept
+        : red(v.getX()), green(v.getY()), blue(v.getZ()), alpha(v.getW()) {}
+    constexpr Color(const Core::Color& col) noexcept
         : red(col.red), green(col.green), blue(col.blue), alpha(col.alpha) {}
 
+    inline operator Vector() const { return Vector(red, green, blue, alpha); }
     inline operator Core::Color() const { return Core::make_color(red, green, blue, alpha); }
     inline operator Core::Pixel() const { return Core::to_pixel(*this); }
 

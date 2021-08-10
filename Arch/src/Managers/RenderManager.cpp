@@ -32,10 +32,8 @@ void RenderManager::renderActiveScene()
 
 void RenderManager::renderScene(Scene &scene, Camera &camera)
 {
-    Core::Scene rawScene = scene.getRawScene();
-    Core::RenderParams params = Core::make_render_params(getRenderTarget(), rawScene, camera);
+    Core::RenderParams params = Core::make_render_params(getRenderTarget(), scene, camera);
     Core::renderScene(params);
-    Core::destroy(rawScene);
 }
 
 void RenderManager::onBeforeSceneRender(Scene &scene, Camera &camera)

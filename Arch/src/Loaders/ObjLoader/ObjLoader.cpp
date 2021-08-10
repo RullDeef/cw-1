@@ -5,10 +5,11 @@
 #include <sstream>
 #include <string>
 #include <cstring>
-#include <Loaders/ObjLoader/ObjFace.hpp>
-#include "Core/Objects/Mesh.hpp"
+#include "Objects/Mesh.hpp"
 #include "Objects/ObjectAdapter.hpp"
 #include "Scene/Scene.hpp"
+#include "Builders/DefaultIDGenerator.hpp"
+#include "Loaders/ObjLoader/ObjFace.hpp"
 #include "Loaders/ObjLoader/ObjLoader.hpp"
 
 
@@ -26,17 +27,20 @@ std::unique_ptr<IObject> ObjLoader::loadMesh(const std::string& filename)
     auto uvs = extractTextureUV(file);
     auto norms = extractNormals(file);
 
+    auto mtllibnames = extractMatLibs(file, filename);
+    auto mtllibs = loadMaterials(mtllibnames);
+
     auto meshes = extractMeshesList(file);
 
     /// TODO: get rid of assumption (hint: use group object adapter)
     /// ASSUMPTION (!)
     /// mesh list size == 1
 
-    size_t id = -1;
-    Mesh mesh = constructMesh(meshes.front().second, verts, uvs, norms);
+    size_t id = DefaultIDGenerator().generate();
+    Mesh mesh = constructMesh(meshes.front(), verts, uvs, norms, mtllibs);
 
     auto object = std::unique_ptr<IObject>(new ObjectAdapter<Mesh>(id, std::move(mesh)));
-    object->setName(meshes.front().first);
+    object->setName(meshes.front().getName());
     return object;
 }
 std::unique_ptr<IObject> ObjLoader::loadCamera(const std::string &filename)
@@ -109,33 +113,109 @@ std::vector<Vector> ObjLoader::extractNormals(std::ifstream &file)
     return result;
 }
 
-std::list<ObjLoader::ObjObject> ObjLoader::extractMeshesList(std::ifstream &file)
+std::vector<std::string> ObjLoader::extractMatLibs(std::ifstream& file, std::string baseFilename)
+{
+    file.clear();
+    file.seekg(0, std::ios_base::beg);
+
+    std::vector<std::string> result;
+    baseFilename = baseFilename.substr(0, 1 + baseFilename.find_last_of("/\\"));
+
+    std::string line;
+    while (std::getline(file, line))
+        if (acceptWhenToken(line, "mtllib"))
+            result.push_back(baseFilename + line);
+
+    return result;
+}
+
+std::list<ObjObject> ObjLoader::extractMeshesList(std::ifstream &file)
 {
     file.clear();
     file.seekg(0, std::ios_base::beg);
 
     std::list<ObjObject> result;
-    std::vector<ObjFace> currFaces;
-    std::string currName;
+    ObjObject currObject;
 
     std::string line;
     while (std::getline(file, line))
     {
         if (acceptWhenToken(line, "o"))
         {
-            result.emplace_back(currName, currFaces);
-            currName = line;
-            currFaces.clear();
+            result.push_back(currObject);
+            currObject = ObjObject(line);
         }
+        else if (acceptWhenToken(line, "usemtl"))
+            currObject.setMaterialName(line);
         else if (acceptWhenToken(line, "f"))
+            for (const auto& face : ObjFace(line).triangulate())
+                currObject.addFace(face);
+    }
+
+    result.push_back(currObject);
+    result.erase(result.begin());
+
+    return result;
+}
+
+std::map<std::string, Material> ObjLoader::loadMaterials(const std::vector<std::string>& filenames)
+{
+    std::map<std::string, Material> result;
+
+    for (const auto& filename : filenames)
+        result.merge(loadMaterials(filename));
+
+    return result;
+}
+
+std::map<std::string, Material> ObjLoader::loadMaterials(const std::string& filename)
+{
+    std::map<std::string, Material> result;
+
+    std::ifstream file(filename);
+    std::string line;
+
+    std::string currName;
+    Material currMat;
+    while (std::getline(file, line))
+    {
+        if (acceptWhenToken(line, "newmtl"))
         {
-            auto triangles = ObjFace(line).triangulate();
-            currFaces.insert(currFaces.end(), triangles.begin(), triangles.end());
+            if (!currName.empty())
+                result[currName] = currMat;
+
+            currName = line;
+            currMat = Material();
+        }
+        else if (acceptWhenToken(line, "Ka"))
+        {
+            auto color = extractVector3(line, 1.0);
+            currMat.setAmbientColor(color);
+        }
+        else if (acceptWhenToken(line, "kd"))
+        {
+            auto color = extractVector3(line, 1.0);
+            currMat.setDiffuseColor(color);
+        }
+        else if (acceptWhenToken(line, "Ks"))
+        {
+            auto color = extractVector3(line, 1.0);
+            currMat.setSpecularColor(color);
+        }
+        else if (acceptWhenToken(line, "Ns"))
+        {
+            double value = extractScalar(line);
+            currMat.setSpecularHighlight(value);
+        }
+        else if (acceptWhenToken(line, "d"))
+        {
+            double value = extractScalar(line);
+            currMat.setOpacity(value);
         }
     }
 
-    result.emplace_back(currName, currFaces);
-    result.erase(result.begin());
+    if (!currName.empty())
+        result[currName] = currMat;
 
     return result;
 }
@@ -160,12 +240,17 @@ std::string ObjLoader::trim(const std::string &str)
     return str.substr(first_i, last_i);
 }
 
+double ObjLoader::extractScalar(const std::string &str)
+{
+    double value;
+    std::stringstream(str) >> value;
+    return value;
+}
+
 Vector ObjLoader::extractVector2(const std::string &str)
 {
-    std::istringstream ss(str);
     double x, y;
-
-    ss >> x >> y;
+    std::istringstream(str) >> x >> y;
     return Vector(x, y, 0.0, 0.0);
 }
 
@@ -178,12 +263,13 @@ Vector ObjLoader::extractVector3(const std::string& str, double w)
     return Vector(x, y, z, w);
 }
 
-Mesh ObjLoader::constructMesh(const ObjLoader::ObjFaceList &faces, const std::vector<Vector> &positions,
-                              const std::vector<Vector> &textures, const std::vector<Vector> &normals)
+Mesh ObjLoader::constructMesh(const ObjObject &object, const std::vector<Vector> &positions,
+                              const std::vector<Vector> &textures, const std::vector<Vector> &normals,
+                              const std::map<std::string, Material>& materialLib)
 {
-    Core::Mesh mesh = Core::make_mesh(faces.size());
+    Core::Mesh mesh = Core::make_mesh(object.end() - object.begin());
 
-    for (const auto& objFace : faces)
+    for (const auto& objFace : object)
     {
         const auto& vList = objFace.getVertexList();
 
@@ -209,5 +295,10 @@ Mesh ObjLoader::constructMesh(const ObjLoader::ObjFaceList &faces, const std::ve
         Core::add_face(mesh, face);
     }
 
-    return Mesh(mesh);
+    Mesh result(mesh);
+
+    if (!object.getMaterialName().empty())
+        result.setMaterial(materialLib.at(object.getMaterialName()));
+
+    return result;
 }

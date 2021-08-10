@@ -41,7 +41,15 @@
     <property name="title">
      <string>Объект</string>
     </property>
+    <widget class="QMenu" name="menu">
+     <property name="title">
+      <string>Добавить</string>
+     </property>
+     <addaction name="addCamera"/>
+     <addaction name="addLightSource"/>
+    </widget>
     <addaction name="loadObject"/>
+    <addaction name="menu"/>
    </widget>
    <widget class="QMenu" name="renderMenu">
     <property name="title">
@@ -89,6 +97,16 @@
   <action name="createNewScene">
    <property name="text">
     <string>Новая</string>
+   </property>
+  </action>
+  <action name="addCamera">
+   <property name="text">
+    <string>Камеру</string>
+   </property>
+  </action>
+  <action name="addLightSource">
+   <property name="text">
+    <string>Источник света</string>
    </property>
   </action>
  </widget>

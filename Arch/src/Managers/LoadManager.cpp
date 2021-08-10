@@ -1,4 +1,6 @@
 #include <utility>
+#include <Builders/CameraBuilders/DefaultCameraBuilder.hpp>
+#include <Builders/LightBuilders/AmbientLightBuilder.hpp>
 #include "Objects/IObject.hpp"
 #include "Loaders/ILoader.hpp"
 #include "Managers/IManagerFactory.hpp"
@@ -65,6 +67,24 @@ void LoadManager::loadLight()
 {
     std::string filename = requestFilename();
     std::shared_ptr<IObject> object = loader->loadLight(filename);
+
+    getFactory().getSceneManager()->addObject(object);
+
+    onObjectLoad(object);
+}
+
+void LoadManager::buildCamera()
+{
+    std::shared_ptr<IObject> object = DefaultCameraBuilder().build();
+
+    getFactory().getSceneManager()->addObject(object);
+
+    onObjectLoad(object);
+}
+
+void LoadManager::buildLight()
+{
+    std::shared_ptr<IObject> object = AmbientLightBuilder().build();
 
     getFactory().getSceneManager()->addObject(object);
 

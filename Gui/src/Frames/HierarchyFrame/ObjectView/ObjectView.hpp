@@ -9,6 +9,8 @@ class ObjectView : public QTableView
 public:
     explicit ObjectView(QWidget* parent = nullptr);
 
+protected:
+    void doItemsLayout() override;
 };
 
 

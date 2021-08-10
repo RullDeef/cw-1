@@ -16,7 +16,6 @@ include_directories(../Core/include)
 include_directories(include)
 
 add_library(Arch STATIC
-        src/Arch.cpp
         src/Managers/SelectionManager.cpp
         src/Managers/LoadManager.cpp
         src/Managers/RenderManager.cpp
@@ -38,6 +37,6 @@ add_library(Arch STATIC
         src/Math/Ray.cpp
         src/Math/Rect.cpp
         src/Math/Matrix.cpp
-        src/Math/Vector.cpp src/Objects/Material.cpp)
+        src/Math/Vector.cpp src/Objects/Material.cpp src/Builders/CameraBuilders/DefaultCameraBuilder.cpp src/Builders/DefaultIDGenerator.cpp src/Builders/LightBuilders/AmbientLightBuilder.cpp src/Objects/Light.cpp src/Objects/Adapters/LightAdapter.cpp)
 
 link_libraries(Arch Core)

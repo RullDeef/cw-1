@@ -21,6 +21,10 @@ protected slots:
     void createNewSceneCommand();
 
     void loadObjectCommand();
+
+    void addCameraCommand();
+    void addLightSourceCommand();
+
     void saveRenderCommand();
 
 private:

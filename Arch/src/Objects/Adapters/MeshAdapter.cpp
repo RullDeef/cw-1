@@ -14,23 +14,27 @@ ObjectAdapter<Mesh>::~ObjectAdapter()
 
 Mesh& ObjectAdapter<Mesh>::getAdaptee()
 {
-    mesh.setSelected(isSelected());
     return mesh;
 }
 
 const Mesh& ObjectAdapter<Mesh>::getAdaptee() const
 {
-    ((Mesh&)mesh).setSelected(isSelected());
     return mesh;
 }
 
 void ObjectAdapter<Mesh>::accept(IObjectVisitor& visitor)
 {
-    mesh.setSelected(isSelected());
     visitor.visit(*this);
 }
 
 bool ObjectAdapter<Mesh>::intersects(double &t, const Ray &ray)
 {
     return mesh.intersects(t, ray);
+}
+
+void ObjectAdapter<Mesh>::onSelectionChange()
+{
+    IObject::onSelectionChange();
+
+    mesh.setSelected(isSelected());
 }

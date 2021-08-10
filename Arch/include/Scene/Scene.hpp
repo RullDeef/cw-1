@@ -25,7 +25,6 @@ public:
     virtual ~Scene();
 
     Scene& operator=(const Scene&) = delete;
-    Scene& operator=(Scene&&) = delete;
 
     void insert(const_iterator pos, const objptr_t& object);
     void erase(const_iterator pos);
@@ -36,7 +35,7 @@ public:
     const_iterator begin() const;
     const_iterator end() const;
 
-    Core::Scene getRawScene();
+    operator Core::Scene() const;
 
 private:
     containter_t objects;

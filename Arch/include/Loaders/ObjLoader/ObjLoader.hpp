@@ -3,19 +3,17 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include "Math/Vector.hpp"
 #include "Objects/Mesh.hpp"
 #include "Loaders/ILoader.hpp"
 #include "Loaders/ObjLoader/ObjVertex.hpp"
-#include "Loaders/ObjLoader/ObjFace.hpp"
+#include "Loaders/ObjLoader/ObjObject.hpp"
 
 
 class ObjLoader : public ILoader
 {
 public:
-    using ObjFaceList = std::vector<ObjFace>;
-    using ObjObject = std::pair<std::string, ObjFaceList>;
-
     std::unique_ptr<Scene> loadScene(const std::string& filename) override;
 
     std::unique_ptr<IObject> loadMesh(const std::string& filename) override;
@@ -27,10 +25,18 @@ private:
     static std::vector<Vector> extractTextureUV(std::ifstream& file);
     static std::vector<Vector> extractNormals(std::ifstream& file);
 
+    static std::vector<std::string> extractMatLibs(std::ifstream& file, std::string baseFilename);
+
     static std::list<ObjObject> extractMeshesList(std::ifstream& file);
 
-    static Mesh constructMesh(const ObjFaceList &faces, const std::vector<Vector> &positions,
-                              const std::vector<Vector> &textures, const std::vector<Vector> &normals);
+    static std::map<std::string, Material> loadMaterials(const std::vector<std::string>& filenames);
+    static std::map<std::string, Material> loadMaterials(const std::string& filename);
+
+    static Mesh constructMesh(const ObjObject &objObject, const std::vector<Vector> &positions,
+                              const std::vector<Vector> &textures, const std::vector<Vector> &normals,
+                              const std::map<std::string, Material>& materialLib);
+
+    static double extractScalar(const std::string& str);
 
     static Vector extractVector2(const std::string& str);
     static Vector extractVector3(const std::string& str, double w);
@@ -39,8 +45,6 @@ private:
 
     static std::string trim(const std::string& str);
 
-
-    /// TODO: static std::map<std::string, Core::Material> loadMaterials(const std::string& filename);
 };
 
 #endif // OBJLOADER_HPP

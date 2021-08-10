@@ -19,6 +19,9 @@ public:
     void loadCamera();
     void loadLight();
 
+    void buildCamera();
+    void buildLight();
+
 protected:
     void setLoader(std::shared_ptr<ILoader> newLoader);
 

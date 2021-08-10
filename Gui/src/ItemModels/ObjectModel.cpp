@@ -13,15 +13,6 @@ ObjectModel::ObjectModel(Scene& scene, QObject *parent)
 {
 }
 
-void ObjectModel::setScene(Scene& newScene)
-{
-    beginResetModel();
-    scene = &newScene;
-    endResetModel();
-
-    emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
-}
-
 int ObjectModel::rowCount(const QModelIndex &parent) const
 {
     if (!scene)
@@ -53,4 +44,36 @@ QVariant ObjectModel::data(const QModelIndex &index, int role) const
     list.push_back(selected);
 
     return list.value(index.column());
+}
+
+QVariant ObjectModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role == Qt::DisplayRole)
+    {
+        if (section == 0)
+            return "Object name";
+        else if (section == 1)
+            return "Visible";
+        else if (section == 2)
+            return "Selected";
+        else
+            return "";
+    }
+
+    return QVariant();
+}
+
+void ObjectModel::setScene(Scene& newScene)
+{
+    beginResetModel();
+    scene = &newScene;
+    endResetModel();
+
+    emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
+}
+
+void ObjectModel::objectUpdated(std::shared_ptr<IObject> object)
+{
+    /// TODO: emit soft signal
+    emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
 }

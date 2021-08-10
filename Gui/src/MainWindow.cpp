@@ -47,6 +47,8 @@ void MainWindow::setupActions()
 {
     connect(ui.createNewScene, &QAction::triggered, this, &MainWindow::createNewSceneCommand);
     connect(ui.loadObject, &QAction::triggered, this, &MainWindow::loadObjectCommand);
+    connect(ui.addCamera, &QAction::triggered, this, &MainWindow::addCameraCommand);
+    connect(ui.addLightSource, &QAction::triggered, this, &MainWindow::addLightSourceCommand);
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
 }
 
@@ -58,6 +60,16 @@ void MainWindow::createNewSceneCommand()
 void MainWindow::loadObjectCommand()
 {
     factory->getLoadManager()->loadMesh();
+}
+
+void MainWindow::addCameraCommand()
+{
+    factory->getLoadManager()->buildCamera();
+}
+
+void MainWindow::addLightSourceCommand()
+{
+    factory->getLoadManager()->buildLight();
 }
 
 void MainWindow::saveRenderCommand()

@@ -18,6 +18,7 @@ const std::string &IObject::getName() const noexcept
 void IObject::setName(const std::string &newName)
 {
     name = newName;
+    onNameChange();
 }
 
 bool IObject::isSelected() const noexcept
@@ -28,4 +29,5 @@ bool IObject::isSelected() const noexcept
 void IObject::setSelected(bool newSelected) noexcept
 {
     selected = newSelected;
+    onSelectionChange();
 }

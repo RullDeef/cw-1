@@ -25,6 +25,10 @@ public:
 
     virtual bool intersects(double& t, const Ray& ray) = 0;
 
+protected:
+    virtual void onNameChange() {}
+    virtual void onSelectionChange() {}
+
 private:
     const size_t id;
     std::string name;

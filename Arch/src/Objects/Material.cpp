@@ -20,3 +20,28 @@ Material::operator Core::Material() const
 
     return mat;
 }
+
+void Material::setAmbientColor(const Color &color)
+{
+    ambientColor = color;
+}
+
+void Material::setDiffuseColor(const Color &color)
+{
+    diffuseColor = color;
+}
+
+void Material::setSpecularColor(const Color &color)
+{
+    specularColor = color;
+}
+
+void Material::setSpecularHighlight(double value)
+{
+    specularHighlight = value;
+}
+
+void Material::setOpacity(double value)
+{
+    opacity = value;
+}

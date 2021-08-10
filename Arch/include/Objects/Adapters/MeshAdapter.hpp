@@ -19,6 +19,9 @@ public:
 
     virtual bool intersects(double& t, const Ray& ray) override;
 
+protected:
+    void onSelectionChange() override;
+
 private:
     Mesh mesh;
 };

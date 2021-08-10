@@ -17,6 +17,9 @@ public:
     explicit HierarchyFrame(IManagerFactory& managerFactory, QWidget* parent = nullptr);
     virtual ~HierarchyFrame() = default;
 
+protected slots:
+    void sceneChangedSlot();
+
     void updateHierarchy();
 
 protected:
