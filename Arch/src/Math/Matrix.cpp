@@ -79,8 +79,8 @@ Matrix Matrix::scale(double fx, double fy, double fz)
     Matrix res = identity();
 
     res.data[0] = fx;
-    res.data[1] = fy;
-    res.data[2] = fz;
+    res.data[5] = fy;
+    res.data[10] = fz;
 
     return res;
 }

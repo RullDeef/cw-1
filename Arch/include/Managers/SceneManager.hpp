@@ -23,6 +23,8 @@ public:
     void removeObject(std::shared_ptr<IObject> object);
     void removeObject(size_t objectId);
 
+    void triggerSceneChanged();
+
 protected:
     virtual void onAddScene(std::shared_ptr<Scene> scene);
     virtual void onBeforeRemoveScene(std::shared_ptr<Scene> scene);

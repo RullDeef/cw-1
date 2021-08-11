@@ -95,3 +95,8 @@ void SceneManager::onBeforeRemoveObject(std::shared_ptr<IObject> object)
 {
     getFactory().getRenderManager()->renderActiveScene();
 }
+
+void SceneManager::triggerSceneChanged()
+{
+    onActiveSceneChange(*activeScene);
+}

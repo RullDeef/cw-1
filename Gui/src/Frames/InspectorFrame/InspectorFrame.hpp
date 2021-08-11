@@ -16,6 +16,8 @@ public:
 protected slots:
     void updateInspectee();
 
+    void objectChanged();
+
 private:
     IManagerFactory* managerFactory;
     InspectorWidget* inspectorWidget;

@@ -2,7 +2,7 @@
 #define QTRENDERMANAGER_HPP
 
 #include <QObject>
-#include <Widgets/RenderWidget.hpp>
+#include <Widgets/RenderWidget/RenderWidget.hpp>
 #include <Managers/RenderManager.hpp>
 
 

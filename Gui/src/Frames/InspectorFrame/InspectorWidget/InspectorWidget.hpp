@@ -25,8 +25,15 @@ public:
     void inspect(nullptr_t);
     void inspect(const std::shared_ptr<IObject>& newObject);
 
+signals:
+    void objectChangedSignal();
+
 protected:
     void inspect(ObjectAdapter<Mesh>& object);
+
+protected slots:
+    void renameObject();
+    void applyTransform();
 
 private:
     Ui::InspectorWidget *ui;

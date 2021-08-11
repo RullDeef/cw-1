@@ -1,5 +1,7 @@
 #include "Managers/QtSelectionManager.hpp"
 #include "InspectorFrame.hpp"
+#include <Managers/RenderManager.hpp>
+#include <Managers/SceneManager.hpp>
 
 
 InspectorFrame::InspectorFrame(IManagerFactory &managerFactory, QWidget *parent)
@@ -9,6 +11,7 @@ InspectorFrame::InspectorFrame(IManagerFactory &managerFactory, QWidget *parent)
 
     auto selectionManager = dynamic_cast<QtSelectionManager*>(managerFactory.getSelectionManager().get());
     connect(selectionManager, &QtSelectionManager::selectionChangedSignal, this, &InspectorFrame::updateInspectee);
+    connect(inspectorWidget, &InspectorWidget::objectChangedSignal, this, &InspectorFrame::objectChanged);
 }
 
 void InspectorFrame::updateInspectee()
@@ -21,3 +24,7 @@ void InspectorFrame::updateInspectee()
         inspectorWidget->inspect(selection.front());
 }
 
+void InspectorFrame::objectChanged()
+{
+    managerFactory->getSceneManager()->triggerSceneChanged();
+}

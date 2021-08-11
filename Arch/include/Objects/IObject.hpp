@@ -23,9 +23,9 @@ public:
     [[nodiscard]] bool isSelected() const noexcept;
     void setSelected(bool newSelected) noexcept;
 
-    [[nodiscard]] const Vector& getPosition() const noexcept;
-    [[nodiscard]] const Vector& getRotation() const noexcept;
-    [[nodiscard]] const Vector& getScale() const noexcept;
+    [[nodiscard]] Vector getPosition() const noexcept;
+    [[nodiscard]] Vector getRotation() const noexcept;
+    [[nodiscard]] Vector getScale() const noexcept;
 
     [[nodiscard]] Matrix getTransform() const;
 

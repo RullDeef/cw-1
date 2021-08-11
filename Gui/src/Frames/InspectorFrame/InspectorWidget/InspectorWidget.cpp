@@ -1,11 +1,15 @@
+#include <Widgets/VectorEditWidget/VectorEditWidget.hpp>
 #include "InspectorWidget.hpp"
 #include "ui_InspectorWidget.h"
 
 
-InspectorWidget::InspectorWidget(QWidget *parent) :
-        QWidget(parent), ui(new Ui::InspectorWidget)
+InspectorWidget::InspectorWidget(QWidget *parent) : QWidget(parent), ui(new Ui::InspectorWidget)
 {
     ui->setupUi(this);
+
+    connect(ui->renameButton, &QPushButton::clicked, this, &InspectorWidget::renameObject);
+    connect(ui->applyTransformButton, &QPushButton::clicked, this, &InspectorWidget::applyTransform);
+
     inspect(nullptr);
 }
 
@@ -36,20 +40,9 @@ void InspectorWidget::inspect(const std::shared_ptr<IObject>& newObject)
     ui->idSpinBox->setValue(newObject->getId() % 1000000000);
     ui->nameTextEdit->setPlainText(QString::fromStdString(newObject->getName()));
 
-    auto position = newObject->getPosition();
-    ui->positionXSpinBox->setValue(position.getX());
-    ui->positionYSpinBox->setValue(position.getY());
-    ui->positionZSpinBox->setValue(position.getZ());
-
-    auto rotation = newObject->getRotation();
-    ui->rotationXSpinBox->setValue(rotation.getX());
-    ui->rotationYSpinBox->setValue(rotation.getY());
-    ui->rotationZSpinBox->setValue(rotation.getZ());
-
-    auto scale = newObject->getScale();
-    ui->scaleXSpinBox->setValue(scale.getX());
-    ui->scaleYSpinBox->setValue(scale.getY());
-    ui->scaleZSpinBox->setValue(scale.getZ());
+    ui->positionEdit->setValue(newObject->getPosition());
+    ui->rotationEdit->setValue(newObject->getRotation());
+    ui->scaleEdit->setValue(newObject->getScale());
 
     if (auto meshAdapter = dynamic_cast<ObjectAdapter<Mesh>*>(newObject.get()))
         inspect(*meshAdapter);
@@ -78,4 +71,26 @@ void InspectorWidget::inspect(ObjectAdapter<Mesh> &object)
 
     ui->specularHightlightSpinBox->setValue(material.getSpecularHighlight());
     ui->opacitySpinBox->setValue(material.getOpacity());
+}
+
+void InspectorWidget::renameObject()
+{
+    if (auto obj = object.lock())
+    {
+        obj->setName(ui->nameTextEdit->toPlainText().toStdString());
+
+        emit objectChangedSignal();
+    }
+}
+
+void InspectorWidget::applyTransform()
+{
+    if (auto obj = object.lock())
+    {
+        obj->setPosition(ui->positionEdit->getValue());
+        obj->setRotation(ui->rotationEdit->getValue());
+        obj->setScale(ui->scaleEdit->getValue());
+
+        emit objectChangedSignal();
+    }
 }

@@ -1,7 +1,7 @@
 #include "Objects/IObject.hpp"
 
 IObject::IObject(size_t id)
-    : id(id)
+    : id(id), scale(1, 1, 1)
 {
 }
 
@@ -32,20 +32,21 @@ void IObject::setSelected(bool newSelected) noexcept
     onSelectionChange();
 }
 
-const Vector &IObject::getPosition() const noexcept
+Vector IObject::getPosition() const noexcept
 {
     return position;
 }
 
-const Vector &IObject::getRotation() const noexcept
+Vector IObject::getRotation() const noexcept
 {
-    return rotation;
+    return rotation * 180.0 / M_PI;
 }
 
-const Vector &IObject::getScale() const noexcept
+Vector IObject::getScale() const noexcept
 {
     return scale;
 }
+
 Matrix IObject::getTransform() const
 {
     return Matrix::trsModel(position, rotation, scale);
@@ -59,7 +60,7 @@ void IObject::setPosition(const Vector &value)
 
 void IObject::setRotation(const Vector &value)
 {
-    rotation = value;
+    rotation = value / 180.0 * M_PI;
     onTransformChange();
 }
 
