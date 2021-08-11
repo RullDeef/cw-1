@@ -116,7 +116,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Rendering Type</string>
+            <string>Rendering LightType</string>
            </property>
           </widget>
          </item>

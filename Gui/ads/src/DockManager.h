@@ -433,7 +433,7 @@ public:
 
 	/**
 	 * This function returns the internal view menu.
-	 * To fill the view menu, you can use the addToggleViewActionToMenu()
+	 * To visible the view menu, you can use the addToggleViewActionToMenu()
 	 * function.
 	 */
 	QMenu* viewMenu() const;

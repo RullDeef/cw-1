@@ -9,21 +9,22 @@
 
 namespace Core
 {
+    enum struct RenderType
+    {
+        Fast,
+        Fancy,
+        Overlay
+    };
+
+    enum struct LightingModelType
+    {
+        Flat,
+        Gouraud,
+        Phong
+    };
+
     struct RenderParams
     {
-        enum struct RenderType
-        {
-            FastRenderType,
-            FancyRenderType
-        };
-
-        enum struct LightingModelType
-        {
-            FlatModelType,
-            GouraudModelType,
-            PhongModelType
-        };
-
         RenderTarget renderTarget;
         Scene scene;
         Camera camera;

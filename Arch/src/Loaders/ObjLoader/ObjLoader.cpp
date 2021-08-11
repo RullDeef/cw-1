@@ -192,7 +192,7 @@ std::map<std::string, Material> ObjLoader::loadMaterials(const std::string& file
             auto color = extractVector3(line, 1.0);
             currMat.setAmbientColor(color);
         }
-        else if (acceptWhenToken(line, "kd"))
+        else if (acceptWhenToken(line, "Kd"))
         {
             auto color = extractVector3(line, 1.0);
             currMat.setDiffuseColor(color);

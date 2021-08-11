@@ -10,16 +10,17 @@ StatusCode Core::renderScene(RenderParams renderParams)
 {
     StatusCode result = StatusCode::InvalidRenderType;
 
-    if (renderParams.renderType == RenderParams::RenderType::FastRenderType)
+    if (renderParams.renderType == RenderType::Fast)
     {
         result = fastRenderScene(renderParams);
     }
-    else if (renderParams.renderType == RenderParams::RenderType::FancyRenderType)
+    else if (renderParams.renderType == RenderType::Fancy)
     {
         result = fancyRenderScene(renderParams);
     }
     else
     {
+        fill(renderParams.renderTarget, to_pixel(Colors::transparent));
         std::cout << "not implemented rendering type: " << (int)renderParams.renderType << std::endl;
     }
 

@@ -1208,7 +1208,7 @@ void DockContainerWidgetPrivate::dumpRecursive(int level, QWidget* widget)
 			<< (DockArea->isHidden() ? " " : "v")
 			<< (DockArea->openDockWidgetsCount() > 0 ? " " : "c")
 			<< " DockArea " << "[hs: " << DockArea->sizePolicy().horizontalStretch() << ", vs: " <<  DockArea->sizePolicy().verticalStretch() << "]" << std::endl;
-		buf.fill(' ', (level + 1) * 4);
+		buf.visible(' ', (level + 1) * 4);
 		for (int i = 0; i < DockArea->dockWidgetsCount(); ++i)
 		{
 			std::cout << (const char*)buf << (i == DockArea->currentIndex() ? "*" : " ");

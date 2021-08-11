@@ -1,5 +1,8 @@
+#include <Core/Rasterizers/RenderRegion.hpp>
+#include "Core/Rasterizers/LineRenderer.hpp"
 #include "Core/Objects/Face.hpp"
 #include "Core/Objects/Camera.hpp"
+#include "Core/RenderParams.hpp"
 
 using namespace Core;
 
@@ -153,4 +156,113 @@ bool Core::culling(const Face& face, const Camera& camera, FaceCullingType type)
     }
 
     return false;
+}
+
+StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
+{
+    double x_aspect = get_x_aspect(camera.viewport);
+    double y_aspect = get_y_aspect(camera.viewport);
+
+    Face projection = project_frustrum(face, camera);
+    auto projections = clip_face(projection, x_aspect, y_aspect);
+
+    for (size_t i = 0; i < projections.size; i++)
+    {
+        Face clip_face = unproject_frustrum(projections.data[i], camera);
+
+        StatusCode result = renderClippedFace(renderTarget, zbuffer, mesh, clip_face, camera, lighting, colorComputeFn);
+        if (result != StatusCode::Success)
+            return result;
+    }
+
+    return StatusCode::Success;
+}
+
+StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
+{
+    Face projection = project(face, camera);
+
+    if (lighting == LightingModelType::Flat)
+    {
+//        auto regions = make_flat_render_regions(mesh, face, projection);
+//
+//        for (size_t i = 0; i < regions.size; i++)
+//        {
+//            RenderRegion* region = nullptr;
+//            /// TODO: implement later
+//            if (at(regions, i, region))
+//                renderFlat(renderTarget, zbuffer, *region, camera);
+//        }
+    }
+    else if (lighting == LightingModelType::Gouraud)
+    {
+        auto regions = make_render_regions(mesh, face, projection);
+
+        for (size_t i = 0; i < regions.size; i++)
+        {
+            RenderRegion* region = nullptr;
+            if (at(regions, i, region))
+                renderGouraud(renderTarget, zbuffer, *region, colorComputeFn);
+        }
+    }
+    else if (lighting == LightingModelType::Phong)
+    {
+        auto regions = make_render_regions(mesh, face, projection);
+
+        for (size_t i = 0; i < regions.size; i++)
+        {
+            RenderRegion* region = nullptr;
+            if (at(regions, i, region))
+                renderPhong(renderTarget, zbuffer, *region, colorComputeFn);
+        }
+    }
+    else
+        return StatusCode::UnsupportedLightingModelType;
+
+    return StatusCode::Success;
+}
+
+StatusCode Core::renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Color color)
+{
+    return renderWireframeFace(renderTarget, face, camera, to_pixel(color));
+}
+
+StatusCode Core::renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Pixel color)
+{
+    Face projection = project_frustrum(face, camera);
+
+    arr_t<Vertex, 3> vertices = make_arr<Vertex, 3>();
+    push_back(vertices, projection.verts[0]);
+    push_back(vertices, projection.verts[1]);
+    push_back(vertices, projection.verts[2]);
+
+    double x_aspect = 1.0; /// TODO: extract method
+    double y_aspect = 1.0;
+    if (camera.viewport.width < camera.viewport.height)
+        x_aspect *= double(camera.viewport.height) / camera.viewport.width;
+    else
+        y_aspect *= double(camera.viewport.width) / camera.viewport.height;
+
+    auto clipped = clip_polygon(vertices, x_aspect, y_aspect);
+    if (clipped.size >= 3)
+    {
+        Vertex v1, v2, v3;
+        get(clipped, 0, v1);
+
+        for (size_t i = 1; i < clipped.size - 1; i++)
+        {
+            get(clipped, i, v2);
+            get(clipped, i + 1, v3);
+
+            Vec p1 = viewport_adjust(camera, v1.position);
+            Vec p2 = viewport_adjust(camera, v2.position);
+            Vec p3 = viewport_adjust(camera, v3.position);
+
+            renderLine(renderTarget, p1, p2, color);
+            renderLine(renderTarget, p2, p3, color);
+            renderLine(renderTarget, p1, p3, color);
+        }
+    }
+
+    return StatusCode::Success;
 }

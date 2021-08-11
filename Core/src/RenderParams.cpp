@@ -15,8 +15,8 @@ RenderParams Core::make_render_params(const RenderTarget& renderTarget, const Sc
     params.camera = make_camera();
     update_viewport(params.camera, params.viewport);
 
-    params.renderType = RenderParams::RenderType::FastRenderType;
-    params.sceneLightingModel = RenderParams::LightingModelType::GouraudModelType;
+    params.renderType = RenderType::Fast;
+    params.sceneLightingModel = LightingModelType::Gouraud;
     params.faceCullingType = OcclusionCullingType; // | BackfaceCullingType; /// TODO: fix backface culling
 
     return params;

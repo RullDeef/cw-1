@@ -10,9 +10,11 @@ class RenderWidget : public QWidget
     Q_OBJECT
 
 public:
-    RenderTarget getRenderTarget();
+    RenderTarget getSceneRenderTarget();
+    RenderTarget getOverlayTarget();
 
     [[nodiscard]] QImage getImage() const;
+    [[nodiscard]] QImage getOverlay() const;
 
 signals:
     void widgetResized(RenderWidget* widget);
@@ -24,7 +26,11 @@ protected slots:
     /// TODO: make event filters (exclude mouse-key events)
 
 private:
+    void drawLayers();
+    static RenderTarget createRenderTarget(QImage& source);
+
     QImage sceneImage;
+    QImage overlayImage;
 };
 
 #endif // RENDERWIDGET_HPP

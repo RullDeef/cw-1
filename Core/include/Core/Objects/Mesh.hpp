@@ -16,8 +16,8 @@ namespace Core
         Material material;
         vect_t<Face> faces;
 
+        bool visible;
         bool wireframe;
-        bool fill;
     };
 
     Mesh make_mesh(size_t faces_count);
@@ -26,14 +26,10 @@ namespace Core
 
     bool add_face(Mesh& mesh, const Face& face);
 
-    /// =============================================================
+    StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn);
 
-//    struct Mesh
-//    {
-//        Transform transform;
-//        Geometry geometry;
-//        Material material;
-//    };
+    StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera, Color color, FaceCullingType cullingType);
+    StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera, Pixel color, FaceCullingType cullingType);
 }
 
 #endif // MESH_HPP

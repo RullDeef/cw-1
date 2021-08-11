@@ -1,13 +1,22 @@
 #ifndef FACE_HPP
 #define FACE_HPP
 
-#include "Core/Objects/Vertex.hpp"
+#include "Core/common/StatusCodes.hpp"
+#include "Core/common/Color.hpp"
 #include "Core/containers/arr_t.hpp"
+#include "Core/RenderTarget/RenderTarget.hpp"
+#include "Core/RenderTarget/ZBuffer.hpp"
+#include "Core/Objects/Vertex.hpp"
+#include "Core/Objects/Light.hpp"
 
 
 namespace Core
 {
+    struct RenderParams;
+    struct Mesh;
     struct Camera;
+
+    enum struct LightingModelType;
 
     using FaceCullingType = unsigned int;
     constexpr FaceCullingType OcclusionCullingType = 1 << 0;
@@ -35,6 +44,12 @@ namespace Core
     arr_t<Face, 4> clip_face(const Face& face, double x_aspect = 1.0, double y_aspect = 1.0);
 
     bool culling(const Face& face, const Camera& camera, FaceCullingType type);
+
+    StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
+    StatusCode renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
+
+    StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Color color);
+    StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Pixel color);
 }
 
 #endif // FACE_HPP

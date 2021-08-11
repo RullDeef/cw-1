@@ -160,3 +160,8 @@ StatusCode Core::renderLine(RenderTarget& renderTarget, int x1, int y1, int x2, 
 
     return StatusCode::Success;
 }
+
+StatusCode Core::renderLine(RenderTarget& renderTarget, const Vec& p1, const Vec& p2, Pixel color)
+{
+    return renderLine(renderTarget, p1.x, p1.y, p2.x, p2.y, color);
+}

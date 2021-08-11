@@ -49,8 +49,8 @@ namespace Core
     void normalize(RenderRegion& region);
     RenderRegion normalized(const RenderRegion& region);
 
-    void renderPhong(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, const Camera& camera);
-    void renderGouraud(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, const Camera& camera);
+    void renderPhong(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, ColorComputeFn colorComputeFn);
+    void renderGouraud(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, ColorComputeFn colorComputeFn);
 }
 
 #endif // RENDERREGION_HPP

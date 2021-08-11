@@ -19,8 +19,10 @@ public:
 
 protected:
     void renderScene(Scene &scene, Camera &camera);
+    void renderOverlay(Scene &scene, Camera &camera);
 
-    virtual RenderTarget getRenderTarget() = 0;
+    virtual RenderTarget getSceneRenderTarget() = 0;
+    virtual RenderTarget getOverlayRenderTarget() = 0;
 
     virtual void onBeforeSceneRender(Scene& scene, Camera& camera);
     virtual void onSceneRender(Scene& scene, Camera& camera);

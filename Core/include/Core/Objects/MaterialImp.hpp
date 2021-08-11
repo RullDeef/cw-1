@@ -17,21 +17,21 @@ namespace Core
             Light light;
             if (get(lights, i, light))
             {
-                if (light.type == Light::Type::Ambient)
+                if (light.type == LightType::Ambient)
                 {
-                    color += light.ambient.intensity * light.ambient.color * material.ambientColor;
+                    color += light.intensity * light.color * material.ambientColor;
                 }
-                else if (light.type == Light::Type::Directional)
+                else if (light.type == LightType::Directional)
                 {
-                    Vec dir = light.directional.direction;
+                    Vec dir = light.direction;
                     Vec Rm = 2 * dot(-dir, normal) * normal + dir;
 
                     double Lm_N = std::max(0.0, dot(-dir, normal));
                     double Rm_V = std::max(0.0, dot(Rm, -view));
                     Rm_V = std::pow(Rm_V, material.specularHighlight);
 
-                    color += light.directional.intensity * light.directional.color * material.diffuseColor * Lm_N
-                            + light.directional.color * Rm_V;
+                    color += light.intensity * light.color * material.diffuseColor * Lm_N
+                            + light.color * Rm_V;
                 }
             }
         }

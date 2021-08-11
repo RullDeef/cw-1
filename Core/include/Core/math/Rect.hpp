@@ -20,6 +20,9 @@ namespace Core
     inline bool is_inside(const Rect& outer, const Rect& inner);
     inline bool is_inside(const Rect& rect, int x, int y);
 
+    inline double get_x_aspect(const Rect& rect);
+    inline double get_y_aspect(const Rect& rect);
+
     inline Rect get_inner_box(const Rect& rect);
     inline Rect get_outer_box(const Rect& rect);
 

@@ -3,25 +3,22 @@
 
 Light::Light(const Core::Light &light)
 {
-    if (light.type == Core::Light::Type::Ambient)
+    color = light.color;
+    intensity = light.intensity;
+
+    if (light.type == Core::LightType::Ambient)
     {
         type = Type::Ambient;
-        color = light.ambient.color;
-        intensity = light.ambient.intensity;
     }
-    else if (light.type == Core::Light::Type::Directional)
+    else if (light.type == Core::LightType::Directional)
     {
         type = Type::Directional;
-        color = light.directional.color;
-        direction = light.directional.direction;
-        intensity = light.directional.intensity;
+        direction = light.direction;
     }
-    else if (light.type == Core::Light::Type::Point)
+    else if (light.type == Core::LightType::Point)
     {
         type = Type::Point;
-        color = light.point.color;
-        position = light.point.position;
-        intensity = light.point.intensity;
+        position = light.position;
     }
 }
 
@@ -29,25 +26,22 @@ Light::operator Core::Light() const
 {
     Core::Light res{};
 
+    res.color = color;
+    res.intensity = intensity;
+
     if (type == Type::Ambient)
     {
-        res.type = Core::Light::Type::Ambient;
-        res.ambient.color = color;
-        res.ambient.intensity = intensity;
+        res.type = Core::LightType::Ambient;
     }
     else if (type == Type::Directional)
     {
-        res.type = Core::Light::Type::Directional;
-        res.directional.color = color;
-        res.directional.direction = direction;
-        res.directional.intensity = intensity;
+        res.type = Core::LightType::Directional;
+        res.direction = direction;
     }
     else if (type == Type::Point)
     {
-        res.type = Core::Light::Type::Point;
-        res.point.color = color;
-        res.point.position = position;
-        res.point.intensity = intensity;
+        res.type = Core::LightType::Point;
+        res.position = position;
     }
 
     return res;

@@ -21,7 +21,9 @@ namespace Core
     Rect get_viewport(const RenderTarget& renderTarget);
 
     Pixel getPixel(const RenderTarget& renderTarget, size_t row, size_t col);
-    void setPixel(const RenderTarget& renderTarget, size_t row, size_t col, Pixel pixel);
+    void setPixel(RenderTarget& renderTarget, size_t row, size_t col, Pixel pixel);
+
+    void fill(RenderTarget& renderTarget, Pixel pixel);
 }
 
 #endif // RENDERTARGET_HPP

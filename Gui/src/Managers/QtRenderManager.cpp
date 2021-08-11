@@ -30,9 +30,14 @@ void QtRenderManager::onSceneRender(Scene &scene, Camera &camera)
     emit sceneRenderSignal(scene, camera);
 }
 
-RenderTarget QtRenderManager::getRenderTarget()
+RenderTarget QtRenderManager::getSceneRenderTarget()
 {
-    return viewWidget->getRenderTarget();
+    return viewWidget->getSceneRenderTarget();
+}
+
+RenderTarget QtRenderManager::getOverlayRenderTarget()
+{
+    return viewWidget->getOverlayTarget();
 }
 
 void QtRenderManager::renderWidgetResized()

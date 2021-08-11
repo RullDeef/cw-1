@@ -24,11 +24,14 @@ protected slots:
     void renderWidgetResized();
 
 protected:
-    RenderTarget getRenderTarget() override;
+    RenderTarget getSceneRenderTarget() override;
+    RenderTarget getOverlayRenderTarget() override;
 
     void onSceneRender(Scene &scene, Camera &camera) override;
 
 private:
+    void paintOverlay();
+
     RenderWidget* viewWidget;
 };
 

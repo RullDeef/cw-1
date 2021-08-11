@@ -17,7 +17,7 @@ Material Core::make_material()
     return mat;
 }
 
-Color compute_color(const Material& material, const vect_t<Light>& lights, const Vec& view, const Vec& normal)
+Color Core::compute_color(const Material& material, const vect_t<Light>& lights, const Vec& view, const Vec& normal)
 {
     const double ambient = 0.1;
     Color color = ambient * material.ambientColor;
@@ -27,20 +27,20 @@ Color compute_color(const Material& material, const vect_t<Light>& lights, const
         Light light;
         if (get(lights, i, light))
         {
-            if (light.type == Light::Type::Ambient)
+            if (light.type == LightType::Ambient)
             {
-                color += light.ambient.intensity * light.ambient.color;
+                color += light.intensity * light.color;
             }
-            else if (light.type == Light::Type::Directional)
+            else if (light.type == LightType::Directional)
             {
-                Vec dir = light.directional.direction;
+                Vec dir = light.direction;
                 Vec Rm = 2 * dot(-dir, normal) * normal + dir;
 
                 double Lm_N = std::max(0.0, dot(-dir, normal));
                 double Rm_V = std::max(0.0, dot(Rm, -view));
                 Rm_V = std::pow(Rm_V, material.specularHighlight);
 
-                color += material.diffuseColor * Lm_N + light.directional.color * Rm_V;
+                color += material.diffuseColor * Lm_N + light.color * Rm_V;
             }
         }
     }

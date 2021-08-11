@@ -390,7 +390,7 @@ RenderRegion Core::normalized(const RenderRegion& region)
     return res;
 }
 
-void Core::renderPhong(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegion region, const Camera& camera)
+void Core::renderPhong(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegion region, ColorComputeFn colorComputeFn)
 {
     double xLeft = region.xStartLeft;
     double xRight = region.xStartRight;
@@ -421,10 +421,10 @@ void Core::renderPhong(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegio
             {
                 if (0 <= x && x < renderTarget.width)
                 {
-                    Vec view = normalized(p - camera.eye);
-
-                    Pixel color = recomputeColor(normalized(n), view, region.meshPtr->material);
-                    updatePixel(renderTarget, zbuffer, y, x, z, color);
+                    // Vec view = normalized(p - camera.eye);
+                    // Pixel color = recomputeColor(normalized(n), view, region.meshPtr->material);
+                    Color color = colorComputeFn(p, n, region.meshPtr->material);
+                    updatePixel(renderTarget, zbuffer, y, x, z, to_pixel(color));
                 }
 
                 z += dz;
@@ -447,7 +447,7 @@ void Core::renderPhong(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegio
     }
 }
 
-void Core::renderGouraud(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegion region, const Camera &camera)
+void Core::renderGouraud(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegion region, ColorComputeFn colorComputeFn)
 {
     double xLeft = region.xStartLeft;
     double xRight = region.xStartRight;
@@ -466,8 +466,8 @@ void Core::renderGouraud(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderReg
         double z = zLeft;
         double dz = (zRight - zLeft) / (xRight - xLeft + 1);
 
-        Color cLeft = to_color(recomputeColor(nLeft, normalized(pLeft - camera.eye), region.meshPtr->material));
-        Color cRight = to_color(recomputeColor(nRight, normalized(pRight - camera.eye), region.meshPtr->material));
+        Color cLeft = colorComputeFn(pLeft, nLeft, region.meshPtr->material);
+        Color cRight = colorComputeFn(pRight, nRight, region.meshPtr->material);
 
         Color c = cLeft;
         Color dc = (cRight - cLeft) / (xRight - xLeft + 1);
@@ -536,29 +536,29 @@ static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& 
     /// TODO: microfix for testing
     return recomputeColor(normal);
 
-    static Light light_0 = { Light::Type::Ambient };
-    light_0.ambient = {
-            make_color(1.0, 0.0, 0.0),
-            0.3
-    };
-    static Light light_1 = { Light::Type::Directional };
-    light_1.directional = (DirectionalLight) {
-            make_color(0.0, 1.0, 0.0),
-            0.4,
-            normalized(make_dir(0.2, 0.4, -0.8))
-    };
-    static Light light_2 = { Light::Type::Directional };
-    light_2.directional = (DirectionalLight) {
-            make_color(0.0, 0.0, 1.0),
-            0.4,
-            normalized(make_dir(3, 4, -2))
-    };
-
-    auto lights = make_arr<Light, 3>();
-    push_back(lights, light_0);
-    push_back(lights, light_1);
-    push_back(lights, light_2);
-
-    Color color = compute_color(material, lights, view, normal);
-    return to_pixel(color);
+//    static Light light_0 = { Light::LightType::Ambient };
+//    light_0.ambient = {
+//            make_color(1.0, 0.0, 0.0),
+//            0.3
+//    };
+//    static Light light_1 = { Light::LightType::Directional };
+//    light_1.directional = (DirectionalLight) {
+//            make_color(0.0, 1.0, 0.0),
+//            0.4,
+//            normalized(make_dir(0.2, 0.4, -0.8))
+//    };
+//    static Light light_2 = { Light::LightType::Directional };
+//    light_2.directional = (DirectionalLight) {
+//            make_color(0.0, 0.0, 1.0),
+//            0.4,
+//            normalized(make_dir(3, 4, -2))
+//    };
+//
+//    auto lights = make_arr<Light, 3>();
+//    push_back(lights, light_0);
+//    push_back(lights, light_1);
+//    push_back(lights, light_2);
+//
+//    Color color = compute_color(material, lights, view, normal);
+//    return to_pixel(color);
 }

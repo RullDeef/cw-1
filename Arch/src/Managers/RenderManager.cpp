@@ -23,6 +23,7 @@ void RenderManager::renderActiveScene()
 
         onBeforeSceneRender(scene, camera);
         renderScene(scene, camera);
+        renderOverlay(scene, camera);
         onSceneRender(scene, camera);
     }
     catch (...)
@@ -32,7 +33,14 @@ void RenderManager::renderActiveScene()
 
 void RenderManager::renderScene(Scene &scene, Camera &camera)
 {
-    Core::RenderParams params = Core::make_render_params(getRenderTarget(), scene, camera);
+    Core::RenderParams params = Core::make_render_params(getSceneRenderTarget(), scene, camera);
+    Core::renderScene(params);
+}
+
+void RenderManager::renderOverlay(Scene &scene, Camera &camera)
+{
+    auto params = Core::make_render_params(getOverlayRenderTarget(), scene, camera);
+    params.renderType = Core::RenderType::Overlay;
     Core::renderScene(params);
 }
 

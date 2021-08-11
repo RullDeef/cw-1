@@ -31,6 +31,8 @@ namespace Core
 
     namespace Colors
     {
+        const Color transparent { 0.0, 0.0, 0.0, 0.0 };
+
         const Color black { 0.0, 0.0, 0.0, 1.0 };
         const Color white { 1.0, 1.0, 1.0, 1.0 };
 
