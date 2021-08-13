@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <Objects/IObject.hpp>
 #include <Objects/Mesh.hpp>
+#include <Objects/Light.hpp>
 #include <Objects/ObjectAdapter.hpp>
 
 
@@ -30,10 +31,13 @@ signals:
 
 protected:
     void inspect(ObjectAdapter<Mesh>& object);
+    void inspect(ObjectAdapter<Light>& object);
 
 protected slots:
     void renameObject();
     void applyTransform();
+    void applyMaterial();
+    void applyLight();
 
 private:
     Ui::InspectorWidget *ui;

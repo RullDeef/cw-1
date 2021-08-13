@@ -4,6 +4,7 @@
 #include "Core/common/StatusCodes.hpp"
 #include "Core/common/Color.hpp"
 #include "Core/containers/arr_t.hpp"
+#include "Core/math/Mat.hpp"
 #include "Core/RenderTarget/RenderTarget.hpp"
 #include "Core/RenderTarget/ZBuffer.hpp"
 #include "Core/Objects/Vertex.hpp"
@@ -34,6 +35,8 @@ namespace Core
     bool isValid(const Face& face);
 
     void recalc_normal(Face& face);
+
+    Face operator*(const Mat& mat, const Face& face);
 
     Face project_viewport_frustrum(const Face& face, const Camera& camera);
     Face project_frustrum(const Face& face, const Camera& camera);

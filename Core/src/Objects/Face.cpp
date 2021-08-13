@@ -58,6 +58,17 @@ void Core::recalc_normal(Face &face)
     face.verts[2].normal = normal;
 }
 
+Face Core::operator*(const Mat& mat, const Face& face)
+{
+    Face res = face;
+
+    res.verts[0] = mat * res.verts[0];
+    res.verts[1] = mat * res.verts[1];
+    res.verts[2] = mat * res.verts[2];
+
+    return res;
+}
+
 Face Core::project_viewport_frustrum(const Face& face, const Camera& camera)
 {
     Face result = face;

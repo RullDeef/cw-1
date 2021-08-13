@@ -66,3 +66,8 @@ StatusCode Core::renderCircle(RenderTarget& renderTarget, int x0, int y0, int ra
         }
     }
 }
+
+StatusCode Core::renderCircle(RenderTarget& renderTarget, int circleX, int circleY, int radius, Color color)
+{
+    return renderCircle(renderTarget, circleX, circleY, radius, to_pixel(color));
+}

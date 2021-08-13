@@ -5,6 +5,8 @@ Light::Light(const Core::Light &light)
 {
     color = light.color;
     intensity = light.intensity;
+    position = light.position;
+    direction = light.direction;
 
     if (light.type == Core::LightType::Ambient)
     {
@@ -13,12 +15,10 @@ Light::Light(const Core::Light &light)
     else if (light.type == Core::LightType::Directional)
     {
         type = Type::Directional;
-        direction = light.direction;
     }
     else if (light.type == Core::LightType::Point)
     {
         type = Type::Point;
-        position = light.position;
     }
 }
 
@@ -28,6 +28,8 @@ Light::operator Core::Light() const
 
     res.color = color;
     res.intensity = intensity;
+    res.position = position;
+    res.direction = direction;
 
     if (type == Type::Ambient)
     {
@@ -36,15 +38,18 @@ Light::operator Core::Light() const
     else if (type == Type::Directional)
     {
         res.type = Core::LightType::Directional;
-        res.direction = direction;
     }
     else if (type == Type::Point)
     {
         res.type = Core::LightType::Point;
-        res.position = position;
     }
 
     return res;
+}
+
+double Light::getIntensity() const
+{
+    return intensity;
 }
 
 const Vector& Light::getPosition() const
@@ -57,6 +62,21 @@ const Vector &Light::getDirection() const
     return direction;
 }
 
+const Color &Light::getColor() const
+{
+    return color;
+}
+
+Light::Type Light::getType() const
+{
+    return type;
+}
+
+void Light::setIntensity(double newIntensity)
+{
+    intensity = newIntensity;
+}
+
 void Light::setPosition(const Vector &newPosition)
 {
     position = newPosition;
@@ -65,4 +85,14 @@ void Light::setPosition(const Vector &newPosition)
 void Light::setDirection(const Vector &newDirection)
 {
     direction = newDirection;
+}
+
+void Light::setColor(const Color &newColor)
+{
+    color = newColor;
+}
+
+void Light::setType(Light::Type newType)
+{
+    type = newType;
 }

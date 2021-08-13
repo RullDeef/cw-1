@@ -10,6 +10,7 @@ Light Core::make_ambient_light()
     light.type = LightType::Ambient;
     light.color = Colors::white;
     light.intensity = 0.3;
+    light.position = make_pos();
 
     return light;
 }
@@ -21,6 +22,7 @@ Light Core::make_directional_light()
     light.type = LightType::Directional;
     light.color = Colors::white;
     light.intensity = 0.7;
+    light.position = make_pos();
     light.direction = normalized(make_dir(0, -4, 3));
 
     return light;
@@ -33,6 +35,7 @@ Light Core::make_directional_light(Color color, Vec direction)
     light.type = LightType::Directional;
     light.color = color;
     light.intensity = 0.7;
+    light.position = make_pos();
     light.direction = normalized(direction);
 
     return light;

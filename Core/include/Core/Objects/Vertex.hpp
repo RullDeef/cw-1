@@ -4,6 +4,7 @@
 #include "Core/containers/arr_t.hpp"
 #include "Core/containers/vect_t.hpp"
 #include "Core/math/Vec.hpp"
+#include "Core/math/Mat.hpp"
 
 
 namespace Core
@@ -21,6 +22,8 @@ namespace Core
     Vertex make_vertex(Vec position);
     Vertex make_vertex(Vec position, Vec normal);
     Vertex make_vertex(Vec position, Vec normal, Vec uv);
+
+    Vertex operator*(const Mat& mat, const Vertex& vertex);
 
     Vertex project_viewport_frustrum(const Vertex& vertex, const Camera& camera);
     Vertex project_frustrum(const Vertex& vertex, const Camera& camera);

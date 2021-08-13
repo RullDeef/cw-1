@@ -202,70 +202,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QLabel" name="label_23">
-          <property name="text">
-           <string>R</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="ambientRedSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_24">
-          <property name="text">
-           <string>G</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="ambientGreenSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_25">
-          <property name="text">
-           <string>B</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="ambientBlueSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_19">
         <property name="text">
@@ -273,140 +209,12 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QLabel" name="label_26">
-          <property name="text">
-           <string>R</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="diffuseRedSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_27">
-          <property name="text">
-           <string>G</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="diffuseGreenSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_28">
-          <property name="text">
-           <string>B</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="diffuseBlueSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_20">
         <property name="text">
          <string>Specular Color</string>
         </property>
        </widget>
-      </item>
-      <item row="2" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
-        <item>
-         <widget class="QLabel" name="label_29">
-          <property name="text">
-           <string>R</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="specularRedSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_30">
-          <property name="text">
-           <string>G</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="specularGreenSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_31">
-          <property name="text">
-           <string>B</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="specularBlueSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_22">
@@ -481,6 +289,15 @@
         </item>
        </layout>
       </item>
+      <item row="0" column="1">
+       <widget class="ColorEditWidget" name="ambientEdit" native="true"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="ColorEditWidget" name="diffuseEdit" native="true"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="ColorEditWidget" name="specularEdit" native="true"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -522,70 +339,6 @@
          <string>Color</string>
         </property>
        </widget>
-      </item>
-      <item row="1" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QLabel" name="label_34">
-          <property name="text">
-           <string>R</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="lightRedSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_35">
-          <property name="text">
-           <string>G</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="lightGreenSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_36">
-          <property name="text">
-           <string>B</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="lightBlueSpinBox">
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <property name="buttonSymbols">
-           <enum>QAbstractSpinBox::NoButtons</enum>
-          </property>
-          <property name="maximum">
-           <number>255</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_37">
@@ -633,6 +386,9 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item row="1" column="1">
+       <widget class="ColorEditWidget" name="lightColorEdit" native="true"/>
       </item>
      </layout>
     </widget>
@@ -777,6 +533,12 @@
    <class>VectorEditWidget</class>
    <extends>QWidget</extends>
    <header>Widgets/VectorEditWidget/VectorEditWidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColorEditWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/ColorEditWidget/ColorEditWidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

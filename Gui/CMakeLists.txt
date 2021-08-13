@@ -53,6 +53,6 @@ add_executable(Gui
         src/Managers/QtSelectionManager.cpp
         src/Managers/QtSelectionManager.hpp
         src/Widgets/RenderWidget/RenderWidget.cpp
-        src/Widgets/RenderWidget/RenderWidget.hpp src/Widgets/VectorEditWidget/VectorEditWidget.cpp src/Widgets/VectorEditWidget/VectorEditWidget.hpp src/Widgets/VectorEditWidget/VectorEditWidget.ui)
+        src/Widgets/RenderWidget/RenderWidget.hpp src/Widgets/VectorEditWidget/VectorEditWidget.cpp src/Widgets/VectorEditWidget/VectorEditWidget.hpp src/Widgets/VectorEditWidget/VectorEditWidget.ui src/Widgets/ColorEditWidget/ColorEditWidget.cpp src/Widgets/ColorEditWidget/ColorEditWidget.hpp src/Widgets/ColorEditWidget/ColorEditWidget.ui src/Widgets/ColorPickerWidget/ColorPickerWidget.cpp src/Widgets/ColorPickerWidget/ColorPickerWidget.hpp)
 
 target_link_libraries(Gui PRIVATE qtadvanceddocking PUBLIC Arch Core Qt5::Core Qt5::Widgets pthread)

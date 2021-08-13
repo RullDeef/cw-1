@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Core/OverlayRender.hpp"
 #include "Core/Core.hpp"
 #include "Core/FastRender.hpp"
 #include "Core/FancyRenderer.hpp"
@@ -18,9 +19,12 @@ StatusCode Core::renderScene(RenderParams renderParams)
     {
         result = fancyRenderScene(renderParams);
     }
+    else if (renderParams.renderType == RenderType::Overlay)
+    {
+        result = overlayRenderScene(renderParams);
+    }
     else
     {
-        fill(renderParams.renderTarget, to_pixel(Colors::transparent));
         std::cout << "not implemented rendering type: " << (int)renderParams.renderType << std::endl;
     }
 

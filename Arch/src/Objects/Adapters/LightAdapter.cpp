@@ -23,8 +23,9 @@ void ObjectAdapter<Light>::accept(IObjectVisitor& visitor)
 
 bool ObjectAdapter<Light>::intersects(double& t, const Ray& ray)
 {
-    constexpr auto radius = 1.0;
-    auto center = light.getPosition();
+    Vector center = light.getPosition();
+    const double radiusConstant = 0.05;
+    double radius = radiusConstant * (ray.getPosition() - center).length();
 
     return ray.intersectsSphere(t, center, radius);
 }
@@ -34,5 +35,5 @@ void ObjectAdapter<Light>::onTransformChange()
     IObject::onTransformChange();
 
     light.setPosition(getPosition());
-    light.setDirection(Matrix::rotate(getRotation()) * Vector(1, 0, 0));
+    light.setDirection(Matrix::rotate(getRotation() * M_PI / 180.0) * Vector(1, 0, 0));
 }

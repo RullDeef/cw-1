@@ -78,6 +78,7 @@ bool Core::ray_intersects(double& t, const Ray& ray, const Mesh& mesh)
         Face face{};
         if (get(mesh.faces, i, face))
         {
+            face = mesh.model_mat * face;
             if (ray_intersects(t, ray, face))
             {
                 intersects = true;

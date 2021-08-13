@@ -33,6 +33,16 @@ Vertex Core::make_vertex(Vec position, Vec normal, Vec uv)
     return vert;
 }
 
+Vertex Core::operator*(const Mat& mat, const Vertex& vertex)
+{
+    Vertex res = vertex;
+
+    res.position = mat * vertex.position;
+    res.normal = mat * vertex.normal;
+
+    return res;
+}
+
 Vertex Core::project_viewport_frustrum(const Vertex& vertex, const Camera& camera)
 {
     Vertex result = vertex;
