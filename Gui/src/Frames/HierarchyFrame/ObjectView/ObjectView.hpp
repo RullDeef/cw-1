@@ -10,7 +10,11 @@ public:
     explicit ObjectView(QWidget* parent = nullptr);
 
 protected:
+    void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
     void doItemsLayout() override;
+
+private:
+    QItemSelection tempSelection;
 };
 
 

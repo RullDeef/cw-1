@@ -15,15 +15,6 @@ class HierarchyFrame : public IFrame
 
 public:
     explicit HierarchyFrame(IManagerFactory& managerFactory, QWidget* parent = nullptr);
-    virtual ~HierarchyFrame() = default;
-
-protected slots:
-    void sceneChangedSlot();
-
-    void updateHierarchy();
-
-protected:
-    void displayObject(std::shared_ptr<IObject> object);
 
 private:
     IManagerFactory& managerFactory;

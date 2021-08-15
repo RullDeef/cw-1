@@ -4,13 +4,13 @@
 #include <QAbstractItemModel>
 #include <memory>
 #include <Scene/Scene.hpp>
+#include <Managers/IManagerFactory.hpp>
 
 
 class ObjectModel : public QAbstractTableModel
 {
 public:
-    explicit ObjectModel(QObject* parent = nullptr);
-    explicit ObjectModel(Scene& scene, QObject* parent = nullptr);
+    explicit ObjectModel(IManagerFactory& managerFactory, QObject* parent = nullptr);
     virtual ~ObjectModel() = default;
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -19,12 +19,15 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
-    void setScene(Scene& newScene);
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 
-    void objectUpdated(std::shared_ptr<IObject> object);
+protected slots:
+    void triggerUpdateSlot();
 
 private:
-    Scene* scene = nullptr;
+    Scene* requireActiveScene() const;
+
+    IManagerFactory* managerFactory;
 };
 
 #endif // OBJECTMODEL_HPP

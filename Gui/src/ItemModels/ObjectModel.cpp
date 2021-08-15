@@ -1,20 +1,25 @@
 #include <utility>
 #include "ObjectModel.hpp"
 #include "Objects/IObject.hpp"
+#include <Managers/SceneManager.hpp>
+#include <Managers/QtSceneManager.hpp>
+#include <Managers/QtSelectionManager.hpp>
 
 
-ObjectModel::ObjectModel(QObject *parent)
-    : QAbstractTableModel(parent)
+ObjectModel::ObjectModel(IManagerFactory& managerFactory, QObject *parent)
+    : QAbstractTableModel(parent), managerFactory(&managerFactory)
 {
-}
+    auto sceneManager = dynamic_cast<QtSceneManager*>(managerFactory.getSceneManager().get());
+    auto selectionManager = dynamic_cast<QtSelectionManager*>(managerFactory.getSelectionManager().get());
 
-ObjectModel::ObjectModel(Scene& scene, QObject *parent)
-    : QAbstractTableModel(parent), scene(&scene)
-{
+    connect(sceneManager, &QtSceneManager::activeSceneChangeSignal, this, &ObjectModel::triggerUpdateSlot);
+    connect(sceneManager, &QtSceneManager::addObjectSignal, this, &ObjectModel::triggerUpdateSlot);
+    connect(selectionManager, &QtSelectionManager::selectionChangedSignal, this, &ObjectModel::triggerUpdateSlot);
 }
 
 int ObjectModel::rowCount(const QModelIndex &parent) const
 {
+    Scene* scene = requireActiveScene();
     if (!scene)
         return 0;
 
@@ -28,6 +33,7 @@ int ObjectModel::columnCount(const QModelIndex &parent) const
 
 QVariant ObjectModel::data(const QModelIndex &index, int role) const
 {
+    Scene* scene = requireActiveScene();
     if (!scene || !index.isValid() || role != Qt::DisplayRole)
         return QVariant();
 
@@ -63,17 +69,38 @@ QVariant ObjectModel::headerData(int section, Qt::Orientation orientation, int r
     return QVariant();
 }
 
-void ObjectModel::setScene(Scene& newScene)
+bool ObjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (role == Qt::EditRole && index.column() == 0)
+    {
+        Scene *scene = requireActiveScene();
+        if (scene)
+        {
+            auto iter = scene->begin();
+            std::advance(iter, index.row());
+            managerFactory->getSelectionManager()->select(*iter);
+        }
+    }
+
+    return true;
+}
+
+void ObjectModel::triggerUpdateSlot()
 {
     beginResetModel();
-    scene = &newScene;
     endResetModel();
 
     emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
 }
 
-void ObjectModel::objectUpdated(std::shared_ptr<IObject> object)
+Scene *ObjectModel::requireActiveScene() const
 {
-    /// TODO: emit soft signal
-    emit dataChanged(index(0, 0), index(rowCount(), columnCount()));
+    try
+    {
+        return &managerFactory->getSceneManager()->getActiveScene();
+    }
+    catch (...)
+    {
+        return nullptr;
+    }
 }
