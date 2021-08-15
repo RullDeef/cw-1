@@ -66,8 +66,8 @@ Vertex Core::project(const Vertex &vertex, const Camera &camera)
     Vertex result = vertex;
 
     result.position = project_point(camera, vertex.position);
-    result.position.x = int(result.position.x);
-    result.position.y = int(result.position.y);
+    result.position.x = int(result.position.x + 0.5);
+    result.position.y = int(result.position.y + 0.5);
 
     return result;
 }

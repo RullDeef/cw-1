@@ -28,8 +28,11 @@ StatusCode Core::overlayRenderScene(RenderParams renderParams)
         if (get(renderParams.scene.lightList, i, light))
         {
             Vec pos = project_point(renderParams.camera, light.position);
-            int x = pos.x, y = pos.y, r = 10;
-            renderCircle(renderParams.renderTarget, x, y, r, Colors::light_cyan);
+            if (std::abs(pos.z) < std::abs(pos.w))
+            {
+                int x = pos.x, y = pos.y, r = 10;
+                renderCircle(renderParams.renderTarget, x, y, r, Colors::light_cyan);
+            }
         }
     }
 

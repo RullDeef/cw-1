@@ -34,3 +34,12 @@ Vector Rect::outerQuad(int x, int y) const
 
     return Vector(vx, vy, 0.0, 0.0);
 }
+
+Vector Rect::fitIn(const Vector& point) const
+{
+    double vmax2 = std::max<double>(width, height) / 2;
+    double x = left + point.getX() * vmax2 + double(width) / 2;
+    double y = top - point.getY() * vmax2 + double(height) / 2;
+
+    return Vector(x, y, point.getZ(), point.getW());
+}

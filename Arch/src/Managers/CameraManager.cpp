@@ -44,7 +44,7 @@ Ray CameraManager::createRay(int x, int y)
     Rect viewport = getFactory().getRenderManager()->getActiveViewport();
     Vector uPos = viewport.outerQuad(x, y);
 
-    return getActiveCamera().createRay(uPos.getX(), uPos.getY());
+    return getActiveCamera().createRay(uPos.getX(), uPos.getY(), viewport);
 }
 
 void CameraManager::onActiveCameraSwitch(Camera& activeCamera)

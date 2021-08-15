@@ -58,6 +58,16 @@ void Core::recalc_normal(Face &face)
     face.verts[2].normal = normal;
 }
 
+Vec Core::get_center(const Face &face)
+{
+    return (face.verts[0].position + face.verts[1].position + face.verts[2].position) / 3;
+}
+
+Vec Core::get_mean_normal(const Face& face)
+{
+    return normalized(face.verts[0].normal + face.verts[1].normal + face.verts[2].normal);
+}
+
 Face Core::operator*(const Mat& mat, const Face& face)
 {
     Face res = face;
@@ -192,23 +202,21 @@ StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const 
 StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
 {
     Face projection = project(face, camera);
+    auto regions = make_render_regions(mesh, mesh.model_mat * face, projection);
 
     if (lighting == LightingModelType::Flat)
     {
-//        auto regions = make_flat_render_regions(mesh, face, projection);
-//
-//        for (size_t i = 0; i < regions.size; i++)
-//        {
-//            RenderRegion* region = nullptr;
-//            /// TODO: implement later
-//            if (at(regions, i, region))
-//                renderFlat(renderTarget, zbuffer, *region, camera);
-//        }
+        flat_correction(regions, face);
+
+        for (size_t i = 0; i < regions.size; i++)
+        {
+            RenderRegion* region = nullptr;
+            if (at(regions, i, region))
+                renderFlat(renderTarget, zbuffer, *region, colorComputeFn);
+        }
     }
     else if (lighting == LightingModelType::Gouraud)
     {
-        auto regions = make_render_regions(mesh, face, projection);
-
         for (size_t i = 0; i < regions.size; i++)
         {
             RenderRegion* region = nullptr;
@@ -218,8 +226,6 @@ StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer,
     }
     else if (lighting == LightingModelType::Phong)
     {
-        auto regions = make_render_regions(mesh, face, projection);
-
         for (size_t i = 0; i < regions.size; i++)
         {
             RenderRegion* region = nullptr;
@@ -247,12 +253,8 @@ StatusCode Core::renderWireframeFace(RenderTarget& renderTarget, Face face, cons
     push_back(vertices, projection.verts[1]);
     push_back(vertices, projection.verts[2]);
 
-    double x_aspect = 1.0; /// TODO: extract method
-    double y_aspect = 1.0;
-    if (camera.viewport.width < camera.viewport.height)
-        x_aspect *= double(camera.viewport.height) / camera.viewport.width;
-    else
-        y_aspect *= double(camera.viewport.width) / camera.viewport.height;
+    double x_aspect = get_x_aspect(camera.viewport);
+    double y_aspect = get_y_aspect(camera.viewport);
 
     auto clipped = clip_polygon(vertices, x_aspect, y_aspect);
     if (clipped.size >= 3)

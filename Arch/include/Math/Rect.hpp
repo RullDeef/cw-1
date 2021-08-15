@@ -16,6 +16,8 @@ public:
     Vector innerQuad(int x, int y) const;
     Vector outerQuad(int x, int y) const;
 
+    Vector fitIn(const Vector& point) const;
+
 private:
     int top;
     int left;

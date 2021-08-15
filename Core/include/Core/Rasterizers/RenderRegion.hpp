@@ -36,6 +36,10 @@ namespace Core
         Vertex dvLeft;
         Vertex dvRight;
 
+        // used in flat rendering
+        Vec center;
+        Vec normal;
+
         const Mesh* meshPtr;
     };
 
@@ -49,6 +53,9 @@ namespace Core
     void normalize(RenderRegion& region);
     RenderRegion normalized(const RenderRegion& region);
 
+    void flat_correction(arr_t<RenderRegion, 2>& regions, const Face& face);
+
+    void renderFlat(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, ColorComputeFn colorComputeFn);
     void renderPhong(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, ColorComputeFn colorComputeFn);
     void renderGouraud(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, ColorComputeFn colorComputeFn);
 }

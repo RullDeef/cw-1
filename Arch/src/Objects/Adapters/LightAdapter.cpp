@@ -23,11 +23,17 @@ void ObjectAdapter<Light>::accept(IObjectVisitor& visitor)
 
 bool ObjectAdapter<Light>::intersects(double& t, const Ray& ray)
 {
-    Vector center = light.getPosition();
-    const double radiusConstant = 0.05;
-    double radius = radiusConstant * (ray.getPosition() - center).length();
+    const Camera& camera = *(ray.getCamera());
 
-    return ray.intersectsSphere(t, center, radius);
+    Vector center = camera.project(light.getPosition(), ray.getViewport());
+    Vector ray_pos = camera.project(ray.getPosition() + ray.getDirection(), ray.getViewport());
+    Vector delta = center - ray_pos;
+
+    const double radius = 10.0;
+
+    if (delta.getX() * delta.getX() + delta.getY() * delta.getY() <= radius * radius)
+        return ray.intersectsPlane(t, light.getPosition(), -ray.getDirection());
+    return false;
 }
 
 void ObjectAdapter<Light>::onTransformChange()

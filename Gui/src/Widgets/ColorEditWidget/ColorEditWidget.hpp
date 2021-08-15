@@ -25,6 +25,7 @@ public:
 
 protected slots:
     void colorPickedSlot(QColor color);
+    void colorChangedSlot();
 
 private:
     Ui::ColorEditWidget *ui;

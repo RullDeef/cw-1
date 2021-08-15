@@ -39,6 +39,22 @@ Matrix Camera::getModelMatrix() const
     return res;
 }
 
+Matrix Camera::getViewMatrix() const
+{
+    return getModelMatrix().inverse();
+}
+
+Matrix Camera::getProjectionMatrix() const
+{
+    Matrix res = Matrix::perspective(fov, near, far);
+    return res;
+}
+
+Matrix Camera::getViewProjectionMatrix() const
+{
+    return getProjectionMatrix() * getViewMatrix();
+}
+
 void Camera::setPosition(const Vector& newPosition)
 {
     eye = newPosition;
@@ -71,12 +87,20 @@ void Camera::rotate(double dPitch, double dYaw)
         pitch = M_PI_2;
 }
 
-Ray Camera::createRay(double x, double y) const
+Ray Camera::createRay(double x, double y, const Rect& viewport) const
 {
     double z = 1.0 / std::tan(fov / 2);
     auto dir = Vector(x, y, z, 0.0).normalized();
 
     dir = getModelMatrix() * dir;
 
-    return Ray(eye, dir);
+    return Ray(eye, dir, this, viewport);
+}
+
+Vector Camera::project(const Vector& point, const Rect& viewport) const
+{
+    Vector res = getViewProjectionMatrix() * point;
+    res.perspective_adjust();
+    res = viewport.fitIn(res);
+    return res;
 }

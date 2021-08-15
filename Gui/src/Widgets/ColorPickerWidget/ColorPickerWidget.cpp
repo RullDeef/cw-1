@@ -10,6 +10,7 @@ ColorPickerWidget::ColorPickerWidget(QWidget *parent) : QWidget(parent), color(Q
 void ColorPickerWidget::setColor(QColor newColor)
 {
     color = newColor;
+    repaint();
 }
 
 void ColorPickerWidget::mouseReleaseEvent(QMouseEvent *event)

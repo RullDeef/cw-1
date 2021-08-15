@@ -40,7 +40,7 @@ void InspectorWidget::inspect(const std::shared_ptr<IObject>& newObject)
     object = newObject;
 
     ui->idSpinBox->setValue(newObject->getId() % 1000000000);
-    ui->nameTextEdit->setPlainText(QString::fromStdString(newObject->getName()));
+    ui->nameTextEdit->setText(QString::fromStdString(newObject->getName()));
 
     ui->positionEdit->setValue(newObject->getPosition());
     ui->rotationEdit->setValue(newObject->getRotation());
@@ -81,7 +81,7 @@ void InspectorWidget::renameObject()
 {
     if (auto obj = object.lock())
     {
-        obj->setName(ui->nameTextEdit->toPlainText().toStdString());
+        obj->setName(ui->nameTextEdit->text().toStdString());
 
         emit objectChangedSignal();
     }

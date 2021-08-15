@@ -9,6 +9,8 @@
 
 namespace Core
 {
+    struct Mat;
+
     struct Material
     {
         Color ambientColor;
@@ -24,6 +26,7 @@ namespace Core
     Color compute_color(const Material& material, const arr_t<Light, lightCount>& lights, const Vec& view, const Vec& normal);
 
     Color compute_color(const Material& material, const vect_t<Light>& lights, const Vec& view, const Vec& normal);
+    Color compute_color(const Material& material, const vect_t<Light>& lights, const Mat& view_mat, const Vec& view, const Vec& normal);
 }
 
 #include "Core/Objects/MaterialImp.hpp"

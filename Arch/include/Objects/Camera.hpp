@@ -4,6 +4,7 @@
 #include <Core/Objects/Camera.hpp>
 #include "Math/Vector.hpp"
 #include "Math/Matrix.hpp"
+#include "Math/Rect.hpp"
 #include "Math/Ray.hpp"
 
 
@@ -19,6 +20,9 @@ public:
     [[nodiscard]] double getPitch() const;
     [[nodiscard]] double getYaw() const;
     [[nodiscard]] Matrix getModelMatrix() const;
+    [[nodiscard]] Matrix getViewMatrix() const;
+    [[nodiscard]] Matrix getProjectionMatrix() const;
+    [[nodiscard]] Matrix getViewProjectionMatrix() const;
 
     void setPosition(const Vector& newPosition);
     void setPitch(double newPitch);
@@ -27,7 +31,9 @@ public:
     void translate(const Vector& offset);
     void rotate(double dPitch, double dYaw);
 
-    Ray createRay(double x, double y) const;
+    Ray createRay(double x, double y, const Rect& viewport) const;
+
+    Vector project(const Vector& point, const Rect& viewport) const;
 
 private:
     double fov = 1.2217;
