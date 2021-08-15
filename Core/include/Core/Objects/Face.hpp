@@ -20,8 +20,8 @@ namespace Core
     enum struct LightingModelType;
 
     using FaceCullingType = unsigned int;
-    constexpr FaceCullingType OcclusionCullingType = 1 << 0;
-    constexpr FaceCullingType BackfaceCullingType = 1 << 1;
+    constexpr FaceCullingType OcclusionCulling = 1 << 0;
+    constexpr FaceCullingType BackfaceCulling = 1 << 1;
 
     struct Face
     {

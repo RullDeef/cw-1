@@ -156,7 +156,7 @@ bool Core::culling(const Face& face, const Camera& camera, FaceCullingType type)
     Vec p2 = project_viewport_frustrum(camera, face.verts[1].position);
     Vec p3 = project_viewport_frustrum(camera, face.verts[2].position);
 
-    if (type & OcclusionCullingType)
+    if (type & OcclusionCulling)
     {
         unsigned int code1 = bit_code(p1);
         unsigned int code2 = bit_code(p2);
@@ -166,13 +166,17 @@ bool Core::culling(const Face& face, const Camera& camera, FaceCullingType type)
             return true;
     }
 
-    if (type & BackfaceCullingType)
+    if (type & BackfaceCulling)
     {
+        p1 = viewport_adjust(camera, p1);
+        p2 = viewport_adjust(camera, p2);
+        p3 = viewport_adjust(camera, p3);
+
         Vec norm = Core::cross(p2 - p1, p3 - p1);
-        Vec dir = make_dir(0, 0, -1);
+        Vec dir = make_dir(0, 0, 1);
 
         double dot = Core::dot(dir, norm);
-        if (dot < 0.0)
+        if (dot <= 0.0)
             return true;
     }
 

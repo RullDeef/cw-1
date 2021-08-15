@@ -5,8 +5,6 @@
 using namespace Core;
 
 static bool same_projected(const Vec& v1, const Vec& v2);
-static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material);
-static Pixel recomputeColor(const Vec& normal);
 
 
 arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Face projection)
@@ -48,8 +46,8 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         region.xStartLeft = (int)p1.x;
         region.xStartRight = (int)p1.x;
 
-        region.zStartLeft = 1.0 / (p1.z + 1.0);
-        region.zStartRight = 1.0 / (p1.z + 1.0);
+        region.zStartLeft = 1.0 / (p1.z + 1.001);
+        region.zStartRight = 1.0 / (p1.z + 1.001);
 
         region.vLeft = face.verts[0];
         region.vRight = face.verts[0];
@@ -57,8 +55,8 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         region.dxLeft = (p2.x - p1.x) / (p2.y - p1.y);
         region.dxRight = (p3.x - p1.x) / (p3.y - p1.y);
 
-        region.dzLeft = (1.0 / (p2.z + 1.0) - 1.0 / (p1.z + 1.0)) / (p2.y - p1.y);
-        region.dzRight = (1.0 / (p3.z + 1.0) - 1.0 / (p1.z + 1.0)) / (p3.y - p1.y);
+        region.dzLeft = (1.0 / (p2.z + 1.001) - 1.0 / (p1.z + 1.001)) / (p2.y - p1.y);
+        region.dzRight = (1.0 / (p3.z + 1.001) - 1.0 / (p1.z + 1.001)) / (p3.y - p1.y);
 
         region.dvLeft = vertex_delta(face.verts[0], face.verts[1], p2.y - p1.y);
         region.dvRight = vertex_delta(face.verts[0], face.verts[2], p3.y - p1.y);
@@ -74,11 +72,11 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
             region.xStartLeft = (int)p2.x;
             region.xStartRight += (int)(region.dxRight * (p2.y - p1.y));
 
-            region.zStartLeft = 1.0 / (p2.z + 1.0);
+            region.zStartLeft = 1.0 / (p2.z + 1.001);
             region.zStartRight += region.dzRight * (p2.y - p1.y);
 
             region.dxLeft = (p3.x - p2.x) / (p3.y - p2.y);
-            region.dzLeft = (1.0 / (p3.z + 1.0) - 1.0 / (p2.z + 1.0)) / (p3.y - p2.y);
+            region.dzLeft = (1.0 / (p3.z + 1.001) - 1.0 / (p2.z + 1.001)) / (p3.y - p2.y);
 
             region.vLeft = face.verts[1];
             region.vRight = interpolate(face.verts[0], face.verts[2], (p2.y - p1.y) / (p3.y - p1.y));
@@ -99,10 +97,10 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
             region.xStartRight = (int)p3.x;
 
             region.zStartLeft += region.dzLeft * (p3.y - p1.y);
-            region.zStartRight = 1.0 / (p3.z + 1.0);
+            region.zStartRight = 1.0 / (p3.z + 1.001);
 
             region.dxRight = (p2.x - p3.x) / (p2.y - p3.y);
-            region.dzRight = (1.0 / (p2.z + 1.0) - 1.0 / (p3.z + 1.0)) / (p2.y - p3.y);
+            region.dzRight = (1.0 / (p2.z + 1.001) - 1.0 / (p3.z + 1.001)) / (p2.y - p3.y);
 
             region.vLeft = interpolate(face.verts[0], face.verts[1], (p3.y - p1.y) / (p2.y - p1.y));
             region.vRight = face.verts[2];
@@ -134,14 +132,14 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         region.xStartLeft = (int)p1.x;
         region.xStartRight = (int)p2.x;
 
-        region.zStartLeft = 1.0 / (p1.z + 1.0);
-        region.zStartRight = 1.0 / (p2.z + 1.0);
+        region.zStartLeft = 1.0 / (p1.z + 1.001);
+        region.zStartRight = 1.0 / (p2.z + 1.001);
 
         region.dxLeft = (p3.x - p1.x) / (p3.y - p1.y);
         region.dxRight = (p3.x - p2.x) / (p3.y - p2.y);
 
-        region.dzLeft = (1.0 / (p3.z + 1.0) - 1.0 / (p1.z + 1.0)) / (p3.y - p1.y);
-        region.dzRight = (1.0 / (p3.z + 1.0) - 1.0 / (p2.z + 1.0)) / (p3.y - p2.y);
+        region.dzLeft = (1.0 / (p3.z + 1.001) - 1.0 / (p1.z + 1.001)) / (p3.y - p1.y);
+        region.dzRight = (1.0 / (p3.z + 1.001) - 1.0 / (p2.z + 1.001)) / (p3.y - p2.y);
 
         region.vLeft = face.verts[0];
         region.vRight = face.verts[1];
@@ -168,14 +166,14 @@ arr_t<RenderRegion, 2> Core::make_render_regions(const Mesh& mesh, Face face, Fa
         region.xStartLeft = (int)p1.x;
         region.xStartRight = (int)p3.x;
 
-        region.zStartLeft = 1.0 / (p1.z + 1.0);
-        region.zStartRight = 1.0 / (p3.z + 1.0);
+        region.zStartLeft = 1.0 / (p1.z + 1.001);
+        region.zStartRight = 1.0 / (p3.z + 1.001);
 
         region.dxLeft = (p2.x - p1.x) / (p2.y - p1.y);
         region.dxRight = (p2.x - p3.x) / (p2.y - p3.y);
 
-        region.dzLeft = (1.0 / (p2.z + 1.0) - 1.0 / (p1.z + 1.0)) / (p2.y - p1.y);
-        region.dzRight = (1.0 / (p2.z + 1.0) - 1.0 / (p3.z + 1.0)) / (p2.y - p3.y);
+        region.dzLeft = (1.0 / (p2.z + 1.001) - 1.0 / (p1.z + 1.001)) / (p2.y - p1.y);
+        region.dzRight = (1.0 / (p2.z + 1.001) - 1.0 / (p3.z + 1.001)) / (p2.y - p3.y);
 
         region.vLeft = face.verts[0];
         region.vRight = face.verts[2];
@@ -364,64 +362,4 @@ void Core::renderGouraud(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderReg
 static bool same_projected(const Vec& v1, const Vec& v2)
 {
     return v1.x == v2.x && v1.y == v2.y;
-}
-
-static Pixel recomputeColor(const Vec& normal)
-{
-    static Vec light_1 = normalized(make_dir(-1, 2, 1));
-    static Vec light_2 = normalized(make_dir(3, 4, -2));
-
-    double lit_factor_1 = dot(normal, light_1);
-    double lit_factor_2 = dot(normal, light_2);
-    if (lit_factor_1 < 0) lit_factor_1 = 0;
-    if (lit_factor_2 < 0) lit_factor_2 = 0;
-
-    Pixel color{};
-    { // generate color from lit factor
-        const int min_r = 64;
-        const int max_r = 255;
-        const int min_g = 64;
-        const int max_g = 255;
-        const int min_b = 64;
-        const int max_b = 255;
-
-        color.red   = min_r + (max_r - min_r) * (0.75 * lit_factor_1 + 0.25 * lit_factor_2);
-        color.green = min_g + (max_g - min_g) * (0.50 * lit_factor_1 + 0.50 * lit_factor_2);
-        color.blue  = min_b + (max_b - min_b) * (0.25 * lit_factor_1 + 0.75 * lit_factor_2);
-        color.alpha = 255;
-    }
-
-    return color;
-}
-
-static Pixel recomputeColor(const Vec& normal, const Vec& view, const Material& material)
-{
-    /// TODO: microfix for testing
-    return recomputeColor(normal);
-
-//    static Light light_0 = { Light::LightType::Ambient };
-//    light_0.ambient = {
-//            make_color(1.0, 0.0, 0.0),
-//            0.3
-//    };
-//    static Light light_1 = { Light::LightType::Directional };
-//    light_1.directional = (DirectionalLight) {
-//            make_color(0.0, 1.0, 0.0),
-//            0.4,
-//            normalized(make_dir(0.2, 0.4, -0.8))
-//    };
-//    static Light light_2 = { Light::LightType::Directional };
-//    light_2.directional = (DirectionalLight) {
-//            make_color(0.0, 0.0, 1.0),
-//            0.4,
-//            normalized(make_dir(3, 4, -2))
-//    };
-//
-//    auto lights = make_arr<Light, 3>();
-//    push_back(lights, light_0);
-//    push_back(lights, light_1);
-//    push_back(lights, light_2);
-//
-//    Color color = compute_color(material, lights, view, normal);
-//    return to_pixel(color);
 }
