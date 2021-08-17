@@ -7,19 +7,7 @@ Light::Light(const Core::Light &light)
     intensity = light.intensity;
     position = light.position;
     direction = light.direction;
-
-    if (light.type == Core::LightType::Ambient)
-    {
-        type = Type::Ambient;
-    }
-    else if (light.type == Core::LightType::Directional)
-    {
-        type = Type::Directional;
-    }
-    else if (light.type == Core::LightType::Point)
-    {
-        type = Type::Point;
-    }
+    type = light.type;
 }
 
 Light::operator Core::Light() const
@@ -30,19 +18,7 @@ Light::operator Core::Light() const
     res.intensity = intensity;
     res.position = position;
     res.direction = direction;
-
-    if (type == Type::Ambient)
-    {
-        res.type = Core::LightType::Ambient;
-    }
-    else if (type == Type::Directional)
-    {
-        res.type = Core::LightType::Directional;
-    }
-    else if (type == Type::Point)
-    {
-        res.type = Core::LightType::Point;
-    }
+    res.type = type;
 
     return res;
 }

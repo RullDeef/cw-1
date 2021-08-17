@@ -25,8 +25,8 @@ public:
     const_iterator end() const { return faces.end(); }
 
 private:
-    std::string name;
-    std::string materialName;
+    std::string name = "";
+    std::string materialName = "";
     std::vector<ObjFace> faces;
 };
 

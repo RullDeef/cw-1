@@ -9,12 +9,7 @@
 class Light
 {
 public:
-    enum class Type
-    {
-        Ambient,
-        Directional,
-        Point
-    };
+    using Type = Core::LightType;
 
     Light(const Core::Light& light);
 

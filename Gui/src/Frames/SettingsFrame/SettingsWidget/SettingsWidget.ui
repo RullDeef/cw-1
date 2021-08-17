@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>433</width>
-    <height>300</height>
+    <width>363</width>
+    <height>275</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,26 +95,17 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <widget class="QWidget" name="renderingPage">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>4</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Rendering LightType</string>
            </property>
@@ -124,17 +115,90 @@
           <widget class="QComboBox" name="renderingTypeComboBox">
            <item>
             <property name="text">
-             <string>Fast</string>
+             <string>ColorFilling</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Fancy</string>
+             <string>RayTracing</string>
             </property>
            </item>
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="colorFillingGroupBox">
+         <property name="title">
+          <string>Color Filling Settings</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Lighting Model</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="lightingModelComboBox">
+              <item>
+               <property name="text">
+                <string>Flat</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Gouroud</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Phong</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="occlusionCullingCheckBox">
+            <property name="text">
+             <string>Occlusion Culling</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="backFaceCullingCheckBox">
+            <property name="text">
+             <string>Back Face Culling</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="rayTracingGroupBox">
+         <property name="title">
+          <string>Ray Tracing Settings</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="shadowsCheckBox">

@@ -11,8 +11,8 @@ namespace Core
 {
     enum struct RenderType
     {
-        Fast,
-        Fancy,
+        ColorFilling,
+        RayTracing,
         Overlay
     };
 

@@ -1,11 +1,8 @@
-//
-// Created by rulldeef on 8/3/21.
-//
-
 #ifndef CW_1_SETTINGSWIDGET_HPP
 #define CW_1_SETTINGSWIDGET_HPP
 
 #include <QWidget>
+#include <RenderSettings/RenderSettings.hpp>
 
 
 QT_BEGIN_NAMESPACE
@@ -15,8 +12,7 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
-class SettingsWidget
-        : public QWidget
+class SettingsWidget : public QWidget
 {
     Q_OBJECT
 
@@ -25,9 +21,17 @@ public:
 
     ~SettingsWidget() override;
 
+    void setRenderSettings(RenderSettings settings);
+
+signals:
+    void renderSettingsChangedSignal(RenderSettings settings);
+
+protected slots:
+    void renderSettingsChanged();
+
 private:
     Ui::SettingsWidget *ui;
 };
 
 
-#endif //CW_1_SETTINGSWIDGET_HPP
+#endif // CW_1_SETTINGSWIDGET_HPP

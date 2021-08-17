@@ -15,7 +15,7 @@ RenderParams Core::make_render_params(const RenderTarget& renderTarget, const Sc
     params.camera = make_camera();
     update_viewport(params.camera, params.viewport);
 
-    params.renderType = RenderType::Fast;
+    params.renderType = RenderType::ColorFilling;
     params.sceneLightingModel = LightingModelType::Phong;
     params.faceCullingType = OcclusionCulling | BackfaceCulling;
 

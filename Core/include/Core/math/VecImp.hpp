@@ -44,7 +44,8 @@ namespace Core
 
     inline Vec normalized(const Vec& vec)
     {
-        double f = inv_sqrt_fast(vec);
+        /// TODO: pref tests
+        double f = 1.0 / length(vec); // inv_sqrt_fast(vec);
         return make_dir(f * vec.x, f * vec.y, f * vec.z, vec.w);
     }
 

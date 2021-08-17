@@ -11,11 +11,11 @@ StatusCode Core::renderScene(RenderParams renderParams)
 {
     StatusCode result = StatusCode::InvalidRenderType;
 
-    if (renderParams.renderType == RenderType::Fast)
+    if (renderParams.renderType == RenderType::ColorFilling)
     {
         result = fastRenderScene(renderParams);
     }
-    else if (renderParams.renderType == RenderType::Fancy)
+    else if (renderParams.renderType == RenderType::RayTracing)
     {
         result = fancyRenderScene(renderParams);
     }

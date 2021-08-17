@@ -36,6 +36,10 @@ std::unique_ptr<IObject> ObjLoader::loadMesh(const std::string& filename)
     /// ASSUMPTION (!)
     /// mesh list size == 1
 
+
+    if (meshes.size() == 0)
+        throw std::runtime_error("bad meshes list");
+
     size_t id = DefaultIDGenerator().generate();
     Mesh mesh = constructMesh(meshes.front(), verts, uvs, norms, mtllibs);
 
@@ -226,7 +230,7 @@ bool ObjLoader::acceptWhenToken(std::string &line, const char *token)
     if (line.substr(0, len) == token)
     {
         line = trim(line.substr(len));
-        return true;
+        return !line.empty();
     }
     return false;
 }
@@ -237,7 +241,10 @@ std::string ObjLoader::trim(const std::string &str)
     size_t first_i = str.find_first_not_of(whitespaces);
     size_t last_i = str.find_last_not_of(whitespaces);
 
-    return str.substr(first_i, last_i);
+    if (first_i == std::string::npos)
+        return "";
+    else
+        return str.substr(first_i, last_i);
 }
 
 double ObjLoader::extractScalar(const std::string &str)
@@ -271,7 +278,7 @@ Mesh ObjLoader::constructMesh(const ObjObject &object, const std::vector<Vector>
 
     for (const auto& objFace : object)
     {
-        const auto& vList = objFace.getVertexList();
+        auto vList = objFace.getVertexList();
 
         Core::Vertex v1 = Core::make_vertex(positions[vList[0].getPosIndex()]);
         Core::Vertex v2 = Core::make_vertex(positions[vList[1].getPosIndex()]);
@@ -292,6 +299,8 @@ Mesh ObjLoader::constructMesh(const ObjObject &object, const std::vector<Vector>
         }
 
         Core::Face face = Core::make_face(v1, v2, v3);
+        if (!objFace.hasNormIndex())
+            Core::recalc_normal(face);
         Core::add_face(mesh, face);
     }
 

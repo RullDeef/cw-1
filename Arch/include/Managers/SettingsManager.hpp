@@ -17,7 +17,7 @@ public:
 protected:
     virtual void onBeforeGetRenderSettings() {}
     virtual void onBeforeUpdateRenderSettings(RenderSettings newSettings) {}
-    virtual void onUpdateRenderSettings() {}
+    virtual void onUpdateRenderSettings();
 
 private:
     RenderSettings renderSettings;

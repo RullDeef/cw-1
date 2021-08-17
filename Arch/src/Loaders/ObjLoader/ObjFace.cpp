@@ -8,6 +8,7 @@ ObjFace::ObjFace(const std::string &str)
     std::stringstream ss(str);
     std::string vertStr;
 
+    vertexList = {};
     while (ss >> vertStr)
         vertexList.emplace_back(vertStr);
 }

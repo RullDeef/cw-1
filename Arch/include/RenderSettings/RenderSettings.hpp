@@ -7,7 +7,30 @@
 class RenderSettings
 {
 public:
+    using RenderType = Core::RenderType;
+    using LightingType = Core::LightingModelType;
+    using FaceCullingType = Core::FaceCullingType;
+
+    static const FaceCullingType NoCulling = 0;
+    static const FaceCullingType OcclusionCulling = Core::OcclusionCulling;
+    static const FaceCullingType BackFaceCulling = Core::BackfaceCulling;
+
+    RenderSettings();
+
     void applyTo(Core::RenderParams& params) const;
+
+    [[nodiscard]] RenderType getRenderType() const;
+    [[nodiscard]] LightingType getLightingType() const;
+    [[nodiscard]] FaceCullingType getFaceCullingType() const;
+
+    void setRenderType(RenderType newRenderType);
+    void setLightingType(LightingType newLightingType);
+    void setFaceCullingType(FaceCullingType newFaceCullingType);
+
+private:
+    RenderType renderType;
+    LightingType lightingType;
+    FaceCullingType faceCullingType;
 };
 
 #endif // RENDERSETTINGS_HPP
