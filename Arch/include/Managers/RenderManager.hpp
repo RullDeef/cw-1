@@ -6,6 +6,7 @@
 #include "Scene/Scene.hpp"
 #include "IManager.hpp"
 #include "Math/Rect.hpp"
+#include "RenderSettings/RenderSettings.hpp"
 
 
 class RenderManager : public IManager
@@ -14,18 +15,19 @@ public:
     explicit RenderManager(IManagerFactory& factory);
 
     void renderActiveScene();
+    void renderActiveScene(const RenderSettings& renderSettings);
 
     virtual Rect getActiveViewport() = 0;
 
 protected:
-    void renderScene(Scene &scene, Camera &camera);
-    void renderOverlay(Scene &scene, Camera &camera);
+    void renderScene(Scene &scene, Camera &camera, const RenderSettings& renderSettings);
+    void renderOverlay(Scene &scene, Camera &camera, const RenderSettings& renderSettings);
 
     virtual RenderTarget getSceneRenderTarget() = 0;
     virtual RenderTarget getOverlayRenderTarget() = 0;
 
-    virtual void onBeforeSceneRender(Scene& scene, Camera& camera);
-    virtual void onSceneRender(Scene& scene, Camera& camera);
+    virtual void onBeforeSceneRender(Scene &scene, Camera &camera, const RenderSettings &renderSettings);
+    virtual void onSceneRender(Scene &scene, Camera &camera, const RenderSettings &renderSettings);
 };
 
 #endif // RENDERMANAGER_HPP

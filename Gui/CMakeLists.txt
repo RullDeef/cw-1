@@ -40,19 +40,18 @@ add_executable(Gui
         src/Frames/InspectorFrame/InspectorWidget/InspectorWidget.cpp
         src/Frames/InspectorFrame/InspectorWidget/InspectorWidget.ui
         src/Frames/SettingsFrame/SettingsFrame.cpp
-        src/Frames/SettingsFrame/SettingsFrame.hpp
         src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.cpp
-        src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.hpp
         src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.ui
         src/Managers/QtSceneManager.cpp
-        src/Managers/QtSceneManager.hpp
         src/Managers/QtCameraManager.cpp
-        src/Managers/QtCameraManager.hpp
         src/Managers/QtRenderManager.cpp
-        src/Managers/QtRenderManager.hpp
         src/Managers/QtSelectionManager.cpp
-        src/Managers/QtSelectionManager.hpp
-        src/Widgets/RenderWidget/RenderWidget.cpp
-        src/Widgets/RenderWidget/RenderWidget.hpp src/Widgets/VectorEditWidget/VectorEditWidget.cpp src/Widgets/VectorEditWidget/VectorEditWidget.hpp src/Widgets/VectorEditWidget/VectorEditWidget.ui src/Widgets/ColorEditWidget/ColorEditWidget.cpp src/Widgets/ColorEditWidget/ColorEditWidget.hpp src/Widgets/ColorEditWidget/ColorEditWidget.ui src/Widgets/ColorPickerWidget/ColorPickerWidget.cpp src/Widgets/ColorPickerWidget/ColorPickerWidget.hpp)
+		src/Managers/QtSettingsManager.cpp
+		src/Widgets/RenderWidget/RenderWidget.cpp
+		src/Widgets/VectorEditWidget/VectorEditWidget.cpp
+		src/Widgets/VectorEditWidget/VectorEditWidget.ui
+		src/Widgets/ColorEditWidget/ColorEditWidget.cpp
+		src/Widgets/ColorEditWidget/ColorEditWidget.ui
+		src/Widgets/ColorPickerWidget/ColorPickerWidget.cpp)
 
 target_link_libraries(Gui PRIVATE qtadvanceddocking PUBLIC Arch Core Qt5::Core Qt5::Widgets pthread)

@@ -4,11 +4,8 @@
 #include "Managers/QtRenderManager.hpp"
 #include "Managers/QtLoadManager.hpp"
 #include "Managers/QtSelectionManager.hpp"
+#include "Managers/QtSettingsManager.hpp"
 
-
-QtManagerFactory::QtManagerFactory()
-{
-}
 
 std::shared_ptr<SceneManager> QtManagerFactory::getSceneManager()
 {
@@ -43,4 +40,11 @@ std::shared_ptr<SelectionManager> QtManagerFactory::getSelectionManager()
     if (!selectionManager)
         selectionManager = std::shared_ptr<SelectionManager>(new QtSelectionManager(*this));
     return selectionManager;
+}
+
+std::shared_ptr<SettingsManager> QtManagerFactory::getSettingsManager()
+{
+    if (!settingsManager)
+        settingsManager = std::shared_ptr<SettingsManager>(new QtSettingsManager(*this));
+    return settingsManager;
 }

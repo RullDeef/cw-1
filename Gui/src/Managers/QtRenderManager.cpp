@@ -21,13 +21,13 @@ Rect QtRenderManager::getActiveViewport()
     return Rect(0, 0, width, height);
 }
 
-void QtRenderManager::onSceneRender(Scene &scene, Camera &camera)
+void QtRenderManager::onSceneRender(Scene &scene, Camera &camera, const RenderSettings &renderSettings)
 {
-    RenderManager::onSceneRender(scene, camera);
+    RenderManager::onSceneRender(scene, camera, renderSettings);
 
     viewWidget->repaint();
 
-    emit sceneRenderSignal(scene, camera);
+    emit sceneRenderSignal(scene, camera, renderSettings);
 }
 
 RenderTarget QtRenderManager::getSceneRenderTarget()

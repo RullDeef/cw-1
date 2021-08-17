@@ -18,7 +18,7 @@ public:
     Rect getActiveViewport() override;
 
 signals:
-    void sceneRenderSignal(Scene& scene, Camera& camera);
+    void sceneRenderSignal(Scene &scene, Camera &camera, const RenderSettings &renderSettings);
 
 protected slots:
     void renderWidgetResized();
@@ -27,7 +27,7 @@ protected:
     RenderTarget getSceneRenderTarget() override;
     RenderTarget getOverlayRenderTarget() override;
 
-    void onSceneRender(Scene &scene, Camera &camera) override;
+    void onSceneRender(Scene &scene, Camera &camera, const RenderSettings &renderSettings) override;
 
 private:
     void paintOverlay();
