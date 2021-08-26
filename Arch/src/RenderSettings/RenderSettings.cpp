@@ -1,9 +1,11 @@
+#include <thread>
 #include "RenderSettings/RenderSettings.hpp"
 
 
 RenderSettings::RenderSettings()
     : renderType(RenderType::ColorFilling), lightingType(LightingType::Flat),
-    faceCullingType(OcclusionCulling | BackFaceCulling)
+    faceCullingType(OcclusionCulling | BackFaceCulling),
+    threadsCount(std::thread::hardware_concurrency())
 {
 }
 
@@ -29,6 +31,11 @@ RenderSettings::FaceCullingType RenderSettings::getFaceCullingType() const
     return faceCullingType;
 }
 
+unsigned int RenderSettings::getThreadsCount() const
+{
+    return threadsCount;
+}
+
 void RenderSettings::setRenderType(RenderType newRenderType)
 {
     renderType = newRenderType;
@@ -42,4 +49,9 @@ void RenderSettings::setLightingType(LightingType newLightingType)
 void RenderSettings::setFaceCullingType(FaceCullingType newFaceCullingType)
 {
     faceCullingType = newFaceCullingType;
+}
+
+void RenderSettings::setThreadsCount(unsigned int newThreadsCount)
+{
+    threadsCount = newThreadsCount;
 }

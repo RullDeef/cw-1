@@ -1,6 +1,6 @@
 #include <chrono>
-#include <vector>
-#include <future>
+#include <sstream>
+#include <iomanip>
 #include "Core/Core.hpp"
 #include "Objects/ObjectAdapter.hpp"
 #include "Managers/IManagerFactory.hpp"
@@ -8,6 +8,7 @@
 #include "Managers/CameraManager.hpp"
 #include "Managers/RenderManager.hpp"
 #include "Managers/SettingsManager.hpp"
+#include "Managers/InfoManager.hpp"
 
 
 RenderManager::RenderManager(IManagerFactory &factory)
@@ -40,9 +41,48 @@ void RenderManager::renderActiveScene(const RenderSettings& renderSettings)
 
 void RenderManager::renderScene(Scene &scene, Camera &camera, const RenderSettings& renderSettings)
 {
-    Core::RenderParams params = Core::make_render_params(getSceneRenderTarget(), scene, camera);
+    Core::RenderTarget renderTarget = getSceneRenderTarget();
+    Core::RenderParams params = Core::make_render_params(renderTarget, scene, camera);
     renderSettings.applyTo(params);
-    Core::renderScene(params);
+
+    auto timeStart = std::chrono::high_resolution_clock::now();
+
+    threadPool.killAllTasks();
+    threadPool.beginTaskGroup();
+
+    if (renderSettings.getRenderType() == RenderSettings::RenderType::RayTracing)
+    {
+        if (renderSettings.getThreadsCount() > 1)
+        {
+            threadPool.setWorkersCount(renderSettings.getThreadsCount());
+
+            int x_side = 64, y_side = 64;
+            for (int y = 0; y < renderTarget.height; y += y_side)
+            {
+                for (int x = 0; x < renderTarget.width; x += x_side)
+                {
+                    Core::RenderParams taskParams = params;
+                    taskParams.viewport = Core::make_rect(x_side, y_side, x, y);
+                    threadPool.addTask([taskParams]() { Core::renderScene(taskParams); });
+                }
+            }
+        }
+    }
+    else
+    {
+        threadPool.addTask([params]() { Core::renderScene(params); });
+    }
+
+    threadPool.endTaskGroup();
+
+    auto timeEnd = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durr = timeEnd - timeStart;
+
+    std::stringstream buff;
+    buff << "rendered in " << std::setprecision(3) << std::fixed << durr.count() << " ms. "
+        << "(" << (int)(1000.0 / durr.count()) << " FPS).";
+    std::string message = buff.str();
+    getFactory().getInfoManager()->logInfo(message.c_str());
 }
 
 void RenderManager::renderOverlay(Scene &scene, Camera &camera, const RenderSettings& renderSettings)

@@ -6,7 +6,7 @@ RenderTarget::RenderTarget(unsigned char* data, size_t w, size_t h)
 }
 
 RenderTarget::RenderTarget(const Core::RenderTarget &renderTarget)
-    : data((unsigned char*)renderTarget.data), width(renderTarget.width), height(renderTarget.height)
+    : data((unsigned char*)renderTarget.data.load()), width(renderTarget.width), height(renderTarget.height)
 {
 }
 

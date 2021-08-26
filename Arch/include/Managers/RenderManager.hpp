@@ -7,6 +7,7 @@
 #include "IManager.hpp"
 #include "Math/Rect.hpp"
 #include "RenderSettings/RenderSettings.hpp"
+#include "Threading/ThreadPool.hpp"
 
 
 class RenderManager : public IManager
@@ -28,6 +29,9 @@ protected:
 
     virtual void onBeforeSceneRender(Scene &scene, Camera &camera, const RenderSettings &renderSettings);
     virtual void onSceneRender(Scene &scene, Camera &camera, const RenderSettings &renderSettings);
+
+private:
+    ThreadPool threadPool;
 };
 
 #endif // RENDERMANAGER_HPP

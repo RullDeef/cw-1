@@ -4,11 +4,13 @@
 #include "Core/math/Vec.hpp"
 #include "Core/math/Mat.hpp"
 #include "Core/math/Rect.hpp"
+#include "Core/math/Ray.hpp"
 
 // флаг для компановки рабочего окна в доступную область.
 // если 1 - рабочее окно будет расширено до пределов доступной области (не рекомендуется),
 // если 0 - рабочее окно будет обрезано по доступной области (менее багуемо).
 #define USE_MIN_FIT 0
+
 
 namespace Core
 {
@@ -44,6 +46,8 @@ namespace Core
     Vec unproject_frustrum(const Camera& camera, const Vec& pos);
 
     Vec project_point(const Camera& camera, const Vec& pos);
+
+    Ray shoot_ray(const Camera& camera, int x, int y);
 }
 
 #endif // CMAERA_HPP

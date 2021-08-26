@@ -110,6 +110,17 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
     return viewport_adjust(camera, res);
 }
 
+Ray Core::shoot_ray(const Camera& camera, int x, int y)
+{
+    double z = 1.0 / std::tan(camera.fov / 2);
+
+    Vec dir = outer_quad(camera.viewport, x, y);
+    dir.z = z;
+    dir = camera.model_mat * normalized(dir);
+
+    return make_ray(camera.eye, dir);
+}
+
 void Core::update_transformation(Camera &camera)
 {
     double cosPitch = std::cos(camera.pitch);

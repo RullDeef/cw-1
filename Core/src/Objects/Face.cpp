@@ -68,6 +68,14 @@ Vec Core::get_mean_normal(const Face& face)
     return normalized(face.verts[0].normal + face.verts[1].normal + face.verts[2].normal);
 }
 
+double Core::side_length(const Face& face, size_t i, size_t j)
+{
+    Vec pos_i = face.verts[i].position;
+    Vec pos_j = face.verts[j].position;
+
+    return length(pos_i - pos_j);
+}
+
 Face Core::operator*(const Mat& mat, const Face& face)
 {
     Face res = face;

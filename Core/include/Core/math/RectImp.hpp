@@ -15,13 +15,23 @@ namespace Core
         return rect;
     }
 
+    inline int rect_area(const Rect& rect)
+    {
+        return rect.width * rect.height;
+    }
+
     inline bool is_valid(const Rect &rect)
     {
         return rect.left >= 0 && rect.top >= 0
             && rect.width > 0 && rect.height > 0;
     }
 
-    inline bool is_inside(const Rect &outer, const Rect &inner);
+    inline bool is_inside(const Rect &outer, const Rect &inner)
+    {
+        /// TODO: implement
+        return true;
+    }
+
     inline bool is_inside(const Rect &rect, int x, int y);
 
     inline double get_x_aspect(const Rect& rect)
@@ -63,5 +73,25 @@ namespace Core
         res.y = to_space.top + (point.y - from_space.top) * factor_h;
 
         return res;
+    }
+
+    inline Vec inner_quad(const Rect& rect, int x, int y)
+    {
+        double vp = std::min(rect.width, rect.height);
+
+        double vx = (2 * x - rect.width) / vp;
+        double vy = (rect.height - 2 * y) / vp;
+
+        return make_dir(vx, vy);
+    }
+
+    inline Vec outer_quad(const Rect& rect, int x, int y)
+    {
+        double vp = std::max(rect.width, rect.height);
+
+        double vx = (2 * x - rect.width) / vp;
+        double vy = (rect.height - 2 * y) / vp;
+
+        return make_dir(vx, vy);
     }
 }

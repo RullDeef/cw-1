@@ -23,14 +23,20 @@ public:
     [[nodiscard]] LightingType getLightingType() const;
     [[nodiscard]] FaceCullingType getFaceCullingType() const;
 
+    [[nodiscard]] unsigned int getThreadsCount() const;
+
     void setRenderType(RenderType newRenderType);
     void setLightingType(LightingType newLightingType);
     void setFaceCullingType(FaceCullingType newFaceCullingType);
+
+    void setThreadsCount(unsigned int newThreadsCount);
 
 private:
     RenderType renderType;
     LightingType lightingType;
     FaceCullingType faceCullingType;
+
+    unsigned int threadsCount;
 };
 
 #endif // RENDERSETTINGS_HPP

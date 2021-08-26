@@ -39,6 +39,8 @@ namespace Core
     Vec get_center(const Face& face);
     Vec get_mean_normal(const Face& face);
 
+    double side_length(const Face& face, size_t i, size_t j);
+
     Face operator*(const Mat& mat, const Face& face);
 
     Face project_viewport_frustrum(const Face& face, const Camera& camera);

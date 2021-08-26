@@ -1,6 +1,7 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
+#include "Core/math/Sphere.hpp"
 #include "Core/math/Vec.hpp"
 #include "Core/math/Mat.hpp"
 #include "Core/containers/vect_t.hpp"
@@ -18,6 +19,9 @@ namespace Core
 
         bool visible;
         bool wireframe;
+
+        bool boundingSphereDirtyFlag;
+        Sphere boundingSphere;
     };
 
     Mesh make_mesh(size_t faces_count);
@@ -25,6 +29,9 @@ namespace Core
     void destroy(Mesh& mesh);
 
     bool add_face(Mesh& mesh, const Face& face);
+
+    void recalc_bounding_sphere(Mesh& mesh);
+    Sphere get_bounding_sphere(Mesh& mesh);
 
     StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn);
 
