@@ -13,6 +13,7 @@ protected:
     std::shared_ptr<LoadManager> getLoadManager() override;
     std::shared_ptr<SelectionManager> getSelectionManager() override;
     std::shared_ptr<SettingsManager> getSettingsManager() override;
+    std::shared_ptr<InfoManager> getInfoManager() override;
 
 private:
     std::shared_ptr<SceneManager> sceneManager;
@@ -21,6 +22,7 @@ private:
     std::shared_ptr<LoadManager> loadManager;
     std::shared_ptr<SelectionManager> selectionManager;
     std::shared_ptr<SettingsManager> settingsManager;
+    std::shared_ptr<InfoManager> infoManager;
 };
 
 #endif // QTMANAGERFACTORY_HPP

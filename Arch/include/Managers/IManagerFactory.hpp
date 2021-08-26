@@ -9,6 +9,7 @@ class RenderManager;
 class CameraManager;
 class SelectionManager;
 class SettingsManager;
+class InfoManager;
 
 
 /// TODO: сделать менеджер ввода. (Настройки клавиш + FreeFlyDispatcher)
@@ -24,6 +25,7 @@ public:
     virtual std::shared_ptr<LoadManager> getLoadManager() = 0;
     virtual std::shared_ptr<SelectionManager> getSelectionManager() = 0;
     virtual std::shared_ptr<SettingsManager> getSettingsManager() = 0;
+    virtual std::shared_ptr<InfoManager> getInfoManager() = 0;
 };
 
 #endif // MANAGERFACTORY_HPP
