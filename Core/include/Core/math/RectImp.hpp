@@ -1,4 +1,5 @@
 #include "Rect.hpp"
+#include <algorithm>
 
 
 namespace Core

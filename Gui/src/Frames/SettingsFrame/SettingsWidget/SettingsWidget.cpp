@@ -13,6 +13,8 @@ SettingsWidget::SettingsWidget(QWidget *parent)
             &SettingsWidget::renderSettingsChanged);
     connect(ui->occlusionCullingCheckBox, &QCheckBox::stateChanged, this, &SettingsWidget::renderSettingsChanged);
     connect(ui->backFaceCullingCheckBox, &QCheckBox::stateChanged, this, &SettingsWidget::renderSettingsChanged);
+
+    connect(ui->threadsCountSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &SettingsWidget::renderSettingsChanged);
 }
 
 SettingsWidget::~SettingsWidget()
@@ -34,6 +36,8 @@ void SettingsWidget::setRenderSettings(RenderSettings settings)
         ui->backFaceCullingCheckBox->setCheckState(Qt::Checked);
     else
         ui->backFaceCullingCheckBox->setCheckState(Qt::Unchecked);
+
+    ui->threadsCountSpinBox->setValue(settings.getThreadsCount());
 }
 
 void SettingsWidget::renderSettingsChanged()
@@ -49,6 +53,8 @@ void SettingsWidget::renderSettingsChanged()
     if (ui->backFaceCullingCheckBox->isChecked())
         faceCulling |= RenderSettings::BackFaceCulling;
     renderSettings.setFaceCullingType(faceCulling);
+
+    renderSettings.setThreadsCount(ui->threadsCountSpinBox->value());
 
     emit renderSettingsChangedSignal(renderSettings);
 }

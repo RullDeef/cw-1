@@ -165,18 +165,18 @@ vect_t<Vertex> Core::clip_polygon(const vect_t<Vertex>& points, int component, d
     return result;
 }
 
-arr_t<Vertex, 6> Core::clip_polygon(const arr_t<Vertex, 3>& points, double x_aspect, double y_aspect)
+arr_t<Vertex, 6> Core::clip_polygon(const arr_t<Vertex, 3>& points, double x_aspect, double y_aspect, double left, double right, double top, double bottom)
 {
     auto result = make_arr<Vertex, 6>();
     push_back(result, points.data[0]);
     push_back(result, points.data[1]);
     push_back(result, points.data[2]);
 
-    result = clip_polygon(result, x_aspect, 0);
+    result = clip_polygon(result, x_aspect, 0, left, right);
     if (result.size == 0)
         return result;
 
-    result = clip_polygon(result, y_aspect, 1);
+    result = clip_polygon(result, y_aspect, 1, top, bottom);
     if (result.size == 0)
         return result;
 
@@ -184,29 +184,29 @@ arr_t<Vertex, 6> Core::clip_polygon(const arr_t<Vertex, 3>& points, double x_asp
     return result;
 }
 
-arr_t<Vertex, 6> Core::clip_polygon(const arr_t<Vertex, 6>& points, double aspect, int component)
+arr_t<Vertex, 6> Core::clip_polygon(const arr_t<Vertex, 6>& points, double aspect, int component, double lower, double upper)
 {
-    arr_t<Vertex, 6> result = clip_polygon(points, component, 1.0 * aspect);
+    arr_t<Vertex, 6> result = clip_polygon(points, component, aspect, upper);
     if (result.size == 0)
         return result;
 
-    return clip_polygon(result, component, -1.0 * aspect);
+    return clip_polygon(result, component, -aspect, -lower);
 }
 
-arr_t<Vertex, 6> Core::clip_polygon(const arr_t<Vertex, 6>& points, int component, double scale)
+arr_t<Vertex, 6> Core::clip_polygon(const arr_t<Vertex, 6>& points, int component, double scale, double offset)
 {
     auto result = make_arr<Vertex, 6>();
 
     Vertex prevVert{};
     get(points, points.size - 1, prevVert);
-    double prevVal = scale * get(prevVert.position, component);
+    double prevVal = scale * (get(prevVert.position, component) + offset);
     bool prevInside = prevVal <= prevVert.position.w;
 
     for (size_t i = 0; i < points.size; i++)
     {
         Vertex currVert{};
         get(points, i, currVert);
-        double currVal = scale * get(currVert.position, component);
+        double currVal = scale * (get(currVert.position, component) + offset);
         bool currInside = currVal <= currVert.position.w;
 
         if (prevInside ^ currInside)

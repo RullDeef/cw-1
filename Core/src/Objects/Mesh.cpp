@@ -105,6 +105,7 @@ void Core::recalc_bounding_sphere(Mesh& mesh)
     }
 
     mesh.boundingSphere = boundedSphere(first, second);
+    mesh.boundingSphere.position = mesh.model_mat * mesh.boundingSphere.position;
 }
 
 Sphere Core::get_bounding_sphere(Mesh& mesh)
@@ -130,6 +131,26 @@ StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const 
         if (!culling(*face, camera, cullingType))
         {
             StatusCode result = renderFace(renderTarget, zbuffer, mesh, *face, camera, lighting, colorComputeFn);
+            if (result != StatusCode::Success)
+                return result;
+        }
+    }
+
+    return StatusCode::Success;
+}
+
+StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Rect& renderViewport, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn)
+{
+    recalc_mvp(camera, mesh.model_mat);
+
+    for (size_t i = 0; i < mesh.faces.size; i++)
+    {
+        const Face* face;
+        at(mesh.faces, i, face);
+
+        if (!culling(*face, camera, renderViewport, cullingType))
+        {
+            StatusCode result = renderFace(renderTarget, zbuffer, renderViewport, mesh, *face, camera, lighting, colorComputeFn);
             if (result != StatusCode::Success)
                 return result;
         }

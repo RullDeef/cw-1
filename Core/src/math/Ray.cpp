@@ -18,6 +18,33 @@ Vec Core::ray_at(const Ray &ray, double t)
     return ray.position + t * ray.direction;
 }
 
+void Core::advance(Ray& ray, double distance)
+{
+    ray.position += ray.direction * distance;
+}
+
+Ray Core::ray_reflection(const Ray& src, const Face& face)
+{
+    Vec n = get_mean_normal(face); // TODO: make face normal interpolation
+    Vec new_dir = src.direction - 2 * dot(n, src.direction) * n;
+    return make_ray(src.position, new_dir);
+}
+
+Ray Core::ray_refraction(const Ray& src, const Face& face, double IOR)
+{
+    Vec n = get_mean_normal(face); // TODO: same as above
+    Vec tan = normalized(src.direction - dot(n, src.direction) * n);
+
+    // double r_x = dot(tan, src.direction);
+    double r_y = dot(n, src.direction);
+
+    double rp_y = r_y / IOR;
+    double rp_x = std::sqrt(1.0 - rp_y * rp_y);
+
+    Vec new_dir = rp_x * tan + rp_y * n;
+    return make_ray(src.position, new_dir);
+}
+
 bool Core::ray_intersects(double& t, const Ray& ray, const Sphere& sphere)
 {
     Vec h = sphere.position - ray.position;

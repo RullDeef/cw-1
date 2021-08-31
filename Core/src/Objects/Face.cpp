@@ -158,6 +158,33 @@ arr_t<Face, 4> Core::clip_face(const Face& face, double x_aspect, double y_aspec
     return result;
 }
 
+arr_t<Face, 4> Core::clip_face(const Face& face, double x_aspect, double y_aspect, double left, double right, double top, double bottom)
+{
+    arr_t<Vertex, 3> verts = make_arr<Vertex, 3>();
+    push_back(verts, face.verts[0]);
+    push_back(verts, face.verts[1]);
+    push_back(verts, face.verts[2]);
+
+    auto clipped = clip_polygon(verts, x_aspect, y_aspect, left, right, top, bottom);
+    auto result = make_arr<Face, 4>();
+
+    if (clipped.size >= 3)
+    {
+        Vertex v1, v2, v3;
+        get(clipped, 0, v1);
+
+        for (size_t i = 1; i < clipped.size - 1; i++)
+        {
+            get(clipped, i, v2);
+            get(clipped, i + 1, v3);
+
+            push_back(result, make_face(v1, v2, v3));
+        }
+    }
+
+    return result;
+}
+
 bool Core::culling(const Face& face, const Camera& camera, FaceCullingType type)
 {
     Vec p1 = project_viewport_frustrum(camera, face.verts[0].position);
@@ -169,6 +196,48 @@ bool Core::culling(const Face& face, const Camera& camera, FaceCullingType type)
         unsigned int code1 = bit_code(p1);
         unsigned int code2 = bit_code(p2);
         unsigned int code3 = bit_code(p3);
+
+        if (code1 & code2 & code3)
+            return true;
+    }
+
+    if (type & BackfaceCulling)
+    {
+        p1 = viewport_adjust(camera, p1);
+        p2 = viewport_adjust(camera, p2);
+        p3 = viewport_adjust(camera, p3);
+
+        Vec norm = Core::cross(p2 - p1, p3 - p1);
+        Vec dir = make_dir(0, 0, 1);
+
+        double dot = Core::dot(dir, norm);
+        if (dot <= 0.0)
+            return true;
+    }
+
+    return false;
+}
+
+bool Core::culling(const Face& face, const Camera& camera, const Rect& renderViewport, FaceCullingType type)
+{
+    Vec p1 = project_viewport_frustrum(camera, face.verts[0].position);
+    Vec p2 = project_viewport_frustrum(camera, face.verts[1].position);
+    Vec p3 = project_viewport_frustrum(camera, face.verts[2].position);
+
+    if (type & OcclusionCulling)
+    {
+        double dx = renderViewport.left + renderViewport.width / 2.0 - camera.viewport.left - camera.viewport.width / 2.0;
+        double dy = renderViewport.top + renderViewport.height / 2.0 - camera.viewport.top - camera.viewport.height / 2.0;
+
+        double left = (dx - renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
+        double right = (dx + renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
+
+        double top = (dy - renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
+        double bottom = (dy + renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
+
+        unsigned int code1 = bit_code(p1, left, right, top, bottom);
+        unsigned int code2 = bit_code(p2, left, right, top, bottom);
+        unsigned int code3 = bit_code(p3, left, right, top, bottom);
 
         if (code1 & code2 & code3)
             return true;
@@ -211,10 +280,42 @@ StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const 
     return StatusCode::Success;
 }
 
+StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Rect& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
+{
+    double x_aspect = get_x_aspect(camera.viewport);
+    double y_aspect = get_y_aspect(camera.viewport);
+
+    double dx = renderViewport.left + renderViewport.width / 2.0 - camera.viewport.left - camera.viewport.width / 2.0;
+    double dy = renderViewport.top + renderViewport.height / 2.0 - camera.viewport.top - camera.viewport.height / 2.0;
+
+    double left = (dx - renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
+    double right = (dx + renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
+
+    double top = (dy - renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
+    double bottom = (dy + renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
+
+    Face projection = project_frustrum(face, camera);
+    auto projections = clip_face(projection, x_aspect, y_aspect, left, right, top, bottom);
+
+    for (size_t i = 0; i < projections.size; i++)
+    {
+        Face clip_face = unproject_frustrum(projections.data[i], camera);
+
+        StatusCode result = renderClippedFace(renderTarget, zbuffer, mesh, clip_face, camera, lighting, colorComputeFn);
+        if (result != StatusCode::Success)
+            return result;
+    }
+
+    return StatusCode::Success;
+}
+
 StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
 {
+    StatusCode result = StatusCode::Success;
     Face projection = project(face, camera);
     auto regions = make_render_regions(mesh, mesh.model_mat * face, projection);
+
+    lock(renderTarget);
 
     if (lighting == LightingModelType::Flat)
     {
@@ -246,9 +347,10 @@ StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer,
         }
     }
     else
-        return StatusCode::UnsupportedLightingModelType;
+        result = StatusCode::UnsupportedLightingModelType;
 
-    return StatusCode::Success;
+    unlock(renderTarget);
+    return result;
 }
 
 StatusCode Core::renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Color color)

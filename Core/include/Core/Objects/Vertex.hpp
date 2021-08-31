@@ -38,9 +38,9 @@ namespace Core
     vect_t<Vertex> clip_polygon(const vect_t<Vertex>& points, double aspect, int component);
     vect_t<Vertex> clip_polygon(const vect_t<Vertex>& points, int component, double scale);
 
-    arr_t<Vertex, 6> clip_polygon(const arr_t<Vertex, 3>& points, double x_aspect = 1.0, double y_aspect = 1.0);
-    arr_t<Vertex, 6> clip_polygon(const arr_t<Vertex, 6>& points, double aspect, int component);
-    arr_t<Vertex, 6> clip_polygon(const arr_t<Vertex, 6>& points, int component, double scale);
+    arr_t<Vertex, 6> clip_polygon(const arr_t<Vertex, 3>& points, double x_aspect = 1.0, double y_aspect = 1.0, double left = -1.0, double right = 1.0, double top = -1.0, double bottom = 1.0);
+    arr_t<Vertex, 6> clip_polygon(const arr_t<Vertex, 6>& points, double aspect, int component, double lower = -1.0, double upper = 1.0);
+    arr_t<Vertex, 6> clip_polygon(const arr_t<Vertex, 6>& points, int component, double scale, double offset = 0.0);
 }
 
 #endif // VERTEX_HPP

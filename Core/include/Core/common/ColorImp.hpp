@@ -42,6 +42,18 @@ namespace Core
         return res;
     }
 
+    inline Color mix(const Color& c1, const Color& c2, double t)
+    {
+        Color res{};
+
+        res.red = c1.red * (1 - t) + c2.red * t;
+        res.green = c1.green * (1 - t) + c2.green * t;
+        res.blue = c1.blue * (1 - t) + c2.blue * t;
+        res.alpha = c1.alpha * (1 - t) + c2.alpha * t;
+
+        return res;
+    }
+
     /// TODO: add blend modes (ADD, MULTIPLY, OVERLAY...)
     inline Color operator+(const Color& c1, const Color& c2)
     {

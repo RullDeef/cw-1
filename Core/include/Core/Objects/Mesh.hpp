@@ -34,6 +34,7 @@ namespace Core
     Sphere get_bounding_sphere(Mesh& mesh);
 
     StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn);
+    StatusCode renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Rect& renderViewport, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn);
 
     StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera, Color color, FaceCullingType cullingType);
     StatusCode renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera, Pixel color, FaceCullingType cullingType);

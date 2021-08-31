@@ -1,6 +1,7 @@
 #include <utility>
 #include <Builders/CameraBuilders/DefaultCameraBuilder.hpp>
 #include <Builders/LightBuilders/AmbientLightBuilder.hpp>
+#include <Builders/LightBuilders/DirectionalLightBuilder.hpp>
 #include "Objects/IObject.hpp"
 #include "Loaders/ILoader.hpp"
 #include "Managers/IManagerFactory.hpp"
@@ -26,6 +27,21 @@ void LoadManager::loadEmptyScene()
 
     std::shared_ptr<IObject> woof = loader->loadMesh("/home/rulldeef/Projects/cw-1/Models/Wolf.obj");
     sceneManager->addObject(woof);
+
+    std::shared_ptr<IObject> light = AmbientLightBuilder().build();
+    getFactory().getSceneManager()->addObject(light);
+
+    light = DirectionalLightBuilder()
+            .setColor(Color::magenta())
+            .setDirection(Vector(-4, -2, -3))
+            .build();
+    getFactory().getSceneManager()->addObject(light);
+
+    light = DirectionalLightBuilder()
+            .setColor(Color::cyan())
+            .setDirection(Vector(-1, -2, -3))
+            .build();
+    getFactory().getSceneManager()->addObject(light);
 
     onSceneLoad(scene);
 }

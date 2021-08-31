@@ -4,17 +4,20 @@
 ThreadPool::ThreadPool()
     : isRunning(true), busyWorkersCount(0)
 {
-    auto workersCount = std::thread::hardware_concurrency();
+    auto workersCount = 1; // std::thread::hardware_concurrency(); /// TODO: fix crash on shrink
     threads.reserve(workersCount);
     for (unsigned int i = 0; i < workersCount; i++)
-        threads.emplace_back(&ThreadPool::worker, this);
+        threads.emplace_back([this]() { this->worker(); });
 }
 
 ThreadPool::~ThreadPool()
 {
     isRunning = false;
     for (auto& thread : threads)
+    {
+        do {} while (!thread.joinable());
         thread.join();
+    }
 }
 
 unsigned int ThreadPool::getWorkersCount() const
@@ -31,7 +34,19 @@ void ThreadPool::setWorkersCount(unsigned int newWorkersCount)
         busyWorkersCount = newWorkersCount;
 
     std::lock_guard<std::mutex> lock(taskQueueMutex);
-    threads.resize(newWorkersCount);
+
+    isRunning = false;
+    for (auto& thread : threads)
+    {
+        do {} while (!thread.joinable());
+        thread.join();
+    }
+    threads.clear();
+    isRunning = true;
+
+    threads.reserve(newWorkersCount);
+    for (unsigned int i = 0; i < newWorkersCount; i++)
+        threads.emplace_back([this]() { this->worker(); });
 }
 
 void ThreadPool::addTask(task_t task)

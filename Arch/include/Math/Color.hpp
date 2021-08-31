@@ -32,7 +32,14 @@ public:
     constexpr static Color transparent() noexcept { return Color(0.0, 0.0, 0.0, 0.0); }
     constexpr static Color black() noexcept { return Color(0.0, 0.0, 0.0, 1.0); }
     constexpr static Color white() noexcept { return Color(1.0, 1.0, 1.0, 1.0); }
+
+    constexpr static Color red() noexcept { return Color(1.0, 0.0, 0.0, 1.0); }
     constexpr static Color green() noexcept { return Color(0.0, 1.0, 0.0, 1.0); }
+    constexpr static Color blue() noexcept { return Color(0.0, 0.0, 1.0, 1.0); }
+
+    constexpr static Color yellow() noexcept { return Color(1.0, 1.0, 0.0, 1.0); }
+    constexpr static Color magenta() noexcept { return Color(1.0, 0.0, 1.0, 1.0); }
+    constexpr static Color cyan() noexcept { return Color(0.0, 1.0, 1.0, 1.0); }
 
 private:
     double mRed;

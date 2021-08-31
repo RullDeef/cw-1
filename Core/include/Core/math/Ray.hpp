@@ -19,6 +19,10 @@ namespace Core
     Ray make_ray(const Vec& position, const Vec& direction);
 
     Vec ray_at(const Ray& ray, double t);
+    void advance(Ray& ray, double distance);
+
+    Ray ray_reflection(const Ray& src, const Face& face);
+    Ray ray_refraction(const Ray& src, const Face& face, double IOR);
 
     bool ray_intersects(double& t, const Ray& ray, const Sphere& sphere);
     bool ray_intersects(double& t, const Ray& ray, const Plane& plane);

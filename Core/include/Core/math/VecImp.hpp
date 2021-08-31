@@ -1,4 +1,5 @@
 #include "Vec.hpp"
+#include "Rect.hpp"
 #include <cmath>
 #include <cstdint>
 
@@ -98,16 +99,16 @@ namespace Core
             return 0.0;
     }
 
-    inline unsigned int bit_code(const Vec& point)
+    inline unsigned int bit_code(const Vec& point, double left, double right, double top, double bottom, double near, double far)
     {
         unsigned int code = 0x000000;
 
-        code |= (point.x < -point.w ? 1 : 0) << 0;
-        code |= (point.x >  point.w ? 1 : 0) << 1;
-        code |= (point.y < -point.w ? 1 : 0) << 2;
-        code |= (point.y >  point.w ? 1 : 0) << 3;
-        code |= (point.z < -point.w ? 1 : 0) << 4;
-        code |= (point.z >  point.w ? 1 : 0) << 5;
+        code |= (point.x < point.w * left ? 1 : 0) << 0;
+        code |= (point.x > point.w * right ? 1 : 0) << 1;
+        code |= (point.y < point.w * top ? 1 : 0) << 2;
+        code |= (point.y > point.w * bottom ? 1 : 0) << 3;
+        code |= (point.z < point.w * near ? 1 : 0) << 4;
+        code |= (point.z > point.w * far ? 1 : 0) << 5;
 
         return code;
     }
