@@ -284,7 +284,7 @@ void Core::renderPhong(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderRegio
             {
                 if (0 <= x && x < renderTarget.width)
                 {
-                    Color color = colorComputeFn(p, n, region.meshPtr->material);
+                    Color color = colorComputeFn(p, normalized(n), region.meshPtr->material);
                     updatePixel(renderTarget, zbuffer, y, x, 1.0 / z, to_pixel(color));
                 }
 
@@ -327,8 +327,8 @@ void Core::renderGouraud(RenderTarget &renderTarget, ZBuffer &zbuffer, RenderReg
         double z = zLeft;
         double dz = (zRight - zLeft) / (xRight - xLeft + 1);
 
-        Color cLeft = colorComputeFn(pLeft, nLeft, region.meshPtr->material);
-        Color cRight = colorComputeFn(pRight, nRight, region.meshPtr->material);
+        Color cLeft = colorComputeFn(pLeft, normalized(nLeft), region.meshPtr->material);
+        Color cRight = colorComputeFn(pRight, normalized(nRight), region.meshPtr->material);
 
         Color c = cLeft;
         Color dc = (cRight - cLeft) / (xRight - xLeft + 1);

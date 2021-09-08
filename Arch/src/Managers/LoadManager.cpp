@@ -33,13 +33,13 @@ void LoadManager::loadEmptyScene()
 
     light = DirectionalLightBuilder()
             .setColor(Color::magenta())
-            .setDirection(Vector(-4, -2, -3))
+            .setDirection(Vector(-4, -2, -3, 0))
             .build();
     getFactory().getSceneManager()->addObject(light);
 
     light = DirectionalLightBuilder()
             .setColor(Color::cyan())
-            .setDirection(Vector(-1, -2, -3))
+            .setDirection(Vector(-1, -2, -3, 0))
             .build();
     getFactory().getSceneManager()->addObject(light);
 

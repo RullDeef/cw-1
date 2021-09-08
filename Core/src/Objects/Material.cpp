@@ -1,5 +1,7 @@
+#include <Core/math/Ray.hpp>
 #include "Core/math/Mat.hpp"
 #include "Core/Objects/Material.hpp"
+#include "Core/Scene/Scene.hpp"
 
 using namespace Core;
 
@@ -72,6 +74,47 @@ Color Core::compute_color(const Material& material, const vect_t<Light>& lights,
                 Rm_V = std::pow(Rm_V, material.specularHighlight);
 
                 color += light.intensity * material.diffuseColor * light.color * (Lm_N + Rm_V);
+            }
+        }
+    }
+
+    return color;
+}
+
+Color Core::compute_color(const Material& material, const Scene& scene, const vect_t<Light>& lights, const Vec& pos, const Vec& view, const Vec& normal)
+{
+    Color color = Colors::black;
+
+    for (size_t i = 0; i < lights.size; i++)
+    {
+        Light light{};
+        if (get(lights, i, light))
+        {
+            if (light.type == LightType::Ambient)
+            {
+                color += light.intensity * light.color * material.ambientColor;
+            }
+            else if (light.type == LightType::Directional)
+            {
+                double t;
+                Mesh mesh{};
+                Ray ray = make_ray(pos - 0.01 * light.direction, -light.direction);
+                if (ray_intersects(t, ray, mesh, scene))
+                {
+                    color = Colors::green; /// TODO: fix bug. Ray does not collide with meshes
+                    break;
+                }
+                else
+                {
+                    Vec dir = normalized(light.direction);
+                    Vec Rm = 2 * dot(-dir, normal) * normal + dir;
+
+                    double Lm_N = std::max(0.0, dot(-dir, normal));
+                    double Rm_V = std::max(0.0, dot(Rm, -view));
+                    Rm_V = std::pow(Rm_V, material.specularHighlight);
+
+                    color += light.intensity * material.diffuseColor * light.color * (Lm_N + Rm_V);
+                }
             }
         }
     }

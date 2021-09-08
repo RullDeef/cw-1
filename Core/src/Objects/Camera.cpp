@@ -35,18 +35,13 @@ Vec Core::project_viewport_frustrum(const Camera& camera, const Vec& point)
 {
     Vec res = camera.mvp * point;
 
-    // TODO: вынести функции по работе с вьюпортом
-#if USE_MIN_FIT
-    if (camera.viewport.width > camera.viewport.height)
-        res.x *= double(camera.viewport.height) / camera.viewport.width;
-    else
-        res.y *= double(camera.viewport.width) / camera.viewport.height;
-#else
-    if (camera.viewport.width > camera.viewport.height)
-        res.y *= double(camera.viewport.height) / camera.viewport.width;
-    else
-        res.x *= double(camera.viewport.width) / camera.viewport.height;
-#endif
+    res.x *= get_x_aspect(camera.viewport);
+    res.y *= get_y_aspect(camera.viewport);
+
+//    if (camera.viewport.width > camera.viewport.height)
+//        res.y *= double(camera.viewport.height) / camera.viewport.width;
+//    else
+//        res.x *= double(camera.viewport.width) / camera.viewport.height;
 
     return res;
 }
@@ -55,17 +50,10 @@ Vec Core::adjust(const Camera& camera, const Vec& pos)
 {
     Vec res = pos;
 
-#if USE_MIN_FIT
-    if (camera.viewport.width > camera.viewport.height)
-        res.x /= double(camera.viewport.height) / camera.viewport.width;
-    else
-        res.y /= double(camera.viewport.width) / camera.viewport.height;
-#else
     if (camera.viewport.width > camera.viewport.height)
         res.y /= double(camera.viewport.height) / camera.viewport.width;
     else
         res.x /= double(camera.viewport.width) / camera.viewport.height;
-#endif
 
     return viewport_adjust(camera, res);
 }

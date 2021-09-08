@@ -56,7 +56,9 @@ namespace Core
         const Color black { 0.0, 0.0, 0.0, 1.0 };
         const Color white { 1.0, 1.0, 1.0, 1.0 };
 
+        const Color red { 1.0, 0.0, 0.0, 1.0 };
         const Color green { 0.0, 1.0, 0.0, 1.0 };
+        const Color blue { 0.0, 0.0, 1.0, 1.0 };
 
         const Color cyan { 0.0, 1.0, 1.0, 1.0 };
 

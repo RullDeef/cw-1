@@ -47,14 +47,14 @@ void RenderManager::renderScene(Scene &scene, Camera &camera, const RenderSettin
 
     auto timeStart = std::chrono::high_resolution_clock::now();
 
-    threadPool.killAllTasks();
-    threadPool.beginTaskGroup();
 
     if (renderSettings.getRenderType() == RenderSettings::RenderType::RayTracing)
     {
         if (renderSettings.getThreadsCount() > 1)
         {
+            threadPool.killAllTasks();
             threadPool.setWorkersCount(renderSettings.getThreadsCount());
+            threadPool.beginTaskGroup();
 
             int x_side = 64, y_side = 64;
             for (int y = 0; y < renderTarget.height; y += y_side)
@@ -66,14 +66,15 @@ void RenderManager::renderScene(Scene &scene, Camera &camera, const RenderSettin
                     threadPool.addTask([taskParams]() { Core::renderScene(taskParams); });
                 }
             }
+
+            threadPool.endTaskGroup();
         }
     }
     else
     {
-        threadPool.addTask([params]() { Core::renderScene(params); });
+        Core::renderScene(params);
     }
 
-    threadPool.endTaskGroup();
 
     auto timeEnd = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> durr = timeEnd - timeStart;

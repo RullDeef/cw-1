@@ -1,4 +1,5 @@
 #include "Core/math/Ray.hpp"
+#include "Core/Scene/Scene.hpp"
 
 using namespace Core;
 
@@ -52,13 +53,14 @@ bool Core::ray_intersects(double& t, const Ray& ray, const Sphere& sphere)
     double dh = dot(ray.direction, h);
     double D_4 = dh * dh - dot(h, h) + sphere.radius * sphere.radius;
 
-    if (D_4 > 0.0)
-    {
-        t = dh - std::sqrt(D_4);
-        return t > 0.0;
-    }
+    if (D_4 < 0.0)
+        return false;
 
-    return false;
+    t = dh - std::sqrt(D_4);
+    if (t < 0.0)
+        t = dh + std::sqrt(D_4);
+
+    return t > 0.0;
 }
 
 bool Core::ray_intersects(double& t, const Ray& ray, const Plane& plane)
@@ -97,6 +99,10 @@ bool Core::ray_intersects(double& t, const Ray& ray, const Face& face)
 
 bool Core::ray_intersects(double& t, const Ray& ray, const Mesh& mesh)
 {
+    Sphere sphere = get_bounding_sphere(const_cast<Mesh&>(mesh));
+    if (!ray_intersects(t, ray, sphere))
+        return false;
+
     double tMin = std::numeric_limits<double>::infinity();
     bool intersects = false;
 
@@ -110,6 +116,27 @@ bool Core::ray_intersects(double& t, const Ray& ray, const Mesh& mesh)
             {
                 intersects = true;
                 tMin = std::min(tMin, t);
+            }
+        }
+    }
+
+    t = tMin;
+    return intersects;
+}
+
+bool Core::ray_intersects(double& t, const Ray& ray, Mesh& mesh, const Scene& scene)
+{
+    double tMin = std::numeric_limits<double>::infinity();
+    bool intersects = false;
+
+    for (auto node = scene.meshList.head; node; node = node->next)
+    {
+        if (ray_intersects(t, ray, node->value))
+        {
+            if (t < tMin)
+            {
+                tMin = t;
+                mesh = node->value;
             }
         }
     }

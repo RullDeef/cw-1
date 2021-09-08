@@ -28,6 +28,7 @@ namespace Core
     bool ray_intersects(double& t, const Ray& ray, const Plane& plane);
     bool ray_intersects(double& t, const Ray& ray, const Face& face);
     bool ray_intersects(double& t, const Ray& ray, const Mesh& mesh);
+    bool ray_intersects(double& t, const Ray& ray, Mesh& mesh, const Scene& scene);
 }
 
 #endif // RAY_HPP

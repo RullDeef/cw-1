@@ -6,6 +6,7 @@
 using namespace Core;
 
 static ColorComputeFn makeColorComputator(Camera camera, vect_t<Light> lights);
+static ColorComputeFn makeShadedColorComputator(Scene scene, Camera camera);
 
 
 StatusCode Core::fastRenderScene(RenderParams renderParams)
@@ -15,7 +16,9 @@ StatusCode Core::fastRenderScene(RenderParams renderParams)
 
     fill(renderParams.renderTarget, to_pixel(Colors::black));
 
-    ColorComputeFn colorComputor = makeColorComputator(renderParams.camera, renderParams.scene.lightList);
+    ColorComputeFn colorComputor =
+            // makeShadedColorComputator(renderParams.scene, renderParams.camera);
+            makeColorComputator(renderParams.camera, renderParams.scene.lightList);
 
     for (list_node<Mesh>* node = renderParams.scene.meshList.head; node; node = node->next)
         if (node->value.visible)
@@ -31,5 +34,17 @@ ColorComputeFn makeColorComputator(Camera camera, vect_t<Light> lights)
     {
         Vec view = normalized(position - camera.eye);
         return compute_color(material, lights, view, normal);
+    };
+}
+
+static ColorComputeFn makeShadedColorComputator(Scene scene, Camera camera)
+{
+    return [scene, camera](const Vec& position, const Vec& normal, const Material& material) -> Color
+    {
+        //double dist = length(position - camera.eye);
+        //return Colors::light_cyan * (0.8 + 0.2 * std::sin(dist / 10.0));
+
+        Vec view = normalized(position - camera.eye);
+        return compute_color(material, scene, scene.lightList, position, view, normal);
     };
 }

@@ -67,9 +67,9 @@ Matrix Matrix::rotate(const Vector &axis, double angle)
 
 Matrix Matrix::rotate(const Vector& angles)
 {
-    auto mx = rotate(Vector(1, 0, 0), angles.getX());
-    auto my = rotate(Vector(0, 1, 0), angles.getY());
-    auto mz = rotate(Vector(0, 0, 1), angles.getZ());
+    auto mx = rotate(Vector(1, 0, 0, 0), angles.getX());
+    auto my = rotate(Vector(0, 1, 0, 0), angles.getY());
+    auto mz = rotate(Vector(0, 0, 1, 0), angles.getZ());
 
     return mz * my * mx;
 }

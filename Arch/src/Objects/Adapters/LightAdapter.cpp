@@ -41,5 +41,5 @@ void ObjectAdapter<Light>::onTransformChange()
     IObject::onTransformChange();
 
     light.setPosition(getPosition());
-    light.setDirection(Matrix::rotate(getRotation() * M_PI / 180.0) * Vector(1, 0, 0));
+    light.setDirection(Matrix::rotate(getRotation() * M_PI / 180.0) * Vector(1, 0, 0, 0));
 }
