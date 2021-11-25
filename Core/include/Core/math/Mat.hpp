@@ -1,7 +1,7 @@
 #ifndef MAT_HPP
 #define MAT_HPP
 
-#include "Vec.hpp"
+#include "Core/math/Vec.hpp"
 
 
 namespace Core

@@ -139,7 +139,7 @@ StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const 
     return StatusCode::Success;
 }
 
-StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const Rect& renderViewport, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn)
+StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const RectF& renderViewport, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn)
 {
     recalc_mvp(camera, mesh.model_mat);
 

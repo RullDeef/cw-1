@@ -29,7 +29,7 @@ namespace Core
         Scene scene;
         Camera camera;
 
-        Rect viewport; // describes portion of render target
+        RectI viewport; // describes portion of render target
 
         RenderType renderType;
         LightingModelType sceneLightingModel;

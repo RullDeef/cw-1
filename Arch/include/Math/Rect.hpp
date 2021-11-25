@@ -9,20 +9,24 @@ class Rect
 {
 public:
     Rect(int top, int left, int width, int height);
-    Rect(const Core::Rect& rect);
+    Rect(const Core::RectF& rect);
+    Rect(const Core::RectI& rect);
 
-    operator Core::Rect() const;
+    operator Core::RectI() const;
+    operator Core::RectF() const;
 
-    Vector innerQuad(int x, int y) const;
-    Vector outerQuad(int x, int y) const;
+    [[nodiscard]] Vector innerQuad(float x, float y) const;
+    [[nodiscard]] Vector outerQuad(float x, float y) const;
 
-    Vector fitIn(const Vector& point) const;
+    [[nodiscard]] Vector fitIn(const Vector& point) const;
 
 private:
-    int top;
-    int left;
-    int width;
-    int height;
+    [[nodiscard]] bool isValid() const;
+
+    float top;
+    float left;
+    float width;
+    float height;
 };
 
 #endif //ARCH_RECT_HPP

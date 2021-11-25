@@ -8,10 +8,23 @@ Ray Core::make_ray(const Vec &position, const Vec &direction)
 {
     Ray ray{};
 
-    ray.position = position;
-    ray.direction = direction;
+    if (is_zero(direction))
+    {
+        ray.position = make_pos();
+        ray.direction = make_dir();
+    }
+    else
+    {
+        ray.position = position;
+        ray.direction = direction;
+    }
 
     return ray;
+}
+
+bool Core::is_valid(const Ray& ray)
+{
+    return is_normal(ray.direction);
 }
 
 Vec Core::ray_at(const Ray &ray, double t)

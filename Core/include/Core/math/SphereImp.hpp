@@ -1,7 +1,7 @@
 #ifndef SPHEREIMP_HPP
 #define SPHEREIMP_HPP
 
-#include "Sphere.hpp"
+#include "Core/math/Sphere.hpp"
 
 
 namespace Core
@@ -14,6 +14,11 @@ namespace Core
         sphere.radius = radius;
 
         return sphere;
+    }
+
+    inline bool is_valid(const Sphere& sphere)
+    {
+        return sphere.radius > 0.0;
     }
 }
 

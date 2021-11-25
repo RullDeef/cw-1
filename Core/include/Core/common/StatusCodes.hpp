@@ -9,6 +9,9 @@ namespace Core
         InvalidRenderType,
         InvalidRenderViewport,
 
+        InvalidRect,
+        InvalidRenderTarget,
+
         UnsupportedLightingModelType,
     };
 }

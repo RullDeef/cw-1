@@ -1,21 +1,40 @@
+#include <stdexcept>
 #include "Math/Rect.hpp"
+
 
 Rect::Rect(int top, int left, int width, int height)
     : top(top), left(left), width(width), height(height)
 {
+    if (!isValid())
+        throw std::runtime_error("bad Rect() args.");
 }
 
-Rect::Rect(const Core::Rect &rect)
+Rect::Rect(const Core::RectI &rect)
     : top(rect.top), left(rect.left), width(rect.width), height(rect.height)
 {
+    if (!isValid())
+        throw std::runtime_error("bad Rect() args.");
 }
 
-Rect::operator Core::Rect() const
+Rect::Rect(const Core::RectF &rect)
+        : top(rect.top), left(rect.left), width(rect.width), height(rect.height)
+{
+    if (!isValid())
+        throw std::runtime_error("bad Rect() args.");
+}
+
+Rect::operator Core::RectI() const
+{
+    Core::RectF rect = *this;
+    return Core::cast_rect(rect);
+}
+
+Rect::operator Core::RectF() const
 {
     return Core::make_rect(width, height, left, top);
 }
 
-Vector Rect::innerQuad(int x, int y) const
+Vector Rect::innerQuad(float x, float y) const
 {
     double vp = std::min(width, height);
 
@@ -25,7 +44,7 @@ Vector Rect::innerQuad(int x, int y) const
     return Vector(vx, vy, 0.0, 0.0);
 }
 
-Vector Rect::outerQuad(int x, int y) const
+Vector Rect::outerQuad(float x, float y) const
 {
     double vp = std::max(width, height);
 
@@ -42,4 +61,10 @@ Vector Rect::fitIn(const Vector& point) const
     double y = top - point.getY() * vmax2 + double(height) / 2;
 
     return Vector(x, y, point.getZ(), point.getW());
+}
+
+bool Rect::isValid() const
+{
+    Core::RectF rect = *this;
+    return Core::is_valid(rect);
 }

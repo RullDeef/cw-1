@@ -12,8 +12,8 @@ namespace Core
     struct RenderTarget
     {
         std::atomic<Pixel*> data;
-        size_t width;
-        size_t height;
+        int width;
+        int height;
 
         std::atomic<bool> writeLock;
 
@@ -23,10 +23,10 @@ namespace Core
         RenderTarget& operator=(const RenderTarget& src);
     };
 
-    RenderTarget make_render_target(unsigned char* data, size_t w, size_t h);
-    bool isValid(const RenderTarget& renderTarget);
+    RenderTarget make_render_target(unsigned char* data, int width, int height);
+    bool is_valid(const RenderTarget& renderTarget);
 
-    Rect get_viewport(const RenderTarget& renderTarget);
+    RectI get_viewport(const RenderTarget& renderTarget);
 
     Pixel getPixel(const RenderTarget& renderTarget, size_t row, size_t col);
     void setPixel(RenderTarget& renderTarget, size_t row, size_t col, Pixel pixel);

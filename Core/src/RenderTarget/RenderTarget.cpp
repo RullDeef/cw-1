@@ -19,19 +19,25 @@ RenderTarget& RenderTarget::operator=(const RenderTarget& src)
 }
 
 
-RenderTarget Core::make_render_target(unsigned char *data, size_t w, size_t h)
+RenderTarget Core::make_render_target(unsigned char *data, int width, int height)
 {
     RenderTarget res{};
 
+    // TODO: make more params like stride, offset and etc.
     res.data = (Core::Pixel*)data;
-    res.width = w;
-    res.height = h;
+    res.width = width;
+    res.height = height;
     res.writeLock = false;
 
     return res;
 }
 
-Rect Core::get_viewport(const RenderTarget& renderTarget)
+bool Core::is_valid(const RenderTarget& renderTarget)
+{
+    return renderTarget.data != nullptr && renderTarget.width > 0 && renderTarget.height > 0;
+}
+
+RectI Core::get_viewport(const RenderTarget& renderTarget)
 {
     return make_rect(renderTarget.width, renderTarget.height);
 }

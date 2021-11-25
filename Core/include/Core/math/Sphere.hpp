@@ -1,7 +1,7 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
-#include "Vec.hpp"
+#include "Core/math/Vec.hpp"
 
 
 namespace Core
@@ -13,8 +13,10 @@ namespace Core
     };
 
     inline Sphere make_sphere(const Vec& position, double radius);
+
+    inline bool is_valid(const Sphere& sphere);
 }
 
-#include "SphereImp.hpp"
+#include "Core/math/SphereImp.hpp"
 
 #endif // SPHERE_HPP

@@ -21,7 +21,7 @@ Camera Core::make_camera(double fov, double near, double far)
     return cam;
 }
 
-void Core::update_viewport(Camera& camera, const Rect& viewport)
+void Core::update_viewport(Camera& camera, const RectF& viewport)
 {
     camera.viewport = viewport;
 }
@@ -98,7 +98,7 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
     return viewport_adjust(camera, res);
 }
 
-Ray Core::shoot_ray(const Camera& camera, int x, int y)
+Ray Core::shoot_ray(const Camera& camera, float x, float y)
 {
     double z = 1.0 / std::tan(camera.fov / 2);
 

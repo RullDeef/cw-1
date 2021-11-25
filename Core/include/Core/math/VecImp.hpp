@@ -1,7 +1,6 @@
-#include "Vec.hpp"
-#include "Rect.hpp"
 #include <cmath>
 #include <cstdint>
+#include "Core/math/Vec.hpp"
 
 
 namespace Core
@@ -36,11 +35,26 @@ namespace Core
         return conv.f;
     }
 
+    template<class T>
+    typename std::enable_if<!std::numeric_limits<T>::is_integer, bool>::type almost_equal(T x, T y, int ulp)
+    {
+        // the machine epsilon has to be scaled to the magnitude of the values used
+        // and multiplied by the desired precision in ULPs (units in the last place)
+        return std::fabs(x-y) <= std::numeric_limits<T>::epsilon() * std::fabs(x+y) * ulp
+               // unless the result is subnormal
+               || std::fabs(x-y) < std::numeric_limits<T>::min();
+    }
+
     inline bool is_zero(const Vec& vec)
     {
-        return vec.x == std::numeric_limits<double>::epsilon()
-            && vec.y == std::numeric_limits<double>::epsilon()
-            && vec.z == std::numeric_limits<double>::epsilon();
+        return almost_equal(vec.x, 0.0, 2)
+            && almost_equal(vec.y, 0.0, 2)
+            && almost_equal(vec.z, 0.0, 2);
+    }
+
+    inline bool is_normal(const Vec& vec)
+    {
+        return almost_equal(dot(vec, vec), 1.0, 4);
     }
 
     inline Vec normalized(const Vec& vec)

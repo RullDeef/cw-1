@@ -7,15 +7,15 @@
 class RenderTarget
 {
 public:
-    RenderTarget(unsigned char* data, size_t w, size_t h);
+    RenderTarget(unsigned char* data, int w, int h);
     RenderTarget(const Core::RenderTarget& renderTarget);
 
     operator Core::RenderTarget() const;
 
 private:
     unsigned char* data;
-    size_t width;
-    size_t height;
+    int width;
+    int height;
 };
 
 #endif //ARCH_RENDERTARGET_HPP

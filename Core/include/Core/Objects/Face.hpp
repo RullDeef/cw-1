@@ -53,10 +53,10 @@ namespace Core
     arr_t<Face, 4> clip_face(const Face& face, double x_aspect, double y_aspect, double left, double right, double top, double bottom);
 
     bool culling(const Face& face, const Camera& camera, FaceCullingType type);
-    bool culling(const Face& face, const Camera& camera, const Rect& renderViewport, FaceCullingType type);
+    bool culling(const Face& face, const Camera& camera, const RectF& renderViewport, FaceCullingType type);
 
     StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
-    StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Rect& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
+    StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const RectF& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
     StatusCode renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
 
     StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Color color);

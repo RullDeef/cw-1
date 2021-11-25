@@ -4,13 +4,19 @@
 using namespace Core;
 
 
-StatusCode Core::renderRect(RenderTarget &renderTarget, const Core::Rect &rect, Pixel color)
+StatusCode Core::renderRect(RenderTarget &renderTarget, const Core::RectI &rect, Pixel color)
 {
+    if (!is_valid(rect))
+        return StatusCode::InvalidRect;
+
     return renderRect(renderTarget, rect.left, rect.top, rect.left + rect.width, rect.top + rect.height, color);
 }
 
 StatusCode Core::renderRect(RenderTarget &renderTarget, int x1, int y1, int x2, int y2, Pixel color)
 {
+    if (!is_valid(renderTarget))
+        return StatusCode::InvalidRenderTarget;
+
     if (x2 < x1) std::swap(x1, x2);
     if (y2 < y1) std::swap(y1, y2);
 

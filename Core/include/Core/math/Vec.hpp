@@ -19,6 +19,7 @@ namespace Core
     inline double inv_sqrt_fast(const Vec& vec);
 
     inline bool is_zero(const Vec& vec);
+    inline bool is_normal(const Vec& vec);
 
     inline Vec normalized(const Vec& vec);
     inline void normalize(Vec& vec);

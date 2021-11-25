@@ -1,39 +1,63 @@
 #ifndef RECT_HPP
 #define RECT_HPP
 
-#include "Vec.hpp"
+#include "Core/math/Vec.hpp"
 
 
 namespace Core
 {
+    template<typename T>
     struct Rect
     {
-        int top;
-        int left;
-        int width;
-        int height;
+        T top;
+        T left;
+        T width;
+        T height;
     };
 
-    inline Rect make_rect(int width, int height, int left = 0, int top = 0);
+    using RectI = Rect<int>;
+    using RectF = Rect<float>;
 
-    inline int rect_area(const Rect& rect);
+    template<typename T>
+    inline Rect<T> make_rect(T width, T height, T left = 0, T top = 0);
 
-    inline bool is_valid(const Rect& rect);
-    inline bool is_inside(const Rect& outer, const Rect& inner);
-    inline bool is_inside(const Rect& rect, int x, int y);
+    inline RectF cast_rect(const RectI& rect);
+    inline RectI cast_rect(const RectF& rect);
 
-    inline double get_x_aspect(const Rect& rect);
-    inline double get_y_aspect(const Rect& rect);
+    template<typename T>
+    inline T rect_area(const Rect<T>& rect);
 
-    inline Rect get_inner_box(const Rect& rect);
-    inline Rect get_outer_box(const Rect& rect);
+    template<typename T>
+    inline bool is_valid(const Rect<T>& rect);
 
-    inline Vec map_point(const Rect& from_space, const Rect& to_space, const Vec& point);
+    template<typename T>
+    inline bool is_inside(const Rect<T>& outer, const Rect<T>& inner);
 
-    inline Vec inner_quad(const Rect& rect, int x, int y);
-    inline Vec outer_quad(const Rect& rect, int x, int y);
+    template<typename T>
+    inline bool is_inside(const Rect<T>& rect, T x, T y);
+
+    template<typename T>
+    inline double get_x_aspect(const Rect<T>& rect);
+
+    template<typename T>
+    inline double get_y_aspect(const Rect<T>& rect);
+
+    template<typename T>
+    inline Rect<T> get_inner_box(const Rect<T>& rect);
+
+    template<typename T>
+    inline Rect<T> get_outer_box(const Rect<T>& rect);
+
+    template<typename T>
+    inline Vec map_point(const Rect<T>& from_space, const Rect<T>& to_space, const Vec& point);
+
+    template<typename T>
+    inline Vec inner_quad(const Rect<T>& rect, T x, T y);
+
+    template<typename T>
+    inline Vec outer_quad(const Rect<T>& rect, T x, T y);
 }
 
-#include "RectImp.hpp"
+#include "Core/math/RectImp.hpp"
 
 #endif // RECT_HPP

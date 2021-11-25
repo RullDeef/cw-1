@@ -13,7 +13,7 @@ RenderParams Core::make_render_params(const RenderTarget& renderTarget, const Sc
     params.viewport = get_viewport(renderTarget);
 
     params.camera = make_camera();
-    update_viewport(params.camera, params.viewport);
+    update_viewport(params.camera, cast_rect(params.viewport));
 
     params.renderType = RenderType::ColorFilling;
     params.sceneLightingModel = LightingModelType::Phong;
@@ -33,5 +33,5 @@ RenderParams Core::make_render_params(const RenderTarget& renderTarget, const Sc
 void Core::use_camera(RenderParams& params, const Camera& camera)
 {
     params.camera = camera;
-    update_viewport(params.camera, params.viewport);
+    update_viewport(params.camera, cast_rect(params.viewport));
 }

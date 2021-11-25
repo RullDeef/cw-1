@@ -8,9 +8,9 @@
 
 using namespace Core;
 
-static bool renderViewportValid(const Rect& viewport, const RenderTarget& renderTarget);
+static bool renderViewportValid(const RectI& viewport, const RenderTarget& renderTarget);
 static Color rayTraceRender(const Scene& scene, const Camera& camera, int pixelRow, int pixelCol);
-static Color traceRay(Ray ray, const Scene& scene, const Camera& camera, unsigned int depthLeft);
+static Color traceRay(Ray ray, const Scene& scene, const Camera& camera, int depthLeft);
 static bool findIntersectionPoint(Mesh*& mesh, Face*& face, double& distance, Ray ray, const Scene& scene);
 
 
@@ -36,18 +36,18 @@ StatusCode Core::fancyRenderScene(RenderParams renderParams)
     return StatusCode::Success;
 }
 
-static bool renderViewportValid(const Rect& viewport, const RenderTarget& renderTarget)
+static bool renderViewportValid(const RectI& viewport, const RenderTarget& renderTarget)
 {
     return is_valid(viewport) && is_inside(get_viewport(renderTarget), viewport);
 }
 
 static Color rayTraceRender(const Scene& scene, const Camera& camera, int pixelRow, int pixelCol)
 {
-    Ray ray = shoot_ray(camera, pixelCol, pixelRow);
+    Ray ray = shoot_ray(camera, float(pixelCol), float(pixelRow));
     return traceRay(ray, scene, camera, 0);
 }
 
-static Color traceRay(Ray ray, const Scene& scene, const Camera& camera, unsigned int depthLeft)
+static Color traceRay(Ray ray, const Scene& scene, const Camera& camera, int depthLeft)
 {
     Mesh* mesh;
     Face* face;

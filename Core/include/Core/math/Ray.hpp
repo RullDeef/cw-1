@@ -1,9 +1,9 @@
 #ifndef RAY_HPP
 #define RAY_HPP
 
-#include "Vec.hpp"
-#include "Plane.hpp"
-#include "Sphere.hpp"
+#include "Core/math/Vec.hpp"
+#include "Core/math/Plane.hpp"
+#include "Core/math/Sphere.hpp"
 #include "Core/Objects/Face.hpp"
 #include "Core/Objects/Mesh.hpp"
 
@@ -17,6 +17,8 @@ namespace Core
     };
 
     Ray make_ray(const Vec& position, const Vec& direction);
+
+    bool is_valid(const Ray& ray);
 
     Vec ray_at(const Ray& ray, double t);
     void advance(Ray& ray, double distance);

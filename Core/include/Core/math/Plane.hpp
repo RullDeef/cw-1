@@ -16,7 +16,7 @@ namespace Core
     inline Plane make_plane(const Vec& p1, const Vec& p2, const Vec& p3);
     inline Plane make_plane(const Vec& pos, const Vec& norm);
 
-    inline void normalize(Plane& plane);
+    inline bool is_valid(const Plane& plane);
 
     inline double distance(const Plane& plane, const Vec& pos);
 

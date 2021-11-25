@@ -19,8 +19,7 @@ namespace Core
 
     inline Plane make_plane(const Vec& p1, const Vec& p2, const Vec& p3)
     {
-        Vec norm = normalized(cross(p2 - p1, p3 - p1));
-
+        Vec norm = cross(p2 - p1, p3 - p1);
         return make_plane(p1, norm);
     }
 
@@ -28,24 +27,24 @@ namespace Core
     {
         Plane plane{};
 
-        plane.position = pos;
-        plane.normal = norm;
+        if (is_zero(norm))
+        {
+            plane.position = make_pos();
+            plane.normal = make_dir();
+        }
+        else
+        {
+            plane.position = pos;
+            plane.normal = normalized(norm);
+        }
 
         return plane;
     }
 
-//    inline void normalize(Plane& plane)
-//    {
-//        double d = plane.a * plane.a + plane.b * plane.b + plane.c * plane.c;
-//
-//        if (std::abs(d - 1.0) > 0.00001)
-//        {
-//            plane.a /= d;
-//            plane.b /= d;
-//            plane.c /= d;
-//            plane.d /= d;
-//        }
-//    }
+    inline bool is_valid(const Plane& plane)
+    {
+        return is_normal(plane.normal);
+    }
 
 //    inline double distance(const Plane& plane, const Vec& pos)
 //    {

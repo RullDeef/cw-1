@@ -218,7 +218,7 @@ bool Core::culling(const Face& face, const Camera& camera, FaceCullingType type)
     return false;
 }
 
-bool Core::culling(const Face& face, const Camera& camera, const Rect& renderViewport, FaceCullingType type)
+bool Core::culling(const Face& face, const Camera& camera, const RectF& renderViewport, FaceCullingType type)
 {
     Vec p1 = project_viewport_frustrum(camera, face.verts[0].position);
     Vec p2 = project_viewport_frustrum(camera, face.verts[1].position);
@@ -280,7 +280,7 @@ StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const 
     return StatusCode::Success;
 }
 
-StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Rect& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
+StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const RectF& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
 {
     double x_aspect = get_x_aspect(camera.viewport);
     double y_aspect = get_y_aspect(camera.viewport);
