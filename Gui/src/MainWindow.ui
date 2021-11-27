@@ -68,6 +68,9 @@
      <string>Сцена</string>
     </property>
     <addaction name="createNewScene"/>
+    <addaction name="separator"/>
+    <addaction name="exportScene"/>
+    <addaction name="importScene"/>
    </widget>
    <addaction name="windowMenu"/>
    <addaction name="sceneMenu"/>
@@ -145,6 +148,19 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+A</string>
+   </property>
+  </action>
+  <action name="exportScene">
+   <property name="text">
+    <string>Сохранить как...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="importScene">
+   <property name="text">
+    <string>Загрузить</string>
    </property>
   </action>
  </widget>

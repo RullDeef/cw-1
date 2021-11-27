@@ -1,6 +1,7 @@
 #include <utility>
 #include <algorithm>
 #include <stdexcept>
+#include <Builders/SceneBuidler.hpp>
 #include "Managers/IManagerFactory.hpp"
 #include "Managers/RenderManager.hpp"
 #include "Managers/SceneManager.hpp"
@@ -9,6 +10,13 @@
 SceneManager::SceneManager(IManagerFactory& factory)
     : IManager(factory), activeScene(scenes.end())
 {
+}
+
+void SceneManager::createEmptyScene()
+{
+    std::shared_ptr<Scene> scene = SceneBuilder().prepare().build();
+    addScene(scene);
+    setActiveScene(scene);
 }
 
 void SceneManager::addScene(const std::shared_ptr<Scene>& scene)
@@ -41,6 +49,13 @@ Scene& SceneManager::getActiveScene()
     if (activeScene == scenes.end())
         throw std::runtime_error("bad scene pointer");
     return **activeScene;
+}
+
+std::shared_ptr<Scene> SceneManager::getActiveScenePtr()
+{
+    if (activeScene == scenes.end())
+        throw std::runtime_error("bad shared scene pointer");
+    return *activeScene;
 }
 
 void SceneManager::addObject(const std::shared_ptr<IObject>& object)

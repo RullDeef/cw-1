@@ -4,7 +4,8 @@
 #include <memory>
 
 class SceneManager;
-class LoadManager;
+class PortManager;
+// class LoadManager;
 class RenderManager;
 class CameraManager;
 class SelectionManager;
@@ -22,7 +23,7 @@ public:
     virtual std::shared_ptr<SceneManager> getSceneManager() = 0;
     virtual std::shared_ptr<CameraManager> getCameraManager() = 0;
     virtual std::shared_ptr<RenderManager> getRenderManager() = 0;
-    virtual std::shared_ptr<LoadManager> getLoadManager() = 0;
+    virtual std::shared_ptr<PortManager> getPortManager() = 0;
     virtual std::shared_ptr<SelectionManager> getSelectionManager() = 0;
     virtual std::shared_ptr<SettingsManager> getSettingsManager() = 0;
     virtual std::shared_ptr<InfoManager> getInfoManager() = 0;

@@ -11,6 +11,8 @@ class Light
 public:
     using Type = Core::LightType;
 
+    Light() = default;
+
     Light(const Core::Light& light);
 
     operator Core::Light() const;

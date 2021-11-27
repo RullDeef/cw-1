@@ -13,11 +13,13 @@ class SceneManager : public IManager
 public:
     explicit SceneManager(IManagerFactory& factory);
 
+    void createEmptyScene();
     void addScene(const std::shared_ptr<Scene>& scene);
     void removeScene(const std::shared_ptr<Scene>& scene);
 
     void setActiveScene(const std::shared_ptr<Scene>& scene);
     Scene& getActiveScene();
+    std::shared_ptr<Scene> getActiveScenePtr();
 
     void addObject(const std::shared_ptr<IObject>& object);
     void removeObject(std::shared_ptr<IObject> object);

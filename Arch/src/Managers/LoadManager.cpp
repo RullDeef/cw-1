@@ -9,7 +9,7 @@
 #include "Managers/LoadManager.hpp"
 #include "Managers/RenderManager.hpp"
 #include "Managers/SelectionManager.hpp"
-#include "Builders/EmptySceneBuidler.hpp"
+#include "Builders/SceneBuidler.hpp"
 
 
 LoadManager::LoadManager(IManagerFactory& factory)
@@ -19,7 +19,12 @@ LoadManager::LoadManager(IManagerFactory& factory)
 
 void LoadManager::loadEmptyScene()
 {
-    std::shared_ptr<Scene> scene = EmptySceneBuilder().build();
+    std::shared_ptr<Scene> scene;
+    {
+        SceneBuilder sceneBuilder;
+        sceneBuilder.prepare();
+        scene = sceneBuilder.build();
+    }
 
     auto sceneManager = getFactory().getSceneManager();
     sceneManager->addScene(scene);

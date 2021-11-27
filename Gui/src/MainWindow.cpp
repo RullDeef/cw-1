@@ -6,7 +6,11 @@
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
 #include "Frames/HierarchyFrame/HierarchyFrame.hpp"
 #include "MainWindow.hpp"
-
+#include <Builders/CameraBuilders/DefaultCameraBuilder.hpp>
+#include <Managers/SceneManager.hpp>
+#include <Builders/LightBuilders/AmbientLightBuilder.hpp>
+#include <Builders/SceneBuidler.hpp>
+#include <Managers/PortManager.hpp>
 
 MainWindow::MainWindow()
 {
@@ -39,15 +43,15 @@ MainWindow::MainWindow()
         frames.push_back(frame);
     }
 
-
-
     setupActions();
 }
 
 void MainWindow::setupActions()
 {
-    connect(ui.createNewScene, &QAction::triggered, this, &MainWindow::createNewSceneCommand);
     connect(ui.loadObject, &QAction::triggered, this, &MainWindow::loadObjectCommand);
+    connect(ui.createNewScene, &QAction::triggered, this, &MainWindow::createNewSceneCommand);
+    connect(ui.importScene, &QAction::triggered, this, &MainWindow::importSceneCommand);
+    connect(ui.exportScene, &QAction::triggered, this, &MainWindow::exportSceneCommand);
     connect(ui.addCamera, &QAction::triggered, this, &MainWindow::addCameraCommand);
     connect(ui.addLightSource, &QAction::triggered, this, &MainWindow::addLightSourceCommand);
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
@@ -59,22 +63,34 @@ void MainWindow::setupActions()
 
 void MainWindow::createNewSceneCommand()
 {
-    factory->getLoadManager()->loadEmptyScene();
+    factory->getSceneManager()->createEmptyScene();
+}
+
+void MainWindow::importSceneCommand()
+{
+    factory->getPortManager()->importScene();
+}
+
+void MainWindow::exportSceneCommand()
+{
+    factory->getPortManager()->exportScene();
 }
 
 void MainWindow::loadObjectCommand()
 {
-    factory->getLoadManager()->loadMesh();
+    factory->getPortManager()->importMesh();
 }
 
 void MainWindow::addCameraCommand()
 {
-    factory->getLoadManager()->buildCamera();
+    auto camera = DefaultCameraBuilder().build();
+    factory->getSceneManager()->addObject(std::move(camera));
 }
 
 void MainWindow::addLightSourceCommand()
 {
-    factory->getLoadManager()->buildLight();
+    auto light = AmbientLightBuilder().build();
+    factory->getSceneManager()->addObject(std::move(light));
 }
 
 void MainWindow::saveRenderCommand()
@@ -98,5 +114,5 @@ void MainWindow::selectAll()
 
 void MainWindow::invertSelection()
 {
-    // factory->getSelectionManager()->invertSelection();
+    throw std::runtime_error("not implemented");
 }

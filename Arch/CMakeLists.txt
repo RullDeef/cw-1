@@ -28,7 +28,7 @@ add_library(Arch STATIC
         src/Loaders/ObjLoader/ObjFace.cpp
         src/Builders/CameraBuilders/DefaultCameraBuilder.cpp
         src/Builders/LightBuilders/AmbientLightBuilder.cpp
-        src/Builders/EmptySceneBuilder.cpp
+        src/Builders/SceneBuilder.cpp
         src/Builders/DefaultIDGenerator.cpp
         src/Scene/Scene.cpp
         src/Objects/Adapters/MeshAdapter.cpp
@@ -45,6 +45,6 @@ add_library(Arch STATIC
         src/Math/Ray.cpp
         src/Math/Rect.cpp
         src/Math/Matrix.cpp
-        src/Math/Vector.cpp src/Threading/ThreadPool.cpp src/Managers/InfoManager.cpp src/Builders/LightBuilders/DirectionalLightBuilder.cpp)
+        src/Math/Vector.cpp src/Threading/ThreadPool.cpp src/Managers/InfoManager.cpp src/Builders/LightBuilders/DirectionalLightBuilder.cpp src/Exporters/UdfExporter/UdfExporter.cpp src/Managers/PortManager.cpp src/Importers/UdfImporter/UdfImporter.cpp)
 
 link_libraries(Arch Core)

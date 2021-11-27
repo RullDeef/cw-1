@@ -6,6 +6,7 @@
 #include "Managers/QtSelectionManager.hpp"
 #include "Managers/QtSettingsManager.hpp"
 #include "Managers/QtInfoManager.hpp"
+#include "QtPortManager.hpp"
 
 
 std::shared_ptr<SceneManager> QtManagerFactory::getSceneManager()
@@ -29,11 +30,11 @@ std::shared_ptr<RenderManager> QtManagerFactory::getRenderManager()
     return renderManager;
 }
 
-std::shared_ptr<LoadManager> QtManagerFactory::getLoadManager()
+std::shared_ptr<PortManager> QtManagerFactory::getPortManager()
 {
-    if (!loadManager)
-        loadManager = std::shared_ptr<LoadManager>(new QtLoadManager(*this));
-    return loadManager;
+    if (!portManager)
+        portManager = std::shared_ptr<PortManager>(new QtPortManager(*this));
+    return portManager;
 }
 
 std::shared_ptr<SelectionManager> QtManagerFactory::getSelectionManager()

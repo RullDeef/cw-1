@@ -19,6 +19,8 @@ public:
 
 protected slots:
     void createNewSceneCommand();
+    void importSceneCommand();
+    void exportSceneCommand();
 
     void loadObjectCommand();
 
