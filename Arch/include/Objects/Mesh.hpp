@@ -2,7 +2,7 @@
 #define ARCH_MESH_HPP
 
 #include <Core/Objects/Mesh.hpp>
-#include <Math/Matrix.hpp>
+#include "Math/Matrix.hpp"
 #include "Math/Ray.hpp"
 #include "Objects/Material.hpp"
 

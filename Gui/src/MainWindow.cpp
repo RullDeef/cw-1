@@ -11,6 +11,7 @@
 #include <Builders/LightBuilders/AmbientLightBuilder.hpp>
 #include <Builders/SceneBuidler.hpp>
 #include <Managers/PortManager.hpp>
+#include <Builders/MeshBuilders/SphereMeshBuilder.hpp>
 
 MainWindow::MainWindow()
 {
@@ -52,8 +53,11 @@ void MainWindow::setupActions()
     connect(ui.createNewScene, &QAction::triggered, this, &MainWindow::createNewSceneCommand);
     connect(ui.importScene, &QAction::triggered, this, &MainWindow::importSceneCommand);
     connect(ui.exportScene, &QAction::triggered, this, &MainWindow::exportSceneCommand);
+
     connect(ui.addCamera, &QAction::triggered, this, &MainWindow::addCameraCommand);
     connect(ui.addLightSource, &QAction::triggered, this, &MainWindow::addLightSourceCommand);
+    connect(ui.addSphere, &QAction::triggered, this, &MainWindow::addSphereCommand);
+
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
 
     connect(ui.deleteSelected, &QAction::triggered, this, &MainWindow::deleteSelected);
@@ -91,6 +95,23 @@ void MainWindow::addLightSourceCommand()
 {
     auto light = AmbientLightBuilder().build();
     factory->getSceneManager()->addObject(std::move(light));
+}
+
+void MainWindow::addSphereCommand()
+{
+    auto mesh = SphereMeshBuilder()
+            .setRadius(100)
+            .setMeshDensity(6)
+            .setSmooth(true)
+            .setColor(Color::cyan())
+            .build();
+    auto object = std::shared_ptr<IObject>(new ObjectAdapter<Mesh>(101020102, std::move(mesh)));
+
+    object->setPosition(Vector(0, 0, 0, 1));
+    object->setRotation(Vector(0, 0, 0, 0));
+    object->setScale(Vector(1, 1, 1, 0));
+
+    factory->getSceneManager()->addObject(object);
 }
 
 void MainWindow::saveRenderCommand()

@@ -10,6 +10,8 @@
 #include "Objects/Adapters/MeshAdapter.hpp"
 #include "Objects/Adapters/CameraAdapter.hpp"
 #include "Objects/Adapters/LightAdapter.hpp"
+#include "Builders/BaseMeshBuilder.hpp"
+
 
 std::shared_ptr<Scene> UdfImporter::importScene(std::istream& stream)
 {
@@ -118,9 +120,11 @@ Mesh UdfImporter::importMesh(std::istream& stream)
     if (line != "M")
         throw std::runtime_error("bad mesh format: not \"M\"");
 
-    std::vector<Vector> vertices;
-    std::vector<Vector> normals;
-    std::vector<std::vector<size_t>> faces;
+    BaseMeshBuilder builder;
+
+//    std::vector<Vector> vertices;
+//    std::vector<Vector> normals;
+//    std::vector<std::vector<size_t>> faces;
 
     while (line != "EM")
     {
@@ -129,41 +133,46 @@ Mesh UdfImporter::importMesh(std::istream& stream)
         if (line == "v")
         {
             std::getline(stream, line);
-            vertices.push_back(readVector(line, 1.0));
+            // vertices.push_back(readVector(line, 1.0));
+            builder.pushPos(readVector(line, 1.0));
         }
         else if (line == "n")
         {
             std::getline(stream, line);
-            normals.push_back(readVector(line, 0.0));
+            // normals.push_back(readVector(line, 0.0));
+            builder.pushNorm(readVector(line, 0.0));
         }
         else if (line == "f")
         {
             std::getline(stream, line);
-            faces.push_back(readFace(line));
+            auto inds = readFace(line);
+            // faces.push_back(readFace(line));
+            builder.linkFace(inds[0], inds[2], inds[4], inds[1], inds[3], inds[5]);
         }
     }
 
-    ///TODO: create separate class for building meshes
-    Core::Mesh mesh = Core::make_mesh(faces.size());
+//    Core::Mesh mesh = Core::make_mesh(faces.size());
+//
+//    for (const auto& faceIndices : faces)
+//    {
+//        Vector v1 = vertices[faceIndices[0]];
+//        Vector v2 = vertices[faceIndices[2]];
+//        Vector v3 = vertices[faceIndices[4]];
+//
+//        Vector n1 = normals[faceIndices[1]];
+//        Vector n2 = normals[faceIndices[3]];
+//        Vector n3 = normals[faceIndices[5]];
+//
+//        Core::Vertex vr1 = Core::make_vertex(v1, n1);
+//        Core::Vertex vr2 = Core::make_vertex(v2, n2);
+//        Core::Vertex vr3 = Core::make_vertex(v3, n3);
+//
+//        add_face(mesh, Core::make_face(vr1, vr2, vr3));
+//    }
 
-    for (const auto& faceIndices : faces)
-    {
-        Vector v1 = vertices[faceIndices[0]];
-        Vector v2 = vertices[faceIndices[2]];
-        Vector v3 = vertices[faceIndices[4]];
+//    return Mesh(mesh);
 
-        Vector n1 = normals[faceIndices[1]];
-        Vector n2 = normals[faceIndices[3]];
-        Vector n3 = normals[faceIndices[5]];
-
-        Core::Vertex vr1 = Core::make_vertex(v1, n1);
-        Core::Vertex vr2 = Core::make_vertex(v2, n2);
-        Core::Vertex vr3 = Core::make_vertex(v3, n3);
-
-        add_face(mesh, Core::make_face(vr1, vr2, vr3));
-    }
-
-    return Mesh(mesh);
+    return builder.build();
 }
 
 Camera UdfImporter::importCamera(std::istream& stream)

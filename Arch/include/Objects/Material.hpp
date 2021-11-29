@@ -8,7 +8,7 @@
 class Material
 {
 public:
-    Material() = default;
+    Material();
     Material(const Core::Material& mat);
 
     [[nodiscard]] inline Color getAmbientColor() const { return ambientColor; }

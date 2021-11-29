@@ -1,6 +1,10 @@
 #include "Objects/Material.hpp"
 
 
+Material::Material() : Material(Core::make_material())
+{
+}
+
 Material::Material(const Core::Material &mat)
     : ambientColor(mat.ambientColor), diffuseColor(mat.diffuseColor),
       specularColor(mat.specularColor), specularHighlight(mat.specularHighlight),

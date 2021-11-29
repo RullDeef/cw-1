@@ -26,6 +26,7 @@ protected slots:
 
     void addCameraCommand();
     void addLightSourceCommand();
+    void addSphereCommand();
 
     void saveRenderCommand();
 

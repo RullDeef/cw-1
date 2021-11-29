@@ -1,0 +1,17 @@
+O
+1637961975633379252
+Ambient light
+light
+0 0 0
+0 0 0
+1 1 1
+EO
+O
+1637962008070484368
+Directional light
+light
+0 0 0
+0 -29 0
+1 1 1
+EO
+

@@ -47,6 +47,8 @@
      </property>
      <addaction name="addCamera"/>
      <addaction name="addLightSource"/>
+     <addaction name="separator"/>
+     <addaction name="addSphere"/>
     </widget>
     <addaction name="loadObject"/>
     <addaction name="menu"/>
@@ -161,6 +163,11 @@
   <action name="importScene">
    <property name="text">
     <string>Загрузить</string>
+   </property>
+  </action>
+  <action name="addSphere">
+   <property name="text">
+    <string>Сферу</string>
    </property>
   </action>
  </widget>
