@@ -5,6 +5,8 @@
 #include "Managers/SceneManager.hpp"
 #include <fstream>
 #include <Loaders/ObjLoader/ObjLoader.hpp>
+#include <Objects/ObjectAdapter.hpp>
+#include <Builders/BaseMeshBuilder.hpp>
 #include "Managers/SelectionManager.hpp"
 
 PortManager::PortManager(IManagerFactory& factory) : IManager(factory)

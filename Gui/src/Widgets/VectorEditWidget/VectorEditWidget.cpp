@@ -17,6 +17,8 @@ void VectorEditWidget::setValue(const Vector &vector)
     ui->xSpinBox->setValue(vector.getX());
     ui->ySpinBox->setValue(vector.getY());
     ui->zSpinBox->setValue(vector.getZ());
+
+    w = vector.getW();
 }
 
 Vector VectorEditWidget::getValue() const
@@ -25,5 +27,5 @@ Vector VectorEditWidget::getValue() const
     double y = ui->ySpinBox->value();
     double z = ui->zSpinBox->value();
 
-    return Vector(x, y, z);
+    return Vector(x, y, z, w);
 }

@@ -12,8 +12,9 @@ namespace Core
         double w;
     };
 
-    inline Vec make_pos(double x = 0.0, double y = 0.0, double z = 0.0, double w = 1.0);
-    inline Vec make_dir(double x = 0.0, double y = 0.0, double z = 0.0, double w = 0.0);
+    inline Vec make_pos(double x, double y, double z);
+    inline Vec make_dir(double x, double y, double z);
+    inline Vec make_vec(double x, double y, double z, double w);
 
     inline double length(const Vec& vec);
     inline double inv_sqrt_fast(const Vec& vec);

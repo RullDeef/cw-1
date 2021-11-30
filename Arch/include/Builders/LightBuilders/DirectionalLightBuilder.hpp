@@ -15,9 +15,9 @@ public:
     std::unique_ptr<IObject> build() override;
 
 private:
-    Color color;
-    Vector direction;
-    double intensity;
+    Color color = Color::white();
+    Vector direction = Vector(0, 0, 0, 0);
+    double intensity = 1.0;
 };
 
 #endif // DIRECTIONALLIGHTBUILDER_HPP

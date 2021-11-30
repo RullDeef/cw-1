@@ -6,7 +6,7 @@ using namespace Core;
 
 Vertex Core::make_vertex()
 {
-    return make_vertex(make_pos());
+    return make_vertex(make_pos(0, 0, 0), make_dir(1, 0, 0));
 }
 
 Vertex Core::make_vertex(Vec position)
@@ -16,7 +16,7 @@ Vertex Core::make_vertex(Vec position)
 
 Vertex Core::make_vertex(Vec position, Vec normal)
 {
-    return make_vertex(position, normal, make_dir());
+    return make_vertex(position, normal, make_dir(0, 0, 0));
 }
 
 Vertex Core::make_vertex(Vec position, Vec normal, Vec uv)

@@ -1,7 +1,7 @@
 #include "Objects/IObject.hpp"
 
 IObject::IObject(size_t id)
-    : id(id), scale(1, 1, 1)
+    : id(id), position(0, 0, 0, 1), rotation(0, 0, 0, 0), scale(1, 1, 1, 0)
 {
 }
 

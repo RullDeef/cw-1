@@ -1,7 +1,6 @@
 #include <Frames/InspectorFrame/InspectorFrame.hpp>
 #include <Frames/SettingsFrame/SettingsFrame.hpp>
 #include <Managers/SelectionManager.hpp>
-#include "Managers/LoadManager.hpp"
 #include "Managers/QtManagerFactory.hpp"
 #include "Frames/ViewportFrame/ViewportFrame.hpp"
 #include "Frames/HierarchyFrame/HierarchyFrame.hpp"
@@ -45,6 +44,8 @@ MainWindow::MainWindow()
     }
 
     setupActions();
+
+    createNewSceneCommand();
 }
 
 void MainWindow::setupActions()
@@ -110,6 +111,7 @@ void MainWindow::addSphereCommand()
     object->setPosition(Vector(0, 0, 0, 1));
     object->setRotation(Vector(0, 0, 0, 0));
     object->setScale(Vector(1, 1, 1, 0));
+    ///TODO: update object builders to return smart pointer to IObject
 
     factory->getSceneManager()->addObject(object);
 }

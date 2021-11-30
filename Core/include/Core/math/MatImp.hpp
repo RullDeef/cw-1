@@ -83,17 +83,11 @@ inline Mat make_mat_perspective(double fov, double near, double far)
 {
     double s = 1 / std::tan(fov / 2);
 
-//    return Mat {
-//        s, 0, 0, 0,
-//        0, s, 0, 0,
-//        0, 0, far / (near - far), -1,
-//        0, 0, near * far / (near - far), 0
-//    };
     return Mat {
             s, 0, 0, 0,
             0, s, 0, 0,
-            0, 0, far / (far - near), - near * far / (far - near),
-            0, 0, 1, 0
+            0, 0, (near + far) / (near - far), 2 * near * far / (near - far),
+            0, 0, -1, 0
     };
 }
 
@@ -148,7 +142,7 @@ inline Mat operator*(double val, const Mat& mat)
 
 inline Vec operator*(const Vec& vec, const Mat& mat)
 {
-    return make_pos(
+    return make_vec(
         vec.x * mat.data[0] + vec.y * mat.data[4] + vec.z * mat.data[ 8] + vec.w * mat.data[12],
         vec.x * mat.data[1] + vec.y * mat.data[5] + vec.z * mat.data[ 9] + vec.w * mat.data[13],
         vec.x * mat.data[2] + vec.y * mat.data[6] + vec.z * mat.data[10] + vec.w * mat.data[14],
@@ -158,7 +152,7 @@ inline Vec operator*(const Vec& vec, const Mat& mat)
 
 inline Vec operator*(const Mat& mat, const Vec& vec)
 {
-    return make_pos(
+    return make_vec(
         vec.x * mat.data[ 0] + vec.y * mat.data[ 1] + vec.z * mat.data[ 2] + vec.w * mat.data[ 3],
         vec.x * mat.data[ 4] + vec.y * mat.data[ 5] + vec.z * mat.data[ 6] + vec.w * mat.data[ 7],
         vec.x * mat.data[ 8] + vec.y * mat.data[ 9] + vec.z * mat.data[10] + vec.w * mat.data[11],

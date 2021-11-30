@@ -11,7 +11,7 @@ Camera Core::make_camera(double fov, double near, double far)
     cam.fov = fov;
     cam.near = near;
     cam.far = far;
-    cam.eye = make_pos();
+    cam.eye = make_pos(0, 0, 0);
     cam.pitch = .0;
     cam.yaw = .0;
 
@@ -111,10 +111,11 @@ Ray Core::shoot_ray(const Camera& camera, float x, float y)
 
 void Core::update_transformation(Camera &camera)
 {
-    double cosPitch = std::cos(camera.pitch);
-    double sinPitch = std::sin(camera.pitch);
     double cosYaw = std::cos(camera.yaw);
     double sinYaw = std::sin(camera.yaw);
+
+    double cosPitch = std::cos(camera.pitch);
+    double sinPitch = std::sin(camera.pitch);
 
     Vec x_axis = make_dir(cosYaw, 0, -sinYaw);
     Vec y_axis = make_dir(sinYaw * sinPitch, cosPitch, cosYaw * sinPitch);

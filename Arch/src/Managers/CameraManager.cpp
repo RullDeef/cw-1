@@ -6,19 +6,14 @@
 
 
 CameraManager::CameraManager(IManagerFactory &factory)
-    : IManager(factory), mainCamera(Vector(0, 100, 400), 0, M_PI)
+    : IManager(factory), mainCamera(Vector(0, 0, 400, 1), 0, 0)
 {
+    ///TODO: get rid of z=400 constant
 }
 
 Camera& CameraManager::getActiveCamera()
 {
     return mainCamera;
-}
-
-void CameraManager::dragCamera(double dx, double dy)
-{
-    /// TODO: make offset vector depend on distance to observable
-    getActiveCamera().translate(Vector(dx, -dy, 0));
 }
 
 void CameraManager::rotateCamera(double dx, double dy)
@@ -36,7 +31,8 @@ void CameraManager::zoomCamera(double factor)
 
 void CameraManager::freeFlyCamera(double forward, double right, double up)
 {
-    getActiveCamera().translate(Vector(right, up, forward, 0));
+    auto offset = getActiveCamera().getModelMatrix() * Vector(right, up, forward, 0);
+    getActiveCamera().translate(offset);
 }
 
 Ray CameraManager::createRay(int x, int y)

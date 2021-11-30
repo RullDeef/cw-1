@@ -25,6 +25,7 @@ public:
 
 private:
     Ui::VectorEditWidget *ui;
+    double w;
 };
 
 

@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <stdexcept>
 #include <Builders/SceneBuidler.hpp>
+#include <Objects/Mesh.hpp>
+#include <Builders/BaseMeshBuilder.hpp>
+#include <Objects/ObjectAdapter.hpp>
 #include "Managers/IManagerFactory.hpp"
 #include "Managers/RenderManager.hpp"
 #include "Managers/SceneManager.hpp"
@@ -17,6 +20,22 @@ void SceneManager::createEmptyScene()
     std::shared_ptr<Scene> scene = SceneBuilder().prepare().build();
     addScene(scene);
     setActiveScene(scene);
+
+    // testing axes rendering
+//    auto mesh = BaseMeshBuilder()
+//            .pushPos(Vector(0, 0, 0, 1))
+//            .pushPos(Vector(10, 0, 0, 1))
+//            .pushPos(Vector(10, 1, 0, 1))
+//            .linkFace(0, 1, 2)
+//            .pushPos(Vector(0, 20, 0, 1))
+//            .pushPos(Vector(0, 20, 2, 1))
+//            .linkFace(0, 3, 4)
+//            .pushPos(Vector(0, 0, 30, 1))
+//            .pushPos(Vector(3, 0, 30, 1))
+//            .linkFace(0, 5, 6)
+//            .build();
+//    auto adapter = std::shared_ptr<IObject>(new ObjectAdapter<Mesh>(100, std::move(mesh)));
+//    addObject(adapter);
 }
 
 void SceneManager::addScene(const std::shared_ptr<Scene>& scene)

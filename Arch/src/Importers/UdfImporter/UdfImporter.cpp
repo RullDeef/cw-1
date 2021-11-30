@@ -193,7 +193,7 @@ Camera UdfImporter::importCamera(std::istream& stream)
     if (line != "EC")
         throw std::runtime_error("invalid camera format");
 
-    return Camera(Vector(), pitch, yaw);
+    return Camera(Vector(0, 0, 0, 1), pitch, yaw);
 }
 
 Light UdfImporter::importLight(std::istream& stream)

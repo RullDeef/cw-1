@@ -148,19 +148,18 @@ Vector Vector::interpolate(const Vector &v, double t) const
 
 Vector Vector::cross(const Vector &v) const
 {
-    Vector res(0, 0, 0);
+    Vector res(0, 0, 0, 0);
 
     res.x = y * v.z - z * v.y;
     res.y = z * v.x - x * v.z;
     res.z = x * v.y - y * v.x;
-    res.w = 0.0;
 
     return res;
 }
 
 Vector::operator Core::Vec() const
 {
-    return Core::make_dir(x, y, z, w);
+    return Core::make_vec(x, y, z, w);
 }
 
 Vector operator*(double val, const Vector &v)

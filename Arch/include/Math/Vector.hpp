@@ -8,7 +8,7 @@
 class Vector
 {
 public:
-    explicit Vector(double x = 0.0, double y = 0.0, double z = 0.0, double w = 1.0);
+    explicit Vector(double x, double y, double z, double w);
     Vector(const Vector& v);
     Vector(const Core::Vec& vec);
     double length() const;

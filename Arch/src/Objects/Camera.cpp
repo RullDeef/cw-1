@@ -72,7 +72,8 @@ void Camera::setYaw(double newYaw)
 
 void Camera::translate(const Vector& offset)
 {
-    eye += getModelMatrix() * offset;
+    //eye += getModelMatrix() * offset;
+    eye += offset;
 }
 
 void Camera::rotate(double dPitch, double dYaw)

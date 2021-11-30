@@ -49,29 +49,36 @@ BaseMeshBuilder &BaseMeshBuilder::useMaterial(const Material& mat)
 
 Mesh BaseMeshBuilder::build()
 {
+    if (faces.empty())
+        throw std::runtime_error("empty mesh"); ///TODO: errors handling
+
     auto mesh = Core::make_mesh(faces.size());
 
     for (auto face: faces)
     {
-        Vector p1 = vPoses[face.p1];
-        Vector p2 = vPoses[face.p2];
-        Vector p3 = vPoses[face.p3];
+        Vector p1 = getPosAt(face.p1);
+        Vector p2 = getPosAt(face.p2);
+        Vector p3 = getPosAt(face.p3);
 
         Vector n1(0, 0, 0, 0);
         Vector n2(0, 0, 0, 0);
         Vector n3(0, 0, 0, 0);
         if (face.n1 != MBFace::npos)
         {
-            n1 = vNorms[face.n1];
-            n2 = vNorms[face.n2];
-            n3 = vNorms[face.n3];
+            n1 = getNormAt(face.n1);
+            n2 = getNormAt(face.n2);
+            n3 = getNormAt(face.n3);
         }
 
         auto v1 = Core::make_vertex(p1, n1);
         auto v2 = Core::make_vertex(p2, n2);
         auto v3 = Core::make_vertex(p3, n3);
 
-        Core::add_face(mesh, Core::make_face(v1, v2, v3));
+        if (!Core::add_face(mesh, Core::make_face(v1, v2, v3)))
+        {
+            Core::destroy(mesh); ///TODO: implement proper memory cleaning
+            throw std::runtime_error("memory error");
+        }
     }
 
     auto wrapper = Mesh(mesh);
@@ -83,4 +90,20 @@ Mesh BaseMeshBuilder::build()
     faces.clear();
 
     return std::move(wrapper);
+}
+
+Vector BaseMeshBuilder::getPosAt(size_t index) const
+{
+    if (index >= vPoses.size())
+        throw std::runtime_error("bad pos index");
+
+    return vPoses.at(index);
+}
+
+Vector BaseMeshBuilder::getNormAt(size_t index) const
+{
+    if (index >= vNorms.size())
+        throw std::runtime_error("bad norm index");
+
+    return vNorms.at(index);
 }

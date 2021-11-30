@@ -34,6 +34,10 @@ public:
     virtual Mesh build();
 
 private:
+    Vector getPosAt(size_t index) const;
+    Vector getNormAt(size_t index) const;
+
+private:
     std::vector<Vector> vPoses;
     std::vector<Vector> vNorms;
 

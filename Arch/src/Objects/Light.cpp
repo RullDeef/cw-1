@@ -1,14 +1,9 @@
 #include "Objects/Light.hpp"
 
 
-Light::Light(const Core::Light &light)
-{
-    color = light.color;
-    intensity = light.intensity;
-    position = light.position;
-    direction = light.direction;
-    type = light.type;
-}
+Light::Light(const Core::Light &light) : color(light.color), intensity(light.intensity),
+        position(light.position), direction(light.direction), type(light.type)
+{}
 
 Light::operator Core::Light() const
 {

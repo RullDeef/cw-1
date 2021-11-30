@@ -41,8 +41,9 @@ StatusCode Core::overlayRenderScene(RenderParams renderParams)
         }
     }
 
-    /// TODO: fix wrong rotations
-    renderOrientationBox(renderParams.renderTarget, renderParams.camera.model_mat, 20, 20);
+    /// TODO: fix wrong rotations (maybe done)
+    recalc_mvp(renderParams.camera, make_mat_id());
+    renderOrientationBox(renderParams.renderTarget, renderParams.camera.mvp, 20, 20);
 
     return StatusCode::Success;
 }
@@ -87,10 +88,10 @@ static StatusCode renderOrientationBoxSide(RenderTarget& renderTarget, Vec norma
     Vec p3 = point - orientationBoxSize / 2.0 * tangent - orientationBoxSize / 2.0 * tan2;
     Vec p4 = point - orientationBoxSize / 2.0 * tangent + orientationBoxSize / 2.0 * tan2;
 
-    p1.y = offsetY + orientationBoxSize / 2.0 + p1.y;
-    p2.y = offsetY + orientationBoxSize / 2.0 + p2.y;
-    p3.y = offsetY + orientationBoxSize / 2.0 + p3.y;
-    p4.y = offsetY + orientationBoxSize / 2.0 + p4.y;
+    p1.y = offsetY + orientationBoxSize / 2.0 - p1.y;
+    p2.y = offsetY + orientationBoxSize / 2.0 - p2.y;
+    p3.y = offsetY + orientationBoxSize / 2.0 - p3.y;
+    p4.y = offsetY + orientationBoxSize / 2.0 - p4.y;
 
     renderLine(renderTarget, p1, p2, to_pixel(color));
     renderLine(renderTarget, p2, p3, to_pixel(color));

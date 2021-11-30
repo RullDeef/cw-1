@@ -13,6 +13,8 @@ public:
     ObjObject() = default;
     explicit ObjObject(std::string  name) : name(std::move(name)) {}
 
+    bool empty() const noexcept { return faces.empty(); }
+
     const std::string& getName() const { return name; }
     const std::string& getMaterialName() const { return materialName; }
 

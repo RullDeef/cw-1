@@ -10,8 +10,8 @@ Ray Core::make_ray(const Vec &position, const Vec &direction)
 
     if (is_zero(direction))
     {
-        ray.position = make_pos();
-        ray.direction = make_dir();
+        ray.position = make_pos(0, 0, 0);
+        ray.direction = make_dir(0, 0, 0);
     }
     else
     {

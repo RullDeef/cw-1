@@ -5,7 +5,7 @@
 
 
 DefaultCameraBuilder::DefaultCameraBuilder()
-    : eye(0.0, 20, 30), pitch(-atan2(20, 30)), yaw(M_PI)
+    : eye(0, 20, 30, 1), pitch(-atan2(20, 30)), yaw(M_PI)
 {
 }
 

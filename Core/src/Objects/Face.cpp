@@ -208,7 +208,7 @@ bool Core::culling(const Face& face, const Camera& camera, FaceCullingType type)
         p3 = viewport_adjust(camera, p3);
 
         Vec norm = Core::cross(p2 - p1, p3 - p1);
-        Vec dir = make_dir(0, 0, 1);
+        Vec dir = make_dir(0, 0, -1); ///TODO: remove code duplication
 
         double dot = Core::dot(dir, norm);
         if (dot <= 0.0)
@@ -250,7 +250,7 @@ bool Core::culling(const Face& face, const Camera& camera, const RectF& renderVi
         p3 = viewport_adjust(camera, p3);
 
         Vec norm = Core::cross(p2 - p1, p3 - p1);
-        Vec dir = make_dir(0, 0, 1);
+        Vec dir = make_dir(0, 0, -1);
 
         double dot = Core::dot(dir, norm);
         if (dot <= 0.0)

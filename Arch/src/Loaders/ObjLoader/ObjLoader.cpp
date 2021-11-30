@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <cstring>
+#include <Builders/BaseMeshBuilder.hpp>
 #include "Objects/Mesh.hpp"
 #include "Objects/ObjectAdapter.hpp"
 #include "Scene/Scene.hpp"
@@ -62,7 +63,7 @@ std::vector<Vector> ObjLoader::extractGeometry(std::ifstream &file)
     file.clear();
     file.seekg(0, std::ios_base::beg);
 
-    std::vector<Vector> result = { Vector() }; /// for index adjustment
+    std::vector<Vector> result = { Vector(0, 0, 0, 1) }; /// for index adjustment
     std::string line;
     while (std::getline(file, line))
     {
@@ -82,7 +83,7 @@ std::vector<Vector> ObjLoader::extractTextureUV(std::ifstream &file)
     file.clear();
     file.seekg(0, std::ios_base::beg);
 
-    std::vector<Vector> result = { Vector() };
+    std::vector<Vector> result = { Vector(0, 0, 0, 0) };
     std::string line;
     while (std::getline(file, line))
     {
@@ -102,7 +103,7 @@ std::vector<Vector> ObjLoader::extractNormals(std::ifstream &file)
     file.clear();
     file.seekg(0, std::ios_base::beg);
 
-    std::vector<Vector> result = { Vector() };
+    std::vector<Vector> result = { Vector(0, 0, 0, 0) };
     std::string line;
     while (std::getline(file, line))
     {
@@ -157,7 +158,8 @@ std::list<ObjObject> ObjLoader::extractMeshesList(std::ifstream &file)
     }
 
     result.push_back(currObject);
-    result.erase(result.begin());
+    if (result.front().empty())
+        result.erase(result.begin());
 
     return result;
 }
@@ -271,6 +273,40 @@ Vector ObjLoader::extractVector3(const std::string& str, double w)
 }
 
 Mesh ObjLoader::constructMesh(const ObjObject &object, const std::vector<Vector> &positions,
+                                  const std::vector<Vector> &textures, const std::vector<Vector> &normals,
+                                  const std::map<std::string, Material>& materialLib)
+{
+    BaseMeshBuilder builder;
+
+    for (auto& pos : positions)
+        builder.pushPos(pos);
+    for (auto& norm : normals)
+        builder.pushNorm(norm);
+
+    for (const auto& face : object)
+    {
+        const auto& verts = face.getVertexList();
+        if (verts.size() < 3)
+            throw std::runtime_error("bad verts count for face");
+
+        // make triangle fan
+        auto v1 = verts[0];
+        for (size_t i = 2; i < verts.size(); i++)
+        {
+            auto v2 = verts[i - 1], v3 = verts[i];
+
+            if (v1.hasNormIndex() && v2.hasNormIndex() && v3.hasNormIndex())
+                builder.linkFace(v1.getPosIndex(), v2.getPosIndex(), v3.getPosIndex(),
+                                 v1.getNormIndex(), v2.getNormIndex(), v3.getNormIndex());
+            else
+                builder.linkFace(v1.getPosIndex(), v2.getPosIndex(), v3.getPosIndex());
+        }
+    }
+
+    return builder.build();
+}
+
+Mesh constructMesh_old(const ObjObject &object, const std::vector<Vector> &positions,
                               const std::vector<Vector> &textures, const std::vector<Vector> &normals,
                               const std::map<std::string, Material>& materialLib)
 {

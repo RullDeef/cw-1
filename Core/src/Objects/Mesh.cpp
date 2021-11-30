@@ -91,7 +91,7 @@ static Sphere boundedSphere(const Face& face)
 void Core::recalc_bounding_sphere(Mesh& mesh)
 {
     if (mesh.faces.size == 0)
-        mesh.boundingSphere = make_sphere(make_pos(), 0);
+        mesh.boundingSphere = make_sphere(make_pos(0, 0, 0), 0);
     if (mesh.faces.size == 1)
         mesh.boundingSphere = boundedSphere(mesh.faces.data[0]);
 

@@ -47,8 +47,11 @@ void Core::setPixel(RenderTarget& renderTarget, size_t row, size_t col, Pixel pi
     if (row >= renderTarget.height || col >= renderTarget.width)
         return; /// TODO: log error
 
-    Pixel* data = nullptr;
-    do { data = renderTarget.data.exchange(nullptr); } while (data == nullptr);
+    Pixel* data;
+    do {
+        data = renderTarget.data.exchange(nullptr);
+    } while (data == nullptr);
+
     data[row * renderTarget.width + col] = pixel;
     renderTarget.data.exchange(data);
 }

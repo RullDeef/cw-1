@@ -34,11 +34,11 @@ public:
 private:
     Type type;
 
-    Color color;
-    Vector position;
-    Vector direction;
+    Color color = Color::white();
+    Vector position = Vector(0, 0, 0, 1);
+    Vector direction = Vector(1, 0, 0, 0);
 
-    double intensity;
+    double intensity = 1.0;
 };
 
 #endif // ARCH_LIGHT_HPP

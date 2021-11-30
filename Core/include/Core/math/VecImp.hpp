@@ -5,12 +5,17 @@
 
 namespace Core
 {
-    inline Vec make_pos(double x, double y, double z, double w)
+    inline Vec make_pos(double x, double y, double z)
     {
-        return Vec { x, y, z, w };
+        return Vec { x, y, z, 1.0 };
     }
 
-    inline Vec make_dir(double x, double y, double z, double w)
+    inline Vec make_dir(double x, double y, double z)
+    {
+        return Vec { x, y, z, 0.0 };
+    }
+
+    inline Vec make_vec(double x, double y, double z, double w)
     {
         return Vec { x, y, z, w };
     }
@@ -59,9 +64,9 @@ namespace Core
 
     inline Vec normalized(const Vec& vec)
     {
-        /// TODO: pref tests
+        /// TODO: perf tests
         double f = 1.0 / length(vec); // inv_sqrt_fast(vec);
-        return make_dir(f * vec.x, f * vec.y, f * vec.z, vec.w);
+        return make_vec(f * vec.x, f * vec.y, f * vec.z, vec.w);
     }
 
     inline void normalize(Vec& vec)
@@ -153,17 +158,17 @@ namespace Core
 
     inline Vec operator+(const Vec& v1, const Vec& v2)
     {
-        return make_pos(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w);
+        return make_vec(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w);
     }
 
     inline Vec operator-(const Vec& v1, const Vec& v2)
     {
-        return make_pos(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w);
+        return make_vec(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w);
     }
 
     inline Vec operator*(double val, const Vec& vec)
     {
-        return make_dir(val * vec.x, val * vec.y, val * vec.z, val * vec.w);
+        return make_vec(val * vec.x, val * vec.y, val * vec.z, val * vec.w);
     }
 
     inline Vec operator*(const Vec& vec, double val)
@@ -178,6 +183,6 @@ namespace Core
 
     inline Vec operator-(const Vec& vec)
     {
-        return make_dir(-vec.x, -vec.y, -vec.z, vec.w);
+        return make_vec(-vec.x, -vec.y, -vec.z, vec.w);
     }
 }

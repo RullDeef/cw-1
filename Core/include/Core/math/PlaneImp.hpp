@@ -29,8 +29,8 @@ namespace Core
 
         if (is_zero(norm))
         {
-            plane.position = make_pos();
-            plane.normal = make_dir();
+            plane.position = make_pos(0, 0, 0);
+            plane.normal = make_dir(0, 0, 0);
         }
         else
         {

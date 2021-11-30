@@ -34,7 +34,7 @@ SphereMeshBuilder& SphereMeshBuilder::setMeshDensity(int newVertsPerEdge)
     return *this;
 }
 
-static Vector cubeToSphereTransform(const Vector& v)
+static Vector cubeToSphereTransform(const Vector& v) noexcept
 {
     double xx = v.getX() * v.getX();
     double yy = v.getY() * v.getY();

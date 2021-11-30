@@ -297,9 +297,9 @@ Matrix Matrix::fpsModel(const Vector& eye, double pitch, double yaw)
     double cosYaw = std::cos(yaw);
     double sinYaw = std::sin(yaw);
 
-    Vector x_axis = Vector(cosYaw, 0, -sinYaw);
-    Vector y_axis = Vector(sinYaw * sinPitch, cosPitch, cosYaw * sinPitch);
-    Vector z_axis = Vector(sinYaw * cosPitch, -sinPitch, cosPitch * cosYaw);
+    Vector x_axis = Vector(cosYaw, 0, -sinYaw, 0);
+    Vector y_axis = Vector(sinYaw * sinPitch, cosPitch, cosYaw * sinPitch, 0);
+    Vector z_axis = Vector(sinYaw * cosPitch, -sinPitch, cosPitch * cosYaw, 0);
 
     Matrix res;
 
