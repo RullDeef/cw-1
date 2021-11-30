@@ -5,13 +5,17 @@
 #ifndef BASEMESHBUILDER_HPP
 #define BASEMESHBUILDER_HPP
 
+#include <memory>
 #include <vector>
 #include "Math/Vector.hpp"
 #include "Objects/Mesh.hpp"
 #include "Objects/Material.hpp"
+#include "Builders/IObjectBuilder.hpp"
+
+class IObject;
 
 
-class BaseMeshBuilder
+class BaseMeshBuilder : public IObjectBuilder
 {
     struct MBFace
     {
@@ -20,8 +24,6 @@ class BaseMeshBuilder
     };
 
 public:
-    virtual ~BaseMeshBuilder() = default;
-
     BaseMeshBuilder& pushPos(const Vector& pos);
     BaseMeshBuilder& pushNorm(const Vector& norm);
 
@@ -31,7 +33,15 @@ public:
 
     BaseMeshBuilder& useMaterial(const Material& mat);
 
-    virtual Mesh build();
+    BaseMeshBuilder& setId(size_t newId);
+    BaseMeshBuilder& setName(std::string newName);
+    BaseMeshBuilder& setPosition(const Vector& newPosition);
+    BaseMeshBuilder& setRotation(const Vector& newRotation);
+    BaseMeshBuilder& setScale(const Vector& newScale);
+
+    std::unique_ptr<IObject> build() override;
+
+    virtual Mesh buildMesh();
 
 private:
     Vector getPosAt(size_t index) const;
@@ -40,10 +50,14 @@ private:
 private:
     std::vector<Vector> vPoses;
     std::vector<Vector> vNorms;
-
+    std::vector<MBFace> faces;
     Material material;
 
-    std::vector<MBFace> faces;
+    size_t id;
+    std::string name;
+    Vector position = Vector(0, 0, 0, 1);
+    Vector rotation = Vector(0, 0, 0, 0);
+    Vector scale = Vector(1, 1, 1, 0);
 };
 
 #endif //BASEMESHBUILDER_HPP

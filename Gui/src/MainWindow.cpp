@@ -11,6 +11,8 @@
 #include <Builders/SceneBuidler.hpp>
 #include <Managers/PortManager.hpp>
 #include <Builders/MeshBuilders/SphereMeshBuilder.hpp>
+#include <Builders/DefaultIDGenerator.hpp>
+#include <Builders/NameGenerator.hpp>
 
 MainWindow::MainWindow()
 {
@@ -88,32 +90,33 @@ void MainWindow::loadObjectCommand()
 
 void MainWindow::addCameraCommand()
 {
-    auto camera = DefaultCameraBuilder().build();
+    auto camera = DefaultCameraBuilder()
+            .setId(DefaultIDGenerator().generate())
+            .setName(NameGenerator::globalName())
+            .build();
     factory->getSceneManager()->addObject(std::move(camera));
 }
 
 void MainWindow::addLightSourceCommand()
 {
-    auto light = AmbientLightBuilder().build();
+    auto light = AmbientLightBuilder()
+            .setId(DefaultIDGenerator().generate())
+            .setName(NameGenerator::globalName())
+            .build();
     factory->getSceneManager()->addObject(std::move(light));
 }
 
 void MainWindow::addSphereCommand()
 {
-    auto mesh = SphereMeshBuilder()
+    auto object = SphereMeshBuilder()
             .setRadius(100)
             .setMeshDensity(6)
             .setSmooth(true)
             .setColor(Color::cyan())
+            .setId(DefaultIDGenerator().generate())
+            .setName(NameGenerator::globalName())
             .build();
-    auto object = std::shared_ptr<IObject>(new ObjectAdapter<Mesh>(101020102, std::move(mesh)));
-
-    object->setPosition(Vector(0, 0, 0, 1));
-    object->setRotation(Vector(0, 0, 0, 0));
-    object->setScale(Vector(1, 1, 1, 0));
-    ///TODO: update object builders to return smart pointer to IObject
-
-    factory->getSceneManager()->addObject(object);
+    factory->getSceneManager()->addObject(std::move(object));
 }
 
 void MainWindow::saveRenderCommand()

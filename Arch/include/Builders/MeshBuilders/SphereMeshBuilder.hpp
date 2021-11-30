@@ -17,9 +17,9 @@ public:
     SphereMeshBuilder& setSmooth(bool smooth);
     SphereMeshBuilder& setMeshDensity(int newVertsPerEdge);
 
-    virtual Mesh build() override;
-
 protected:
+    Mesh buildMesh() override;
+
     using BaseMeshBuilder::pushPos;
     using BaseMeshBuilder::pushNorm;
     using BaseMeshBuilder::linkFace;

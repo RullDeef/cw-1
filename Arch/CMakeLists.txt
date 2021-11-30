@@ -45,6 +45,6 @@ add_library(Arch STATIC
         src/Math/Ray.cpp
         src/Math/Rect.cpp
         src/Math/Matrix.cpp
-        src/Math/Vector.cpp src/Threading/ThreadPool.cpp src/Managers/InfoManager.cpp src/Builders/LightBuilders/DirectionalLightBuilder.cpp src/Exporters/UdfExporter/UdfExporter.cpp src/Managers/PortManager.cpp src/Importers/UdfImporter/UdfImporter.cpp src/Builders/BaseMeshBuilder.cpp src/Builders/MeshBuilders/SphereMeshBuilder.cpp)
+        src/Math/Vector.cpp src/Threading/ThreadPool.cpp src/Managers/InfoManager.cpp src/Builders/LightBuilders/DirectionalLightBuilder.cpp src/Exporters/UdfExporter/UdfExporter.cpp src/Managers/PortManager.cpp src/Importers/UdfImporter/UdfImporter.cpp src/Builders/BaseMeshBuilder.cpp src/Builders/MeshBuilders/SphereMeshBuilder.cpp src/Builders/NameGenerator.cpp)
 
 link_libraries(Arch Core)

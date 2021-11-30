@@ -303,7 +303,7 @@ Mesh ObjLoader::constructMesh(const ObjObject &object, const std::vector<Vector>
         }
     }
 
-    return builder.build();
+    return builder.buildMesh();
 }
 
 Mesh constructMesh_old(const ObjObject &object, const std::vector<Vector> &positions,

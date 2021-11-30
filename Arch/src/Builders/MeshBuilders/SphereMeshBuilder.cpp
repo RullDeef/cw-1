@@ -47,7 +47,7 @@ static Vector cubeToSphereTransform(const Vector& v) noexcept
     return Vector(x, y, z, 0.0);
 }
 
-Mesh SphereMeshBuilder::build()
+Mesh SphereMeshBuilder::buildMesh()
 {
     Vector sides[] = {Vector( 1, 0, 0, 0), Vector(0,  1, 0, 0),
                       Vector(-1, 0, 0, 0), Vector(0, -1, 0, 0),
@@ -112,5 +112,5 @@ Mesh SphereMeshBuilder::build()
     material.setDiffuseColor(color);
     useMaterial(material);
 
-    return BaseMeshBuilder::build();
+    return BaseMeshBuilder::buildMesh();
 }

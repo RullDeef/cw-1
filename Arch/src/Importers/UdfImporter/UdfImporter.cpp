@@ -172,7 +172,7 @@ Mesh UdfImporter::importMesh(std::istream& stream)
 
 //    return Mesh(mesh);
 
-    return builder.build();
+    return builder.buildMesh();
 }
 
 Camera UdfImporter::importCamera(std::istream& stream)

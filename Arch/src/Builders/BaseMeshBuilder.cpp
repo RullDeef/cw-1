@@ -2,6 +2,8 @@
 // Created by rulldeef on 11/27/21.
 //
 
+#include "Objects/IObject.hpp"
+#include "Objects/ObjectAdapter.hpp"
 #include "Builders/BaseMeshBuilder.hpp"
 
 
@@ -47,7 +49,7 @@ BaseMeshBuilder &BaseMeshBuilder::useMaterial(const Material& mat)
     return *this;
 }
 
-Mesh BaseMeshBuilder::build()
+Mesh BaseMeshBuilder::buildMesh()
 {
     if (faces.empty())
         throw std::runtime_error("empty mesh"); ///TODO: errors handling
@@ -106,4 +108,55 @@ Vector BaseMeshBuilder::getNormAt(size_t index) const
         throw std::runtime_error("bad norm index");
 
     return vNorms.at(index);
+}
+
+BaseMeshBuilder &BaseMeshBuilder::setId(size_t newId)
+{
+    id = newId;
+    return *this;
+}
+
+BaseMeshBuilder &BaseMeshBuilder::setName(std::string newName)
+{
+    name = std::move(newName);
+    return *this;
+}
+
+BaseMeshBuilder &BaseMeshBuilder::setPosition(const Vector &newPosition)
+{
+    if (newPosition.getW() != 1.0)
+        throw std::runtime_error("bad position vector");
+
+    position = newPosition;
+    return *this;
+}
+
+BaseMeshBuilder &BaseMeshBuilder::setRotation(const Vector &newRotation)
+{
+    if (newRotation.getW() != 0.0)
+        throw std::runtime_error("bad rotation vector");
+
+    rotation = newRotation;
+    return *this;
+}
+
+BaseMeshBuilder &BaseMeshBuilder::setScale(const Vector &newScale)
+{
+    if (newScale.getW() != 0.0)
+        throw std::runtime_error("bad rotation vector");
+
+    scale = newScale;
+    return *this;
+}
+
+std::unique_ptr<IObject> BaseMeshBuilder::build()
+{
+    auto object = std::unique_ptr<IObject>(new ObjectAdapter<Mesh>(id, buildMesh()));
+
+    object->setName(name);
+    object->setPosition(position);
+    object->setRotation(rotation);
+    object->setScale(scale);
+
+    return object;
 }
