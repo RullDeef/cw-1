@@ -32,7 +32,7 @@ public:
     void setType(Light::Type newType);
 
 private:
-    Type type;
+    Type type = Core::LightType::Ambient;
 
     Color color = Color::white();
     Vector position = Vector(0, 0, 0, 1);

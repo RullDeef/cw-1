@@ -10,6 +10,8 @@ public:
     Matrix();
     Matrix(const Core::Mat& mat);
 
+    [[nodiscard]] inline double get(size_t row, size_t col) const { return data[row * 4 + col]; }
+
     static Matrix identity();
     static Matrix translate(double dx, double dy, double dz);
     static Matrix translate(const Vector& offset);

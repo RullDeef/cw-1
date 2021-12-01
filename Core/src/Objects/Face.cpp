@@ -270,9 +270,10 @@ StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const 
 
     for (size_t i = 0; i < projections.size; i++)
     {
-        Face clip_face = unproject_frustrum(projections.data[i], camera);
+        // c_face positioned in world
+        Face c_face = unproject_frustrum(projections.data[i], camera);
 
-        StatusCode result = renderClippedFace(renderTarget, zbuffer, mesh, clip_face, camera, lighting, colorComputeFn);
+        StatusCode result = renderClippedFace(renderTarget, zbuffer, mesh, c_face, camera, lighting, colorComputeFn);
         if (result != StatusCode::Success)
             return result;
     }
@@ -319,7 +320,8 @@ StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer,
 
     if (lighting == LightingModelType::Flat)
     {
-        flat_correction(regions, inverse(camera.model_mat) * mesh.model_mat * face); // TODO: check need of mult
+        // flat correction needs to be called on in-world-positioned face
+        flat_correction(regions, face); // TODO: check need of mult
 
         for (size_t i = 0; i < regions.size; i++)
         {

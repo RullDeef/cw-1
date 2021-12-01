@@ -7,7 +7,7 @@
 #include "MainWindow.hpp"
 #include <Builders/CameraBuilders/DefaultCameraBuilder.hpp>
 #include <Managers/SceneManager.hpp>
-#include <Builders/LightBuilders/AmbientLightBuilder.hpp>
+#include <Builders/LightBuilders/LightBuilder.hpp>
 #include <Builders/SceneBuidler.hpp>
 #include <Managers/PortManager.hpp>
 #include <Builders/MeshBuilders/SphereMeshBuilder.hpp>
@@ -47,7 +47,14 @@ MainWindow::MainWindow()
 
     setupActions();
 
+    // test scene construction
     createNewSceneCommand();
+    auto lightAmb = LightBuilder()
+            .setId(DefaultIDGenerator().generate())
+            .setName("Ambient light")
+            .build();
+    factory->getSceneManager()->addObject(std::move(lightAmb));
+
 }
 
 void MainWindow::setupActions()
@@ -99,7 +106,7 @@ void MainWindow::addCameraCommand()
 
 void MainWindow::addLightSourceCommand()
 {
-    auto light = AmbientLightBuilder()
+    auto light = LightBuilder()
             .setId(DefaultIDGenerator().generate())
             .setName(NameGenerator::globalName())
             .build();

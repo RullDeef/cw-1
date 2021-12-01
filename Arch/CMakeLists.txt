@@ -19,17 +19,23 @@ add_library(Arch STATIC
         src/Managers/SettingsManager.cpp
         src/Managers/SelectionManager.cpp
         src/Managers/LoadManager.cpp
+        src/Managers/PortManager.cpp
         src/Managers/RenderManager.cpp
         src/Managers/CameraManager.cpp
         src/Managers/SceneManager.cpp
         src/Managers/IManagerFactory.cpp
         src/Managers/IManager.cpp
+        src/Exporters/UdfExporter/UdfExporter.cpp
+        src/Importers/UdfImporter/UdfImporter.cpp
         src/Loaders/ObjLoader/ObjLoader.cpp
         src/Loaders/ObjLoader/ObjFace.cpp
         src/Builders/CameraBuilders/DefaultCameraBuilder.cpp
-        src/Builders/LightBuilders/AmbientLightBuilder.cpp
+        src/Builders/LightBuilders/LightBuilder.cpp
         src/Builders/SceneBuilder.cpp
         src/Builders/DefaultIDGenerator.cpp
+        src/Builders/BaseMeshBuilder.cpp
+        src/Builders/MeshBuilders/SphereMeshBuilder.cpp
+        src/Builders/NameGenerator.cpp
         src/Scene/Scene.cpp
         src/Objects/Adapters/MeshAdapter.cpp
         src/Objects/Adapters/CameraAdapter.cpp
@@ -45,6 +51,8 @@ add_library(Arch STATIC
         src/Math/Ray.cpp
         src/Math/Rect.cpp
         src/Math/Matrix.cpp
-        src/Math/Vector.cpp src/Threading/ThreadPool.cpp src/Managers/InfoManager.cpp src/Builders/LightBuilders/DirectionalLightBuilder.cpp src/Exporters/UdfExporter/UdfExporter.cpp src/Managers/PortManager.cpp src/Importers/UdfImporter/UdfImporter.cpp src/Builders/BaseMeshBuilder.cpp src/Builders/MeshBuilders/SphereMeshBuilder.cpp src/Builders/NameGenerator.cpp)
+        src/Math/Vector.cpp
+        src/Threading/ThreadPool.cpp
+        src/Managers/InfoManager.cpp)
 
 link_libraries(Arch Core)

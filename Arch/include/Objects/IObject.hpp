@@ -30,6 +30,10 @@ public:
     [[nodiscard]] Matrix getTransform() const;
 
     void setPosition(const Vector& value);
+
+    /**
+     * Rotation always goes in degrees, not radians!
+     */
     void setRotation(const Vector& value);
     void setScale(const Vector& value);
 

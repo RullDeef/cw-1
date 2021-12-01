@@ -1,7 +1,6 @@
 #include <utility>
 #include <Builders/CameraBuilders/DefaultCameraBuilder.hpp>
-#include <Builders/LightBuilders/AmbientLightBuilder.hpp>
-#include <Builders/LightBuilders/DirectionalLightBuilder.hpp>
+#include <Builders/LightBuilders/LightBuilder.hpp>
 #include "Objects/IObject.hpp"
 #include "Loaders/ILoader.hpp"
 #include "Managers/IManagerFactory.hpp"
@@ -33,17 +32,21 @@ void LoadManager::loadEmptyScene()
     std::shared_ptr<IObject> woof = loader->loadMesh("/home/rulldeef/Projects/cw-1/Models/Wolf.obj");
     sceneManager->addObject(woof);
 
-    std::shared_ptr<IObject> light = AmbientLightBuilder().build();
+    std::shared_ptr<IObject> light = LightBuilder().build();
     getFactory().getSceneManager()->addObject(light);
 
-    light = DirectionalLightBuilder()
+    light = LightBuilder()
+            .setType(Light::Type::Directional)
             .setColor(Color::magenta())
+            .setIntensity(0.8)
             .setDirection(Vector(-4, -2, -3, 0))
             .build();
     getFactory().getSceneManager()->addObject(light);
 
-    light = DirectionalLightBuilder()
+    light = LightBuilder()
+            .setType(Light::Type::Directional)
             .setColor(Color::cyan())
+            .setIntensity(0.8)
             .setDirection(Vector(-1, -2, -3, 0))
             .build();
     getFactory().getSceneManager()->addObject(light);
@@ -105,7 +108,7 @@ void LoadManager::buildCamera()
 
 void LoadManager::buildLight()
 {
-    std::shared_ptr<IObject> object = AmbientLightBuilder().build();
+    std::shared_ptr<IObject> object = LightBuilder().build();
 
     getFactory().getSceneManager()->addObject(object);
 

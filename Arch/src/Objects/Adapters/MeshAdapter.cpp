@@ -8,9 +8,7 @@ ObjectAdapter<Mesh>::ObjectAdapter(size_t id, Mesh mesh)
 {
 }
 
-ObjectAdapter<Mesh>::~ObjectAdapter()
-{
-}
+ObjectAdapter<Mesh>::~ObjectAdapter() = default;
 
 Mesh& ObjectAdapter<Mesh>::getAdaptee()
 {

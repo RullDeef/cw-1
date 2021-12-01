@@ -91,6 +91,10 @@ static void renderTestCube(RenderTarget& renderTarget, Camera& camera)
 
 ColorComputeFn makeColorComputator(Camera camera, vect_t<Light> lights)
 {
+    /**
+     * position - real point position in world coordinate system
+     * normal - real, not rotated normal vector to mesh surface in given point
+     */
     return [camera, lights](const Vec& position, const Vec& normal, const Material& material) -> Color
     {
         Vec view = normalized(position - camera.eye);

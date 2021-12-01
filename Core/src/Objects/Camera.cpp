@@ -87,6 +87,7 @@ Vec Core::viewport_adjust(const Camera& camera, const Vec& pos)
     return res;
 }
 
+///TODO: get rid of 'unproject'-like functions. Use original not projected object instead?
 Vec Core::unproject_frustrum(const Camera& camera, const Vec& pos)
 {
     return inverse(camera.mvp) * pos;
