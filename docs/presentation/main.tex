@@ -1,0 +1,69 @@
+% Последняя обновленная версия доступна
+% https://github.com/GrigorySadovskiyxyz/bmstu-beamer
+
+% Preambule
+
+\documentclass[aspectratio=169]{beamer} % 16:9 aspect ratio
+\usepackage[utf8]{inputenc} % utf8 package
+\usepackage[english,russian]{babel} % Added Russian and English
+\usepackage{textpos} % package for the positioning
+\usepackage{xcolor} % package for the colors
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+\usepackage{biblatex}
+%\usefonttheme{professionalfonts}
+%\addbibresource{citations.bib}
+
+
+%Using a defailt outer theme to begin with and remove the navigation symbols
+\useoutertheme[subsection=false]{smoothbars}
+\setbeamertemplate{navigation symbols}{}
+
+
+\setbeamercovered{transparent}
+
+% Лого в нижнем углу
+% \logo{\includegraphics[height=0.8cm]{images/logo-IBM6-square-blue.png}}
+
+
+% Position the logo (top right corner)
+\addtobeamertemplate{frametitle}{}{%
+\begin{textblock*}{100mm}(\textwidth,-1,2cm)
+\includegraphics[height=1cm,width=1cm,keepaspectratio]{images/logo-IBM6-square-blue.png}
+\end{textblock*}}
+
+
+% Начало презентации
+
+\begin{document}
+
+% Титульная страница
+\title{Презентация курсовой работы}
+%\subtitle{}
+\author{Клименко А.К.}
+\institute{Каф. ИУ-7 МГТУ им. Н.Э. Баумана}
+
+
+\date{\today}
+\subject{Компьютерная графика}
+\keywords{один, два, три}
+    
+\begin{frame}{}
+\titlepage
+\end{frame}
+
+\begin{frame}[c]{First Slide}
+    This is the text of our second Slide \texttt{beamer}
+\end{frame}
+
+\begin{frame}{Second Slide}
+    This is the text of our second Slide
+\end{frame}
+
+
+\begin{frame}{Третий слайд}
+    This is the text of our second Slide
+\end{frame}
+
+
+\end{document}
