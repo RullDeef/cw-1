@@ -210,7 +210,8 @@ Light UdfImporter::importLight(std::istream& stream)
         light.setType(Light::Type::Ambient);
     else if (line == "directional")
         light.setType(Light::Type::Directional);
-    ///TODO: add support for point light
+    else if (line == "point")
+        light.setType(Light::Type::Point);
 
     std::getline(stream, line);
     light.setColor(readVector(line, 1.0));
@@ -218,6 +219,13 @@ Light UdfImporter::importLight(std::istream& stream)
     std::getline(stream, line);
     double intensity = strtod(line.c_str(), nullptr);
     light.setIntensity(intensity);
+
+    std::getline(stream, line);
+    light.setAttenuation(readVector(line, 0.0));
+
+    std::getline(stream, line);
+    double radius = strtod(line.c_str(), nullptr);
+    light.setRadius(radius);
 
     std::getline(stream, line);
     if (line != "EL")

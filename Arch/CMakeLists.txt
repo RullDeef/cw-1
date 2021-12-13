@@ -53,6 +53,9 @@ add_library(Arch STATIC
         src/Math/Matrix.cpp
         src/Math/Vector.cpp
         src/Threading/ThreadPool.cpp
-        src/Managers/InfoManager.cpp)
+        src/Managers/InfoManager.cpp
+        src/Builders/MeshBuilders/TorusMeshBuilder.cpp
+        src/Builders/MeshBuilders/CylinderMeshBuilder.cpp
+        src/Builders/MeshBuilders/ConeMeshBuilder.cpp)
 
 link_libraries(Arch Core)

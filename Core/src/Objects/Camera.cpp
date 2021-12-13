@@ -101,7 +101,7 @@ Vec Core::project_point(const Camera& camera, const Vec& pos)
 
 Ray Core::shoot_ray(const Camera& camera, float x, float y)
 {
-    double z = 1.0 / std::tan(camera.fov / 2);
+    double z = -1.0 / std::tan(camera.fov / 2);
 
     Vec dir = outer_quad(camera.viewport, x, y);
     dir.z = z;

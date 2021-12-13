@@ -26,15 +26,18 @@ namespace Core
 
         Vec position;
         Vec direction;
+
+        /* for point light */
+        Vec attenuation;
+        double radius;
     };
 
     using ColorComputeFn = std::function<Color(const Vec& pos, const Vec& norm, const Material& mat)>;
 
-    Light make_ambient_light();
-
-    Light make_directional_light();
-    Light make_directional_light(Color color, Vec direction);
-
+    ///TODO: use this functions!!!
+    Light make_ambient_light(Color color, double intensity);
+    Light make_directional_light(Color color, double intensity, Vec direction);
+    Light make_point_light(Color color, double intensity, Vec position, Vec attenuation, double radius);
 }
 
 #endif // LIGHT_HPP

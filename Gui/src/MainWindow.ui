@@ -49,6 +49,9 @@
      <addaction name="addLightSource"/>
      <addaction name="separator"/>
      <addaction name="addSphere"/>
+     <addaction name="addTorus"/>
+     <addaction name="addCylinder"/>
+     <addaction name="addCone"/>
     </widget>
     <addaction name="loadObject"/>
     <addaction name="menu"/>
@@ -168,6 +171,21 @@
   <action name="addSphere">
    <property name="text">
     <string>Сферу</string>
+   </property>
+  </action>
+  <action name="addTorus">
+   <property name="text">
+    <string>Тороид</string>
+   </property>
+  </action>
+  <action name="addCylinder">
+   <property name="text">
+    <string>Цилиндр</string>
+   </property>
+  </action>
+  <action name="addCone">
+   <property name="text">
+    <string>Конус</string>
    </property>
   </action>
  </widget>

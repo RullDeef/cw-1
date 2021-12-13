@@ -57,9 +57,10 @@ namespace Core
 
     StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
     StatusCode renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const RectF& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
-    StatusCode renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn);
+    StatusCode
+    renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera,
+                      LightingModelType lighting, ColorComputeFn colorComputeFn);
 
-    StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Color color);
     StatusCode renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Pixel color);
 }
 

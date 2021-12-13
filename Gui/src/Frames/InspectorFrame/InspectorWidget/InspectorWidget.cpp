@@ -75,6 +75,8 @@ void InspectorWidget::inspect(ObjectAdapter<Light>& object)
     ui->lightTypeComboBox->setCurrentIndex((int)light.getType());
     ui->lightColorEdit->setValue(light.getColor());
     ui->intensitySpinBox->setValue(light.getIntensity());
+    ui->attenuationLightEdit->setValue(light.getAttenuation());
+    ui->radiusSpinBox->setValue(light.getRadius());
 }
 
 void InspectorWidget::renameObject()
@@ -132,6 +134,8 @@ void InspectorWidget::applyLight()
             light.setType((Light::Type)ui->lightTypeComboBox->currentIndex());
             light.setColor(ui->lightColorEdit->getValue());
             light.setIntensity(ui->intensitySpinBox->value());
+            light.setAttenuation(ui->attenuationLightEdit->getValue());
+            light.setRadius(ui->radiusSpinBox->value());
 
             emit objectChangedSignal();
         }

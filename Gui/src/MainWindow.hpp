@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
-    ~MainWindow() = default;
+    ~MainWindow() override = default;
 
 protected slots:
     void createNewSceneCommand();
@@ -27,6 +27,9 @@ protected slots:
     void addCameraCommand();
     void addLightSourceCommand();
     void addSphereCommand();
+    void addTorusCommand();
+    void addCylinderCommand();
+    void addConeCommand();
 
     void saveRenderCommand();
 

@@ -2,7 +2,7 @@
 
 
 Light::Light(const Core::Light &light) : color(light.color), intensity(light.intensity),
-        position(light.position), direction(light.direction), type(light.type)
+    position(light.position), direction(light.direction), attenuation(light.attenuation), type(light.type)
 {}
 
 Light::operator Core::Light() const
@@ -13,6 +13,8 @@ Light::operator Core::Light() const
     res.intensity = intensity;
     res.position = position;
     res.direction = direction;
+    res.attenuation = attenuation;
+    res.radius = radius;
     res.type = type;
 
     return res;
@@ -38,6 +40,16 @@ const Color &Light::getColor() const
     return color;
 }
 
+const Vector& Light::getAttenuation() const
+{
+    return attenuation;
+}
+
+double Light::getRadius() const
+{
+    return radius;
+}
+
 Light::Type Light::getType() const
 {
     return type;
@@ -61,6 +73,18 @@ void Light::setDirection(const Vector &newDirection)
 void Light::setColor(const Color &newColor)
 {
     color = newColor;
+}
+
+void Light::setAttenuation(const Vector &newAttenuation)
+{
+    attenuation = newAttenuation;
+}
+
+void Light::setRadius(double newRadius)
+{
+    if (newRadius <= 0.0)
+        throw std::runtime_error("bad radius"); ///TODO: add other validations
+    radius = newRadius;
 }
 
 void Light::setType(Light::Type newType)

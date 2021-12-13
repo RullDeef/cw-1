@@ -13,6 +13,9 @@
 #include <Builders/MeshBuilders/SphereMeshBuilder.hpp>
 #include <Builders/DefaultIDGenerator.hpp>
 #include <Builders/NameGenerator.hpp>
+#include <Builders/MeshBuilders/TorusMeshBuilder.hpp>
+#include <Builders/MeshBuilders/CylinderMeshBuilder.hpp>
+#include <Builders/MeshBuilders/ConeMeshBuilder.hpp>
 
 MainWindow::MainWindow()
 {
@@ -49,12 +52,46 @@ MainWindow::MainWindow()
 
     // test scene construction
     createNewSceneCommand();
-    auto lightAmb = LightBuilder()
+
+    factory->getSceneManager()->addObject(
+        LightBuilder()
             .setId(DefaultIDGenerator().generate())
             .setName("Ambient light")
-            .build();
-    factory->getSceneManager()->addObject(std::move(lightAmb));
+            .build()
+    );
 
+    factory->getSceneManager()->addObject(
+        LightBuilder()
+            .setType(Light::Type::Directional)
+            .setIntensity(0.7)
+            .setId(DefaultIDGenerator().generate())
+            .setName("Directional light")
+            .build()
+    );
+
+//    factory->getSceneManager()->addObject(
+//        CylinderMeshBuilder()
+//            .setRadius(50)
+//            .setHeight(100)
+//            .setMeshDensity(32)
+//            .setSmooth(true)
+//            .setColor(Color::yellow())
+//            .setId(DefaultIDGenerator().generate())
+//            .setName("Test Cylinder")
+//            .build()
+//    );
+
+    factory->getSceneManager()->addObject(
+    ConeMeshBuilder()
+            .setRadius(40)
+            .setHeight(100)
+            .setMeshDensity(32)
+            .setSmooth(true)
+            .setColor(Color::green())
+            .setId(DefaultIDGenerator().generate())
+            .setName("Test Cone")
+            .build()
+    );
 }
 
 void MainWindow::setupActions()
@@ -67,6 +104,9 @@ void MainWindow::setupActions()
     connect(ui.addCamera, &QAction::triggered, this, &MainWindow::addCameraCommand);
     connect(ui.addLightSource, &QAction::triggered, this, &MainWindow::addLightSourceCommand);
     connect(ui.addSphere, &QAction::triggered, this, &MainWindow::addSphereCommand);
+    connect(ui.addTorus, &QAction::triggered, this, &MainWindow::addTorusCommand);
+    connect(ui.addCylinder, &QAction::triggered, this, &MainWindow::addCylinderCommand);
+    connect(ui.addCone, &QAction::triggered, this, &MainWindow::addConeCommand);
 
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
 
@@ -120,6 +160,48 @@ void MainWindow::addSphereCommand()
             .setMeshDensity(6)
             .setSmooth(true)
             .setColor(Color::cyan())
+            .setId(DefaultIDGenerator().generate())
+            .setName(NameGenerator::globalName())
+            .build();
+    factory->getSceneManager()->addObject(std::move(object));
+}
+
+void MainWindow::addTorusCommand()
+{
+    auto object = TorusMeshBuilder()
+            .setOuterRadius(100)
+            .setInnerRadius(15)
+            .setMeshDensity(96, 32)
+            .setSmooth(true)
+            .setColor(Color::magenta())
+            .setId(DefaultIDGenerator().generate())
+            .setName(NameGenerator::globalName())
+            .build();
+    factory->getSceneManager()->addObject(std::move(object));
+}
+
+void MainWindow::addCylinderCommand()
+{
+    auto object = CylinderMeshBuilder()
+            .setRadius(50)
+            .setHeight(100)
+            .setMeshDensity(32)
+            .setSmooth(true)
+            .setColor(Color::yellow())
+            .setId(DefaultIDGenerator().generate())
+            .setName(NameGenerator::globalName())
+            .build();
+    factory->getSceneManager()->addObject(std::move(object));
+}
+
+void MainWindow::addConeCommand()
+{
+    auto object = ConeMeshBuilder()
+            .setRadius(40)
+            .setHeight(100)
+            .setMeshDensity(32)
+            .setSmooth(true)
+            .setColor(Color::green())
             .setId(DefaultIDGenerator().generate())
             .setName(NameGenerator::globalName())
             .build();

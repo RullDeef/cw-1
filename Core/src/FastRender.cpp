@@ -13,17 +13,17 @@ static void renderTestCube(RenderTarget& renderTarget, Camera& camera);
 StatusCode Core::fastRenderScene(RenderParams renderParams)
 {
     ZBuffer zbuffer = make_zbuffer(renderParams.renderTarget.width, renderParams.renderTarget.height);
-    fill(zbuffer, 1000000);
+    fill(zbuffer, std::numeric_limits<double>::max());
 
     fill(renderParams.renderTarget, to_pixel(Colors::black));
 
-    ColorComputeFn colorComputor =
+    ColorComputeFn colorComputator =
             // makeShadedColorComputator(renderParams.scene, renderParams.camera);
             makeColorComputator(renderParams.camera, renderParams.scene.lightList);
 
     for (list_node<Mesh>* node = renderParams.scene.meshList.head; node; node = node->next)
         if (node->value.visible)
-            renderMesh(renderParams.renderTarget, zbuffer, node->value, renderParams.camera, renderParams.sceneLightingModel, renderParams.faceCullingType, colorComputor);
+            renderMesh(renderParams.renderTarget, zbuffer, node->value, renderParams.camera, renderParams.sceneLightingModel, renderParams.faceCullingType, colorComputator);
 
     // renderTestCube(renderParams.renderTarget, renderParams.camera);
 
@@ -98,7 +98,7 @@ ColorComputeFn makeColorComputator(Camera camera, vect_t<Light> lights)
     return [camera, lights](const Vec& position, const Vec& normal, const Material& material) -> Color
     {
         Vec view = normalized(position - camera.eye);
-        return compute_color(material, lights, view, normal);
+        return compute_color(material, lights, position, view, normal);
     };
 }
 

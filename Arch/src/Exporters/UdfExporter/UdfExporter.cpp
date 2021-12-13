@@ -116,12 +116,14 @@ void UdfExporter::exportLight(std::ostream &stream, const Light& light)
         case Core::LightType::Directional:
             stream << "directional\n";
             break;
-            ///TODO: defer support for point light
-        default:
+        case Core::LightType::Point:
+            stream << "point\n";
             break;
     }
 
     stream << (Vector)light.getColor() << std::endl;
     stream << light.getIntensity() << std::endl;
+    stream << light.getAttenuation() << std::endl;
+    stream << light.getRadius() << std::endl;
     stream << "EL\n";
 }

@@ -90,7 +90,7 @@ void Camera::rotate(double dPitch, double dYaw)
 
 Ray Camera::createRay(double x, double y, const Rect& viewport) const
 {
-    double z = 1.0 / std::tan(fov / 2);
+    double z = -1.0 / std::tan(fov / 2);
     auto dir = Vector(x, y, z, 0.0).normalized();
 
     dir = getModelMatrix() * dir;

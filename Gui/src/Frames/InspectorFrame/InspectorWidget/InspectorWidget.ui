@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>475</width>
-    <height>895</height>
+    <width>267</width>
+    <height>842</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -315,6 +315,9 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="ColorEditWidget" name="lightColorEdit" native="true"/>
+      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_37">
         <property name="text">
@@ -338,7 +341,40 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_38">
+        <property name="text">
+         <string>Attenuation</string>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="1">
+       <widget class="VectorEditWidget" name="attenuationLightEdit" native="true"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_39">
+        <property name="text">
+         <string>Radius</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QDoubleSpinBox" name="radiusSpinBox">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="maximum">
+         <double>1000000.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout_12">
         <item>
          <spacer name="horizontalSpacer_3">
@@ -361,9 +397,6 @@
          </widget>
         </item>
        </layout>
-      </item>
-      <item row="1" column="1">
-       <widget class="ColorEditWidget" name="lightColorEdit" native="true"/>
       </item>
      </layout>
     </widget>

@@ -270,8 +270,9 @@ StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const 
 
     for (size_t i = 0; i < projections.size; i++)
     {
-        // c_face positioned in world
-        Face c_face = unproject_frustrum(projections.data[i], camera);
+        Face c_proj;
+        get(projections, i, c_proj);
+        Face c_face = unproject_frustrum(c_proj, camera); // positioned in world
 
         StatusCode result = renderClippedFace(renderTarget, zbuffer, mesh, c_face, camera, lighting, colorComputeFn);
         if (result != StatusCode::Success)
@@ -281,47 +282,51 @@ StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const 
     return StatusCode::Success;
 }
 
-StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const RectF& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
-{
-    double x_aspect = get_x_aspect(camera.viewport);
-    double y_aspect = get_y_aspect(camera.viewport);
+//StatusCode Core::renderFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const RectF& renderViewport, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
+//{
+//    double x_aspect = get_x_aspect(camera.viewport);
+//    double y_aspect = get_y_aspect(camera.viewport);
+//
+//    double dx = renderViewport.left + renderViewport.width / 2.0 - camera.viewport.left - camera.viewport.width / 2.0;
+//    double dy = renderViewport.top + renderViewport.height / 2.0 - camera.viewport.top - camera.viewport.height / 2.0;
+//
+//    double left = (dx - renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
+//    double right = (dx + renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
+//
+//    double top = (dy - renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
+//    double bottom = (dy + renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
+//
+//    Face projection = project_frustrum(face, camera);
+//    auto projections = clip_face(projection, x_aspect, y_aspect, left, right, top, bottom);
+//
+//    for (size_t i = 0; i < projections.size; i++)
+//    {
+//        Face clip_face = unproject_frustrum(projections.data[i], camera);
+//
+//        StatusCode result = renderClippedFace(renderTarget, zbuffer, mesh, clip_face, camera, lighting, colorComputeFn);
+//        if (result != StatusCode::Success)
+//            return result;
+//    }
+//
+//    return StatusCode::Success;
+//}
 
-    double dx = renderViewport.left + renderViewport.width / 2.0 - camera.viewport.left - camera.viewport.width / 2.0;
-    double dy = renderViewport.top + renderViewport.height / 2.0 - camera.viewport.top - camera.viewport.height / 2.0;
-
-    double left = (dx - renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
-    double right = (dx + renderViewport.width / 2.0) / (camera.viewport.width / 2.0);
-
-    double top = (dy - renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
-    double bottom = (dy + renderViewport.height / 2.0) / (camera.viewport.height / 2.0);
-
-    Face projection = project_frustrum(face, camera);
-    auto projections = clip_face(projection, x_aspect, y_aspect, left, right, top, bottom);
-
-    for (size_t i = 0; i < projections.size; i++)
-    {
-        Face clip_face = unproject_frustrum(projections.data[i], camera);
-
-        StatusCode result = renderClippedFace(renderTarget, zbuffer, mesh, clip_face, camera, lighting, colorComputeFn);
-        if (result != StatusCode::Success)
-            return result;
-    }
-
-    return StatusCode::Success;
-}
-
-StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera, LightingModelType lighting, ColorComputeFn colorComputeFn)
+StatusCode
+Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh &mesh, Face face, const Camera &camera,
+                        LightingModelType lighting, ColorComputeFn colorComputeFn)
 {
     StatusCode result = StatusCode::Success;
     Face projection = project(face, camera);
-    auto regions = make_render_regions(mesh, inverse(camera.model_mat) * mesh.model_mat * face, projection);
+    auto regions = make_render_regions(mesh,
+           //inverse(camera.model_mat) * mesh.model_mat *
+        face, projection);
 
     lock(renderTarget);
 
     if (lighting == LightingModelType::Flat)
     {
         // flat correction needs to be called on in-world-positioned face
-        flat_correction(regions, face); // TODO: check need of mult
+        flat_correction(regions, face);
 
         for (size_t i = 0; i < regions.size; i++)
         {
@@ -353,11 +358,6 @@ StatusCode Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer,
 
     unlock(renderTarget);
     return result;
-}
-
-StatusCode Core::renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Color color)
-{
-    return renderWireframeFace(renderTarget, face, camera, to_pixel(color));
 }
 
 StatusCode Core::renderWireframeFace(RenderTarget& renderTarget, Face face, const Camera& camera, Pixel color)

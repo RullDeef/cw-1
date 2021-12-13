@@ -139,25 +139,25 @@ StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const 
     return StatusCode::Success;
 }
 
-StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const RectF& renderViewport, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn)
-{
-    recalc_mvp(camera, mesh.model_mat);
-
-    for (size_t i = 0; i < mesh.faces.size; i++)
-    {
-        const Face* face;
-        at(mesh.faces, i, face);
-
-        if (!culling(*face, camera, renderViewport, cullingType))
-        {
-            StatusCode result = renderFace(renderTarget, zbuffer, renderViewport, mesh, *face, camera, lighting, colorComputeFn);
-            if (result != StatusCode::Success)
-                return result;
-        }
-    }
-
-    return StatusCode::Success;
-}
+//StatusCode Core::renderMesh(RenderTarget& renderTarget, ZBuffer& zbuffer, const RectF& renderViewport, const Mesh& mesh, Camera& camera, LightingModelType lighting, FaceCullingType cullingType, ColorComputeFn colorComputeFn)
+//{
+//    recalc_mvp(camera, mesh.model_mat);
+//
+//    for (size_t i = 0; i < mesh.faces.size; i++)
+//    {
+//        const Face* face;
+//        at(mesh.faces, i, face);
+//
+//        if (!culling(*face, camera, renderViewport, cullingType))
+//        {
+//            StatusCode result = renderFace(renderTarget, zbuffer, renderViewport, mesh, *face, camera, lighting, colorComputeFn);
+//            if (result != StatusCode::Success)
+//                return result;
+//        }
+//    }
+//
+//    return StatusCode::Success;
+//}
 
 StatusCode Core::renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mesh, Camera& camera, Color color, FaceCullingType cullingType)
 {
@@ -170,12 +170,12 @@ StatusCode Core::renderWireframeMesh(RenderTarget& renderTarget, const Mesh& mes
 
     for (size_t i = 0; i < mesh.faces.size; i++)
     {
-        const Face* face;
-        at(mesh.faces, i, face);
-
-        if (!culling(*face, camera, cullingType))
+        Face face;
+        if (!get(mesh.faces, i, face))
+            return StatusCode::MemoryError;
+        else if (!culling(face, camera, cullingType))
         {
-            StatusCode result = renderWireframeFace(renderTarget, *face, camera, color);
+            StatusCode result = renderWireframeFace(renderTarget, face, camera, color);
             if (result != StatusCode::Success)
                 return result;
         }

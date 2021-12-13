@@ -1,4 +1,4 @@
-#include <Core/math/Ray.hpp>
+#include "Core/math/Ray.hpp"
 #include "Core/math/Mat.hpp"
 #include "Core/Objects/Material.hpp"
 #include "Core/Scene/Scene.hpp"
@@ -44,6 +44,44 @@ Color Core::compute_color(const Material& material, const vect_t<Light>& lights,
                 Rm_V = std::pow(Rm_V, material.specularHighlight);
 
                 color += light.intensity * material.diffuseColor * light.color * (Lm_N + Rm_V);
+            }
+        }
+    }
+
+    return color;
+}
+
+// handles point lights as well
+Color Core::compute_color(const Material& material, const vect_t<Light>& lights, const Vec& pos, const Vec& view, const Vec& normal)
+{
+    Color color = Colors::black;
+
+    for (size_t i = 0; i < lights.size; i++)
+    {
+        Light light{};
+        if (get(lights, i, light))
+        {
+            if (light.type == LightType::Ambient)
+            {
+                color += light.intensity * light.color * material.ambientColor;
+            }
+            else if (light.type == LightType::Directional)
+            {
+                Vec dir = light.direction;
+                Vec Rm = 2 * dot(-dir, normal) * normal + dir;
+
+                double Lm_N = std::max(0.0, dot(-dir, normal));
+                double Rm_V = std::max(0.0, dot(Rm, -view));
+                Rm_V = std::pow(Rm_V, material.specularHighlight);
+
+                color += light.intensity * material.diffuseColor * light.color * (Lm_N + Rm_V);
+            }
+            else // type == LightType::Point
+            {
+                double dis = length(light.position - pos) / light.radius;
+                double attenuation = light.attenuation.x + light.attenuation.y * dis + light.attenuation.z * dis * dis;
+
+                color += light.intensity / attenuation * light.color * material.ambientColor;
             }
         }
     }
