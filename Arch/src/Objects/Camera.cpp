@@ -18,6 +18,21 @@ Camera::operator Core::Camera() const
     return cam;
 }
 
+double Camera::getFov() const
+{
+    return fov;
+}
+
+double Camera::getNear() const
+{
+    return near;
+}
+
+double Camera::getFar() const
+{
+    return far;
+}
+
 Vector Camera::getPosition() const
 {
     return eye;
@@ -53,6 +68,21 @@ Matrix Camera::getProjectionMatrix() const
 Matrix Camera::getViewProjectionMatrix() const
 {
     return getProjectionMatrix() * getViewMatrix();
+}
+
+void Camera::setFov(double newFov)
+{
+    fov = newFov; ///TODO: perform checks
+}
+
+void Camera::setNear(double newNear)
+{
+    near = newNear; ///TODO: perform checks
+}
+
+void Camera::setFar(double newFar)
+{
+    far = newFar; ///TODO: perform checks
 }
 
 void Camera::setPosition(const Vector& newPosition)

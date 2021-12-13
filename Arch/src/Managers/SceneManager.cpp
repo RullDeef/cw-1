@@ -2,12 +2,13 @@
 #include <algorithm>
 #include <stdexcept>
 #include <Builders/SceneBuidler.hpp>
-#include <Objects/Mesh.hpp>
-#include <Builders/BaseMeshBuilder.hpp>
 #include <Objects/ObjectAdapter.hpp>
+#include <Builders/DefaultIDGenerator.hpp>
+#include "Builders/CameraBuilders/DefaultCameraBuilder.hpp"
 #include "Managers/IManagerFactory.hpp"
 #include "Managers/RenderManager.hpp"
 #include "Managers/SceneManager.hpp"
+#include "Managers/CameraManager.hpp"
 
 
 SceneManager::SceneManager(IManagerFactory& factory)
@@ -18,24 +19,14 @@ SceneManager::SceneManager(IManagerFactory& factory)
 void SceneManager::createEmptyScene()
 {
     std::shared_ptr<Scene> scene = SceneBuilder().prepare().build();
+
+    scene->insert(scene->end(), DefaultCameraBuilder()
+        .setId(DefaultIDGenerator().generate())
+        .setName("Main Camera")
+        .build());
+
     addScene(scene);
     setActiveScene(scene);
-
-    // testing axes rendering
-//    auto mesh = BaseMeshBuilder()
-//            .pushPos(Vector(0, 0, 0, 1))
-//            .pushPos(Vector(10, 0, 0, 1))
-//            .pushPos(Vector(10, 1, 0, 1))
-//            .linkFace(0, 1, 2)
-//            .pushPos(Vector(0, 20, 0, 1))
-//            .pushPos(Vector(0, 20, 2, 1))
-//            .linkFace(0, 3, 4)
-//            .pushPos(Vector(0, 0, 30, 1))
-//            .pushPos(Vector(3, 0, 30, 1))
-//            .linkFace(0, 5, 6)
-//            .build();
-//    auto adapter = std::shared_ptr<IObject>(new ObjectAdapter<Mesh>(100, std::move(mesh)));
-//    addObject(adapter);
 }
 
 void SceneManager::addScene(const std::shared_ptr<Scene>& scene)
@@ -117,6 +108,7 @@ void SceneManager::onBeforeRemoveScene(std::shared_ptr<Scene> scene)
 
 void SceneManager::onActiveSceneChange(std::shared_ptr<Scene> scene)
 {
+    getFactory().getCameraManager()->switchToFirstCamera();
     getFactory().getRenderManager()->renderActiveScene();
 }
 
@@ -127,6 +119,13 @@ void SceneManager::onAddObject(std::shared_ptr<IObject> object)
 
 void SceneManager::onBeforeRemoveObject(std::shared_ptr<IObject> object)
 {
+    if (auto adapter = dynamic_cast<ObjectAdapter<Camera>*>(object.get()))
+    {
+        auto cameraManager = getFactory().getCameraManager();
+        if (&adapter->getAdaptee() == &cameraManager->getActiveCamera())
+            cameraManager->switchToSelectedCamera();
+    }
+
     getFactory().getRenderManager()->renderActiveScene();
 }
 

@@ -16,13 +16,22 @@ public:
 
     operator Core::Camera() const;
 
+    [[nodiscard]] double getFov() const;
+    [[nodiscard]] double getNear() const;
+    [[nodiscard]] double getFar() const;
+
     [[nodiscard]] Vector getPosition() const;
     [[nodiscard]] double getPitch() const;
     [[nodiscard]] double getYaw() const;
+
     [[nodiscard]] Matrix getModelMatrix() const;
     [[nodiscard]] Matrix getViewMatrix() const;
     [[nodiscard]] Matrix getProjectionMatrix() const;
     [[nodiscard]] Matrix getViewProjectionMatrix() const;
+
+    void setFov(double newFov);
+    void setNear(double newNear);
+    void setFar(double newFar);
 
     void setPosition(const Vector& newPosition);
     void setPitch(double newPitch);

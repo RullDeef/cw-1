@@ -12,6 +12,9 @@ class CameraManager : public IManager
 public:
     explicit CameraManager(IManagerFactory& factory);
 
+    void switchToFirstCamera();
+    void switchToSelectedCamera();
+
     Camera& getActiveCamera();
 
     // translates camera along view plane
@@ -32,7 +35,9 @@ protected:
     virtual void onCameraChange(Camera& camera);
 
 private:
-    Camera mainCamera;
+    Camera defaultCamera;
+
+    std::shared_ptr<IObject> cameraObject;
 };
 
 #endif // CAMERAMANAGER_HPP

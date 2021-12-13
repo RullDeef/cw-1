@@ -11,6 +11,7 @@ InspectorWidget::InspectorWidget(QWidget *parent) : QWidget(parent), ui(new Ui::
     connect(ui->applyTransformButton, &QPushButton::clicked, this, &InspectorWidget::applyTransform);
     connect(ui->applyMaterialButton, &QPushButton::clicked, this, &InspectorWidget::applyMaterial);
     connect(ui->applyLightButton, &QPushButton::clicked, this, &InspectorWidget::applyLight);
+    connect(ui->applyCameraButton, &QPushButton::clicked, this, &InspectorWidget::applyCamera);
 
     inspect(nullptr);
 }
@@ -50,6 +51,8 @@ void InspectorWidget::inspect(const std::shared_ptr<IObject>& newObject)
         inspect(*meshAdapter);
     else if (auto lightAdapter = dynamic_cast<ObjectAdapter<Light>*>(newObject.get()))
         inspect(*lightAdapter);
+    else if (auto cameraAdapter = dynamic_cast<ObjectAdapter<Camera>*>(newObject.get()))
+        inspect(*cameraAdapter);
 }
 
 void InspectorWidget::inspect(ObjectAdapter<Mesh> &object)
@@ -77,6 +80,17 @@ void InspectorWidget::inspect(ObjectAdapter<Light>& object)
     ui->intensitySpinBox->setValue(light.getIntensity());
     ui->attenuationLightEdit->setValue(light.getAttenuation());
     ui->radiusSpinBox->setValue(light.getRadius());
+}
+
+void InspectorWidget::inspect(ObjectAdapter<Camera>& object)
+{
+    ui->cameraGroupBox->setVisible(true);
+
+    auto camera = object.getAdaptee();
+
+    ui->fovSpinBox->setValue(camera.getFov() * 180 / M_PI);
+    ui->nearSpinBox->setValue(camera.getNear());
+    ui->farSpinBox->setValue(camera.getFar());
 }
 
 void InspectorWidget::renameObject()
@@ -136,6 +150,23 @@ void InspectorWidget::applyLight()
             light.setIntensity(ui->intensitySpinBox->value());
             light.setAttenuation(ui->attenuationLightEdit->getValue());
             light.setRadius(ui->radiusSpinBox->value());
+
+            emit objectChangedSignal();
+        }
+    }
+}
+
+void InspectorWidget::applyCamera()
+{
+    if (auto obj = object.lock())
+    {
+        if (auto cameraAdapter = dynamic_cast<ObjectAdapter<Camera>*>(obj.get()))
+        {
+            Camera& camera = cameraAdapter->getAdaptee();
+
+            camera.setFov(ui->fovSpinBox->value() * M_PI / 180);
+            camera.setNear(ui->nearSpinBox->value());
+            camera.setFar(ui->farSpinBox->value());
 
             emit objectChangedSignal();
         }

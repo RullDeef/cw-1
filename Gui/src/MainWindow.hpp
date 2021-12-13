@@ -31,6 +31,9 @@ protected slots:
     void addCylinderCommand();
     void addConeCommand();
 
+    void switchViewFirstCommand();
+    void switchViewSelectedCommand();
+
     void saveRenderCommand();
 
     /* Selection */

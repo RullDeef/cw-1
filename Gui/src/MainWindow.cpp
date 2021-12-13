@@ -7,6 +7,7 @@
 #include "MainWindow.hpp"
 #include <Builders/CameraBuilders/DefaultCameraBuilder.hpp>
 #include <Managers/SceneManager.hpp>
+#include <Managers/CameraManager.hpp>
 #include <Builders/LightBuilders/LightBuilder.hpp>
 #include <Builders/SceneBuidler.hpp>
 #include <Managers/PortManager.hpp>
@@ -108,6 +109,9 @@ void MainWindow::setupActions()
     connect(ui.addCylinder, &QAction::triggered, this, &MainWindow::addCylinderCommand);
     connect(ui.addCone, &QAction::triggered, this, &MainWindow::addConeCommand);
 
+    connect(ui.switchFirst, &QAction::triggered, this, &MainWindow::switchViewFirstCommand);
+    connect(ui.switchSelected, &QAction::triggered, this, &MainWindow::switchViewSelectedCommand);
+
     connect(ui.saveRender, &QAction::triggered, this, &MainWindow::saveRenderCommand);
 
     connect(ui.deleteSelected, &QAction::triggered, this, &MainWindow::deleteSelected);
@@ -206,6 +210,18 @@ void MainWindow::addConeCommand()
             .setName(NameGenerator::globalName())
             .build();
     factory->getSceneManager()->addObject(std::move(object));
+}
+
+void MainWindow::switchViewFirstCommand()
+{
+    factory->getCameraManager()->switchToFirstCamera();
+    factory->getRenderManager()->renderActiveScene();
+}
+
+void MainWindow::switchViewSelectedCommand()
+{
+    factory->getCameraManager()->switchToSelectedCamera();
+    factory->getRenderManager()->renderActiveScene();
 }
 
 void MainWindow::saveRenderCommand()

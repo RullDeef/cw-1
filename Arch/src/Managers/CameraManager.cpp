@@ -1,19 +1,58 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include "Objects/Adapters/CameraAdapter.hpp"
+#include "Managers/SceneManager.hpp"
 #include "Managers/CameraManager.hpp"
 #include "Managers/IManagerFactory.hpp"
 #include "Managers/RenderManager.hpp"
+#include "Managers/SelectionManager.hpp"
 
 
 CameraManager::CameraManager(IManagerFactory &factory)
-    : IManager(factory), mainCamera(Vector(0, 0, 400, 1), 0, 0)
+    : IManager(factory), defaultCamera(Vector(0, 0, 400, 1), 0, 0)
 {
     ///TODO: get rid of z=400 constant
 }
 
+void CameraManager::switchToFirstCamera()
+{
+    cameraObject = nullptr;
+
+    auto& scene = getFactory().getSceneManager()->getActiveScene();
+    for (const auto& obj : scene)
+    {
+        if (dynamic_cast<ObjectAdapter<Camera>*>(obj.get()))
+        {
+            cameraObject = obj;
+            break;
+        }
+    }
+}
+
+void CameraManager::switchToSelectedCamera()
+{
+    cameraObject = nullptr;
+
+    auto selection = getFactory().getSelectionManager()->getSelectedObjects();
+    for (const auto& obj : selection)
+    {
+        if (dynamic_cast<ObjectAdapter<Camera>*>(obj.get()) != nullptr)
+        {
+            cameraObject = obj;
+            break;
+        }
+    }
+}
+
 Camera& CameraManager::getActiveCamera()
 {
-    return mainCamera;
+    if (!cameraObject)
+        return defaultCamera;
+
+    if (auto adapter = dynamic_cast<ObjectAdapter<Camera>*>(cameraObject.get()))
+        return adapter->getAdaptee();
+
+    return defaultCamera;
 }
 
 void CameraManager::rotateCamera(double dx, double dy)

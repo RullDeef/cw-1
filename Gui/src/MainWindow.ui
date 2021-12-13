@@ -77,9 +77,23 @@
     <addaction name="exportScene"/>
     <addaction name="importScene"/>
    </widget>
+   <widget class="QMenu" name="viewMenu">
+    <property name="title">
+     <string>Вид</string>
+    </property>
+    <widget class="QMenu" name="viewSwitchMenu">
+     <property name="title">
+      <string>Переключить</string>
+     </property>
+     <addaction name="switchFirst"/>
+     <addaction name="switchSelected"/>
+    </widget>
+    <addaction name="viewSwitchMenu"/>
+   </widget>
    <addaction name="windowMenu"/>
    <addaction name="sceneMenu"/>
    <addaction name="objectMenu"/>
+   <addaction name="viewMenu"/>
    <addaction name="renderMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -186,6 +200,30 @@
   <action name="addCone">
    <property name="text">
     <string>Конус</string>
+   </property>
+  </action>
+  <action name="switchNext">
+   <property name="text">
+    <string>на след. камеру</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="switchSelected">
+   <property name="text">
+    <string>на выделенную камеру</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="switchFirst">
+   <property name="text">
+    <string>на первую камеру</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+V</string>
    </property>
   </action>
  </widget>
