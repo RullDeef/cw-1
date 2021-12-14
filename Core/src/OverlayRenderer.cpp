@@ -17,13 +17,10 @@ StatusCode Core::overlayRenderScene(RenderParams renderParams)
 
     for (auto node = renderParams.scene.meshList.head; node; node = node->next)
     {
-        if (node->value.wireframe)
-        {
-            StatusCode result = renderWireframeMesh(renderParams.renderTarget, node->value, renderParams.camera,
-                                                    wireframeColor, renderParams.faceCullingType);
-            if (result != StatusCode::Success)
-                return result;
-        }
+        StatusCode result = renderWireframeMesh(renderParams.renderTarget,
+            node->value, renderParams.camera, wireframeColor, renderParams.faceCullingType);
+        if (result != StatusCode::Success)
+            return result;
     }
 
     recalc_mvp(renderParams.camera, make_mat_id());
@@ -33,17 +30,17 @@ StatusCode Core::overlayRenderScene(RenderParams renderParams)
         if (get(renderParams.scene.lightList, i, light))
         {
             Vec pos = project_point(renderParams.camera, light.position);
-            if (std::abs(pos.z) < std::abs(pos.w))
+            if (light.outline && std::abs(pos.z) < std::abs(pos.w))
             {
-                int x = pos.x, y = pos.y, r = 10;
+                int x = int(pos.x), y = int(pos.y), r = 10; /// TODO: magic constant - 10
                 renderCircle(renderParams.renderTarget, x, y, r, Colors::light_cyan);
             }
         }
     }
 
     /// TODO: fix wrong rotations (maybe done)
-    recalc_mvp(renderParams.camera, make_mat_id());
-    renderOrientationBox(renderParams.renderTarget, renderParams.camera.mvp, 20, 20);
+//    recalc_mvp(renderParams.camera, make_mat_id());
+//    renderOrientationBox(renderParams.renderTarget, renderParams.camera.mvp, 20, 20);
 
     return StatusCode::Success;
 }

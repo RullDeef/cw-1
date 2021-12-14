@@ -20,6 +20,9 @@ public:
     [[nodiscard]] const std::string& getName() const noexcept;
     void setName(const std::string& newName);
 
+    [[nodiscard]] bool isVisible() const noexcept;
+    void setVisible(bool newVisible) noexcept;
+
     [[nodiscard]] bool isSelected() const noexcept;
     void setSelected(bool newSelected) noexcept;
 
@@ -43,17 +46,19 @@ public:
 
 protected:
     virtual void onNameChange() {}
+    virtual void onVisibilityChange() {}
     virtual void onSelectionChange() {}
     virtual void onTransformChange() {}
 
 private:
     const size_t id;
     std::string name;
+    bool visible = true;
     bool selected = false;
 
-    Vector position;
-    Vector rotation;
-    Vector scale;
+    Vector position = Vector(0, 0, 0, 1);
+    Vector rotation = Vector(0, 0, 0, 0);
+    Vector scale = Vector(1, 1, 1, 0);
 };
 
 #endif // IOBJECT_HPP

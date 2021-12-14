@@ -19,6 +19,8 @@ public:
     virtual bool intersects(double& t, const Ray& ray) override;
 
 protected:
+    void onVisibilityChange() override;
+    void onSelectionChange() override;
     void onTransformChange() override;
 
 private:

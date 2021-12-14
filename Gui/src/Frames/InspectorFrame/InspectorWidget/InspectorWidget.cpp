@@ -7,6 +7,8 @@ InspectorWidget::InspectorWidget(QWidget *parent) : QWidget(parent), ui(new Ui::
 {
     ui->setupUi(this);
 
+    connect(ui->visibilityCheckBox, &QCheckBox::stateChanged, this, &InspectorWidget::changeVisibility);
+
     connect(ui->renameButton, &QPushButton::clicked, this, &InspectorWidget::renameObject);
     connect(ui->applyTransformButton, &QPushButton::clicked, this, &InspectorWidget::applyTransform);
     connect(ui->applyMaterialButton, &QPushButton::clicked, this, &InspectorWidget::applyMaterial);
@@ -41,6 +43,7 @@ void InspectorWidget::inspect(const std::shared_ptr<IObject>& newObject)
     object = newObject;
 
     ui->idSpinBox->setValue(newObject->getId() % 1000000000);
+    ui->visibilityCheckBox->setCheckState(newObject->isVisible() ? Qt::Checked : Qt::Unchecked);
     ui->nameTextEdit->setText(QString::fromStdString(newObject->getName()));
 
     ui->positionEdit->setValue(newObject->getPosition());
@@ -91,6 +94,16 @@ void InspectorWidget::inspect(ObjectAdapter<Camera>& object)
     ui->fovSpinBox->setValue(camera.getFov() * 180 / M_PI);
     ui->nearSpinBox->setValue(camera.getNear());
     ui->farSpinBox->setValue(camera.getFar());
+}
+
+void InspectorWidget::changeVisibility()
+{
+    if (auto obj = object.lock())
+    {
+        obj->setVisible(ui->visibilityCheckBox->isChecked());
+
+        emit objectChangedSignal();
+    }
 }
 
 void InspectorWidget::renameObject()

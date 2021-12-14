@@ -28,6 +28,7 @@ public:
     Matrix getModelMatrix() const;
     void setModelMatrix(const Matrix& matrix);
 
+    void setVisible(bool state);
     void setSelected(bool state);
     bool intersects(double& t, const Ray& ray) const;
 

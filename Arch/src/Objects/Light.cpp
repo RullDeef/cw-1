@@ -1,8 +1,8 @@
 #include "Objects/Light.hpp"
 
 
-Light::Light(const Core::Light &light) : color(light.color), intensity(light.intensity),
-    position(light.position), direction(light.direction), attenuation(light.attenuation), type(light.type)
+Light::Light(const Core::Light &light) : color(light.color), intensity(light.intensity), position(light.position),
+    direction(light.direction), attenuation(light.attenuation), type(light.type), outline(light.outline), visible(light.visible)
 {}
 
 Light::operator Core::Light() const
@@ -16,6 +16,8 @@ Light::operator Core::Light() const
     res.attenuation = attenuation;
     res.radius = radius;
     res.type = type;
+    res.outline = outline;
+    res.visible = visible;
 
     return res;
 }
@@ -85,6 +87,16 @@ void Light::setRadius(double newRadius)
     if (newRadius <= 0.0)
         throw std::runtime_error("bad radius"); ///TODO: add other validations
     radius = newRadius;
+}
+
+void Light::setOutline(bool newOutline)
+{
+    outline = newOutline;
+}
+
+void Light::setVisible(bool newVisible)
+{
+    visible = newVisible;
 }
 
 void Light::setType(Light::Type newType)

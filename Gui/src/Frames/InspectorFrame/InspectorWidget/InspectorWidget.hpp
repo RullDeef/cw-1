@@ -36,6 +36,7 @@ protected:
     void inspect(ObjectAdapter<Camera>& object);
 
 protected slots:
+    void changeVisibility();
     void renameObject();
     void applyTransform();
     void applyMaterial();

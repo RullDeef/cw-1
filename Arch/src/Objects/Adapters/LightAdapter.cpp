@@ -1,8 +1,10 @@
 #include "Objects/Adapters/LightAdapter.hpp"
 
+#include <utility>
+
 
 ObjectAdapter<Light>::ObjectAdapter(size_t id, Light light)
-    : IObject(id), light(light)
+    : IObject(id), light(std::move(light))
 {
 }
 
@@ -29,11 +31,25 @@ bool ObjectAdapter<Light>::intersects(double& t, const Ray& ray)
     Vector ray_pos = camera.project(ray.getPosition() + ray.getDirection(), ray.getViewport());
     Vector delta = center - ray_pos;
 
-    const double radius = 10.0;
+    const double radius = 10.0; /// TODO: magic constant
 
     if (delta.getX() * delta.getX() + delta.getY() * delta.getY() <= radius * radius)
         return ray.intersectsPlane(t, light.getPosition(), -ray.getDirection());
     return false;
+}
+
+void ObjectAdapter<Light>::onVisibilityChange()
+{
+    IObject::onVisibilityChange();
+
+    light.setVisible(isVisible());
+}
+
+void ObjectAdapter<Light>::onSelectionChange()
+{
+    IObject::onSelectionChange();
+
+    light.setOutline(isSelected());
 }
 
 void ObjectAdapter<Light>::onTransformChange()

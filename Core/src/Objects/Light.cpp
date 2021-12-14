@@ -13,6 +13,7 @@ Light Core::make_ambient_light(Color color, double intensity)
     light.direction = make_dir(1, 0, 0);
     light.attenuation = make_dir(1, 0, 1);
     light.radius = 1.0;
+    light.outline = false;
 
     return light;
 }
@@ -28,6 +29,7 @@ Light Core::make_directional_light(Color color, double intensity, Vec direction)
     light.direction = normalized(direction);
     light.attenuation = make_dir(1, 0, 1);
     light.radius = 1.0;
+    light.outline = false;
 
     return light;
 }
@@ -43,6 +45,7 @@ Light Core::make_point_light(Color color, double intensity, Vec position, Vec at
     light.direction = make_dir(1, 0, 0);
     light.attenuation = attenuation;
     light.radius = radius;
+    light.outline = false;
 
     return light;
 }

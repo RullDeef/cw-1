@@ -30,6 +30,11 @@ namespace Core
         /* for point light */
         Vec attenuation;
         double radius;
+
+        /* for overlay rendering */
+        bool outline;
+
+        bool visible;
     };
 
     using ColorComputeFn = std::function<Color(const Vec& pos, const Vec& norm, const Material& mat)>;

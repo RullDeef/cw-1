@@ -1,7 +1,6 @@
 #include "Objects/IObject.hpp"
 
-IObject::IObject(size_t id)
-    : id(id), position(0, 0, 0, 1), rotation(0, 0, 0, 0), scale(1, 1, 1, 0)
+IObject::IObject(size_t id) : id(id)
 {
 }
 
@@ -21,6 +20,20 @@ void IObject::setName(const std::string &newName)
     onNameChange();
 }
 
+bool IObject::isVisible() const noexcept
+{
+    return visible;
+}
+
+void IObject::setVisible(bool newVisible) noexcept
+{
+    if (visible != newVisible)
+    {
+        visible = newVisible;
+        onVisibilityChange();
+    }
+}
+
 bool IObject::isSelected() const noexcept
 {
     return selected;
@@ -28,8 +41,11 @@ bool IObject::isSelected() const noexcept
 
 void IObject::setSelected(bool newSelected) noexcept
 {
-    selected = newSelected;
-    onSelectionChange();
+    if (selected != newSelected)
+    {
+        selected = newSelected;
+        onSelectionChange();
+    }
 }
 
 Vector IObject::getPosition() const noexcept

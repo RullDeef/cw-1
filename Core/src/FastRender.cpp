@@ -21,14 +21,15 @@ StatusCode Core::fastRenderScene(RenderParams renderParams)
             // makeShadedColorComputator(renderParams.scene, renderParams.camera);
             makeColorComputator(renderParams.camera, renderParams.scene.lightList);
 
-    for (list_node<Mesh>* node = renderParams.scene.meshList.head; node; node = node->next)
-        if (node->value.visible)
-            renderMesh(renderParams.renderTarget, zbuffer, node->value, renderParams.camera, renderParams.sceneLightingModel, renderParams.faceCullingType, colorComputator);
+    StatusCode status = StatusCode::Success;
+    for (list_node<Mesh>* node = renderParams.scene.meshList.head; node && status == StatusCode::Success; node = node->next)
+        status = renderMesh(renderParams.renderTarget, zbuffer, node->value, renderParams.camera,
+            renderParams.sceneLightingModel, renderParams.faceCullingType, colorComputator);
 
     // renderTestCube(renderParams.renderTarget, renderParams.camera);
 
     destroy(zbuffer);
-    return StatusCode::Success;
+    return status;
 }
 
 static void __renderCubeSide(RenderTarget& renderTarget, Camera& camera, Vec p1, Vec p2, Vec p3, Vec p4, Color color)

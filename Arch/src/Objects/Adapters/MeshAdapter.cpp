@@ -30,6 +30,13 @@ bool ObjectAdapter<Mesh>::intersects(double &t, const Ray &ray)
     return mesh.intersects(t, ray);
 }
 
+void ObjectAdapter<Mesh>::onVisibilityChange()
+{
+    IObject::onVisibilityChange();
+
+    mesh.setVisible(isVisible());
+}
+
 void ObjectAdapter<Mesh>::onSelectionChange()
 {
     IObject::onSelectionChange();

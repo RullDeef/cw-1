@@ -226,11 +226,11 @@ void MainWindow::switchViewSelectedCommand()
 
 void MainWindow::saveRenderCommand()
 {
-//    for (auto frame : frames)
-//    {
-//        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
-//            return viewportFrame->saveToImage();
-//    }
+    for (auto frame : frames)
+    {
+        if (auto viewportFrame = dynamic_cast<ViewportFrame *>(frame))
+            return viewportFrame->saveToImage();
+    }
 }
 
 void MainWindow::deleteSelected()

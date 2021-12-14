@@ -49,6 +49,11 @@ void Mesh::setMaterial(const Material &newMaterial)
     material = newMaterial;
 }
 
+void Mesh::setVisible(bool state)
+{
+    mesh.visible = state;
+}
+
 void Mesh::setSelected(bool state)
 {
     mesh.wireframe = state;

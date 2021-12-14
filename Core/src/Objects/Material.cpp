@@ -61,7 +61,9 @@ Color Core::compute_color(const Material& material, const vect_t<Light>& lights,
         Light light{};
         if (get(lights, i, light))
         {
-            if (light.type == LightType::Ambient)
+            if (!light.visible)
+                continue;
+            else if (light.type == LightType::Ambient)
             {
                 color += light.intensity * light.color * material.ambientColor;
             }

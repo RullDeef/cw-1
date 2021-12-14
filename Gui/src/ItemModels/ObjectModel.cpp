@@ -41,7 +41,7 @@ QVariant ObjectModel::data(const QModelIndex &index, int role) const
     std::advance(objectIter, index.row());
 
     QString name = QString::fromStdString((*objectIter)->getName());
-    bool visible = true;
+    bool visible = (*objectIter)->isVisible();
     bool selected = (*objectIter)->isSelected();
 
     QVariantList list;
