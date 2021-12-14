@@ -7,6 +7,7 @@
 #include <Loaders/ObjLoader/ObjLoader.hpp>
 #include <Objects/ObjectAdapter.hpp>
 #include <Builders/BaseMeshBuilder.hpp>
+#include <Builders/NameGenerator.hpp>
 #include "Managers/SelectionManager.hpp"
 
 PortManager::PortManager(IManagerFactory& factory) : IManager(factory)
@@ -30,6 +31,10 @@ void PortManager::importMesh()
 {
     std::string filename = requestFilename();
     std::shared_ptr<IObject> object = ObjLoader().loadMesh(filename);
+
+    auto& scene = getFactory().getSceneManager()->getActiveScene();
+    auto newName = NameGenerator::uniqueIndexedName(object->getName(), scene);
+    object->setName(newName);
 
     getFactory().getSceneManager()->addObject(object);
     getFactory().getSelectionManager()->select(object);
