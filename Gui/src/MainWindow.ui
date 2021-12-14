@@ -39,11 +39,11 @@
    </widget>
    <widget class="QMenu" name="objectMenu">
     <property name="title">
-     <string>Объект</string>
+     <string>Object</string>
     </property>
     <widget class="QMenu" name="menu">
      <property name="title">
-      <string>Добавить</string>
+      <string>Add</string>
      </property>
      <addaction name="addCamera"/>
      <addaction name="addLightSource"/>
@@ -64,13 +64,13 @@
    </widget>
    <widget class="QMenu" name="renderMenu">
     <property name="title">
-     <string>Рендер</string>
+     <string>Render</string>
     </property>
     <addaction name="saveRender"/>
    </widget>
    <widget class="QMenu" name="sceneMenu">
     <property name="title">
-     <string>Сцена</string>
+     <string>Scene</string>
     </property>
     <addaction name="createNewScene"/>
     <addaction name="separator"/>
@@ -79,11 +79,11 @@
    </widget>
    <widget class="QMenu" name="viewMenu">
     <property name="title">
-     <string>Вид</string>
+     <string>View</string>
     </property>
     <widget class="QMenu" name="viewSwitchMenu">
      <property name="title">
-      <string>Переключить</string>
+      <string>Switch</string>
      </property>
      <addaction name="switchFirst"/>
      <addaction name="switchSelected"/>
@@ -114,27 +114,27 @@
   </action>
   <action name="loadObject">
    <property name="text">
-    <string>Загрузить</string>
+    <string>Import</string>
    </property>
   </action>
   <action name="saveRender">
    <property name="text">
-    <string>Сохранить как...</string>
+    <string>Save as...</string>
    </property>
   </action>
   <action name="createNewScene">
    <property name="text">
-    <string>Новая</string>
+    <string>New</string>
    </property>
   </action>
   <action name="addCamera">
    <property name="text">
-    <string>Камеру</string>
+    <string>Camera</string>
    </property>
   </action>
   <action name="addLightSource">
    <property name="text">
-    <string>Источник света</string>
+    <string>Light</string>
    </property>
   </action>
   <action name="action_2">
@@ -147,7 +147,7 @@
   </action>
   <action name="deleteSelected">
    <property name="text">
-    <string>Удалить</string>
+    <string>Remove</string>
    </property>
    <property name="shortcut">
     <string>Del</string>
@@ -155,7 +155,7 @@
   </action>
   <action name="selectAll">
    <property name="text">
-    <string>Выделить всё</string>
+    <string>Select all</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
@@ -163,7 +163,7 @@
   </action>
   <action name="invertSelection">
    <property name="text">
-    <string>Обратить</string>
+    <string>Invert Selection</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+A</string>
@@ -171,7 +171,7 @@
   </action>
   <action name="exportScene">
    <property name="text">
-    <string>Сохранить как...</string>
+    <string>Export as...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -179,27 +179,27 @@
   </action>
   <action name="importScene">
    <property name="text">
-    <string>Загрузить</string>
+    <string>Import</string>
    </property>
   </action>
   <action name="addSphere">
    <property name="text">
-    <string>Сферу</string>
+    <string>Sphere</string>
    </property>
   </action>
   <action name="addTorus">
    <property name="text">
-    <string>Тороид</string>
+    <string>Torus</string>
    </property>
   </action>
   <action name="addCylinder">
    <property name="text">
-    <string>Цилиндр</string>
+    <string>Cylinder</string>
    </property>
   </action>
   <action name="addCone">
    <property name="text">
-    <string>Конус</string>
+    <string>Cone</string>
    </property>
   </action>
   <action name="switchNext">
@@ -212,7 +212,7 @@
   </action>
   <action name="switchSelected">
    <property name="text">
-    <string>на выделенную камеру</string>
+    <string>to selected camera</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
@@ -220,7 +220,7 @@
   </action>
   <action name="switchFirst">
    <property name="text">
-    <string>на первую камеру</string>
+    <string>to first camera</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+V</string>

@@ -7,9 +7,9 @@ QtPortManager::QtPortManager(IManagerFactory &factory) : PortManager(factory)
 
 std::string QtPortManager::requestFilename()
 {
-    QString qfilename = QFileDialog::getOpenFileName(nullptr, u8"Выберите файл", nullptr,
+    QString qfilename = QFileDialog::getOpenFileName(nullptr, "Select file", nullptr,
                                                      "", nullptr,
-                                                     QFileDialog::Option());
+                                                     QFileDialog::DontUseNativeDialog);
     return qfilename.toStdString();
 }
 

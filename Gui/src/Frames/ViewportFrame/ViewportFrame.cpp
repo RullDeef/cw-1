@@ -11,7 +11,7 @@
 
 
 ViewportFrame::ViewportFrame(IManagerFactory &managerFactory, QWidget *parent)
-        : IFrame(u8"видовое окно", parent), managerFactory(&managerFactory), freeFlyDispatcher(managerFactory)
+        : IFrame("Viewport", parent), managerFactory(&managerFactory), freeFlyDispatcher(managerFactory)
 {
     setFocusPolicy(Qt::FocusPolicy::StrongFocus);
 

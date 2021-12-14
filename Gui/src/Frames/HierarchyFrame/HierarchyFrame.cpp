@@ -7,7 +7,7 @@
 
 
 HierarchyFrame::HierarchyFrame(IManagerFactory &managerFactory, QWidget *parent)
-        : IFrame(u8"Иерархия объектов", parent), managerFactory(managerFactory)
+        : IFrame("Object hierarchy", parent), managerFactory(managerFactory)
 {
     objectModel = new ObjectModel(managerFactory);
     objectView = new ObjectView();
