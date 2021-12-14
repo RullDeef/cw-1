@@ -141,37 +141,45 @@ void MainWindow::loadObjectCommand()
 
 void MainWindow::addCameraCommand()
 {
+    auto& scene = factory->getSceneManager()->getActiveScene();
+
     auto camera = DefaultCameraBuilder()
             .setId(DefaultIDGenerator().generate())
-            .setName(NameGenerator::globalName())
+            .setName(NameGenerator::uniqueIndexedName("Camera", scene))
             .build();
     factory->getSceneManager()->addObject(std::move(camera));
 }
 
 void MainWindow::addLightSourceCommand()
 {
+    auto& scene = factory->getSceneManager()->getActiveScene();
+
     auto light = LightBuilder()
             .setId(DefaultIDGenerator().generate())
-            .setName(NameGenerator::globalName())
+            .setName(NameGenerator::uniqueIndexedName("Light", scene))
             .build();
     factory->getSceneManager()->addObject(std::move(light));
 }
 
 void MainWindow::addSphereCommand()
 {
+    auto& scene = factory->getSceneManager()->getActiveScene();
+
     auto object = SphereMeshBuilder()
             .setRadius(100)
             .setMeshDensity(6)
             .setSmooth(true)
             .setColor(Color::cyan())
             .setId(DefaultIDGenerator().generate())
-            .setName(NameGenerator::globalName())
+            .setName(NameGenerator::uniqueIndexedName("Sphere", scene))
             .build();
     factory->getSceneManager()->addObject(std::move(object));
 }
 
 void MainWindow::addTorusCommand()
 {
+    auto& scene = factory->getSceneManager()->getActiveScene();
+
     auto object = TorusMeshBuilder()
             .setOuterRadius(100)
             .setInnerRadius(15)
@@ -179,13 +187,15 @@ void MainWindow::addTorusCommand()
             .setSmooth(true)
             .setColor(Color::magenta())
             .setId(DefaultIDGenerator().generate())
-            .setName(NameGenerator::globalName())
+            .setName(NameGenerator::uniqueIndexedName("Torus", scene))
             .build();
     factory->getSceneManager()->addObject(std::move(object));
 }
 
 void MainWindow::addCylinderCommand()
 {
+    auto& scene = factory->getSceneManager()->getActiveScene();
+
     auto object = CylinderMeshBuilder()
             .setRadius(50)
             .setHeight(100)
@@ -193,13 +203,15 @@ void MainWindow::addCylinderCommand()
             .setSmooth(true)
             .setColor(Color::yellow())
             .setId(DefaultIDGenerator().generate())
-            .setName(NameGenerator::globalName())
+            .setName(NameGenerator::uniqueIndexedName("Cylinder", scene))
             .build();
     factory->getSceneManager()->addObject(std::move(object));
 }
 
 void MainWindow::addConeCommand()
 {
+    auto& scene = factory->getSceneManager()->getActiveScene();
+
     auto object = ConeMeshBuilder()
             .setRadius(40)
             .setHeight(100)
@@ -207,7 +219,7 @@ void MainWindow::addConeCommand()
             .setSmooth(true)
             .setColor(Color::green())
             .setId(DefaultIDGenerator().generate())
-            .setName(NameGenerator::globalName())
+            .setName(NameGenerator::uniqueIndexedName("Cone", scene))
             .build();
     factory->getSceneManager()->addObject(std::move(object));
 }
