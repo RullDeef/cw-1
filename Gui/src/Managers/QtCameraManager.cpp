@@ -6,14 +6,14 @@ QtCameraManager::QtCameraManager(IManagerFactory &factory)
 {
 }
 
-void QtCameraManager::onActiveCameraSwitch(Camera &activeCamera)
+void QtCameraManager::onActiveCameraSwitch(std::shared_ptr<IObject> activeCamera)
 {
     CameraManager::onActiveCameraSwitch(activeCamera);
 
     emit activeCameraSwitchSignal(activeCamera);
 }
 
-void QtCameraManager::onCameraChange(Camera &camera)
+void QtCameraManager::onCameraChange(std::shared_ptr<IObject> camera)
 {
     CameraManager::onCameraChange(camera);
 

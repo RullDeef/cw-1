@@ -317,16 +317,14 @@ Core::renderClippedFace(RenderTarget &renderTarget, ZBuffer &zbuffer, const Mesh
 {
     StatusCode result = StatusCode::Success;
     Face projection = project(face, camera);
-    auto regions = make_render_regions(mesh,
-           //inverse(camera.model_mat) * mesh.model_mat *
-        face, projection);
+    auto regions = make_render_regions(mesh, mesh.model_mat * face, projection);
 
     lock(renderTarget);
 
     if (lighting == LightingModelType::Flat)
     {
         // flat correction needs to be called on in-world-positioned face
-        flat_correction(regions, face);
+        flat_correction(regions, mesh.model_mat * face);
 
         for (size_t i = 0; i < regions.size; i++)
         {

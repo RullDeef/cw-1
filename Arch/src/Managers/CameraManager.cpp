@@ -9,21 +9,22 @@
 
 
 CameraManager::CameraManager(IManagerFactory &factory)
-    : IManager(factory), defaultCamera(Vector(0, 0, 400, 1), 0, 0)
+    : IManager(factory), defaultCamera(new ObjectAdapter<Camera>(0,
+        Camera(Vector(0, 0, 400, 1), 0, 0)))
 {
-    ///TODO: get rid of z=400 constant
+    /// TODO: get rid of z=400 constant
 }
 
 void CameraManager::switchToFirstCamera()
 {
-    cameraObject = nullptr;
+    sceneCamera = nullptr;
 
     auto& scene = getFactory().getSceneManager()->getActiveScene();
     for (const auto& obj : scene)
     {
         if (dynamic_cast<ObjectAdapter<Camera>*>(obj.get()))
         {
-            cameraObject = obj;
+            sceneCamera = obj;
             break;
         }
     }
@@ -31,26 +32,23 @@ void CameraManager::switchToFirstCamera()
 
 void CameraManager::switchToSelectedCamera()
 {
-    cameraObject = nullptr;
+    sceneCamera = nullptr;
 
     auto selection = getFactory().getSelectionManager()->getSelectedObjects();
     for (const auto& obj : selection)
     {
         if (dynamic_cast<ObjectAdapter<Camera>*>(obj.get()) != nullptr)
         {
-            cameraObject = obj;
+            sceneCamera = obj;
             break;
         }
     }
 }
 
-Camera& CameraManager::getActiveCamera()
+std::shared_ptr<IObject> CameraManager::getActiveCamera()
 {
-    if (!cameraObject)
-        return defaultCamera;
-
-    if (auto adapter = dynamic_cast<ObjectAdapter<Camera>*>(cameraObject.get()))
-        return adapter->getAdaptee();
+    if (sceneCamera && dynamic_cast<ObjectAdapter<Camera>*>(sceneCamera.get()))
+        return sceneCamera;
 
     return defaultCamera;
 }
@@ -58,9 +56,16 @@ Camera& CameraManager::getActiveCamera()
 void CameraManager::rotateCamera(double dx, double dy)
 {
     /// TODO: make dPitch dYaw depend on viewport
-    getActiveCamera().rotate(dy, dx);
+    auto adapter = getActiveCamera();
+    auto& camera = dynamic_cast<ObjectAdapter<Camera>*>(adapter.get())->getAdaptee();
 
-    onCameraChange(getActiveCamera());
+    // camera.rotate(dy, dx);
+
+    double x = camera.getPitch() + dy;
+    double y = camera.getYaw() + dx;
+    adapter->setRotation(Vector(x, y, 0, 0) * 180 / M_PI); /// TODO: move logic in camera adapter
+
+    onCameraChange(adapter);
 }
 
 void CameraManager::zoomCamera(double factor)
@@ -70,24 +75,29 @@ void CameraManager::zoomCamera(double factor)
 
 void CameraManager::freeFlyCamera(double forward, double right, double up)
 {
-    auto offset = getActiveCamera().getModelMatrix() * Vector(right, up, forward, 0);
-    getActiveCamera().translate(offset);
+    auto adapter = getActiveCamera();
+    auto& camera = dynamic_cast<ObjectAdapter<Camera>*>(adapter.get())->getAdaptee();
+
+    auto offset = camera.getModelMatrix() * Vector(right, up, forward, 0);
+
+    adapter->setPosition(adapter->getPosition() + offset);
 }
 
 Ray CameraManager::createRay(int x, int y)
 {
     Rect viewport = getFactory().getRenderManager()->getActiveViewport();
-    Vector uPos = viewport.outerQuad(x, y);
+    Vector uPos = viewport.outerQuad(float(x), float(y));
 
-    return getActiveCamera().createRay(uPos.getX(), uPos.getY(), viewport);
+    auto& camera = dynamic_cast<ObjectAdapter<Camera>*>(getActiveCamera().get())->getAdaptee();
+    return camera.createRay(uPos.getX(), uPos.getY(), viewport);
 }
 
-void CameraManager::onActiveCameraSwitch(Camera& activeCamera)
+void CameraManager::onActiveCameraSwitch(std::shared_ptr<IObject> activeCamera)
 {
     getFactory().getRenderManager()->renderActiveScene();
 }
 
-void CameraManager::onCameraChange(Camera& camera)
+void CameraManager::onCameraChange(std::shared_ptr<IObject> camera)
 {
     getFactory().getRenderManager()->renderActiveScene();
 }

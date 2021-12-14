@@ -15,7 +15,7 @@ public:
     void switchToFirstCamera();
     void switchToSelectedCamera();
 
-    Camera& getActiveCamera();
+    std::shared_ptr<IObject> getActiveCamera();
 
     // translates camera along view plane
     void dragCamera(double dx, double dy);
@@ -31,13 +31,12 @@ public:
     Ray createRay(int x, int y);
 
 protected:
-    virtual void onActiveCameraSwitch(Camera& activeCamera);
-    virtual void onCameraChange(Camera& camera);
+    virtual void onActiveCameraSwitch(std::shared_ptr<IObject> activeCamera);
+    virtual void onCameraChange(std::shared_ptr<IObject> camera);
 
 private:
-    Camera defaultCamera;
-
-    std::shared_ptr<IObject> cameraObject;
+    std::shared_ptr<IObject> defaultCamera;
+    std::shared_ptr<IObject> sceneCamera;
 };
 
 #endif // CAMERAMANAGER_HPP

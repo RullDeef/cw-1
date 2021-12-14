@@ -13,12 +13,12 @@ public:
     explicit QtCameraManager(IManagerFactory& factory);
 
 signals:
-    void activeCameraSwitchSignal(Camera& activeCamera);
-    void cameraChangeSignal(Camera& camera);
+    void activeCameraSwitchSignal(std::shared_ptr<IObject> activeCamera);
+    void cameraChangeSignal(std::shared_ptr<IObject> camera);
 
 protected:
-    void onActiveCameraSwitch(Camera& activeCamera) override;
-    void onCameraChange(Camera& camera) override;
+    void onActiveCameraSwitch(std::shared_ptr<IObject> activeCamera) override;
+    void onCameraChange(std::shared_ptr<IObject> camera) override;
 };
 
 #endif // QTCAMERAMANAGER_HPP

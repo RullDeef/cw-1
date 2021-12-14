@@ -27,7 +27,7 @@ void RenderManager::renderActiveScene(const RenderSettings& renderSettings)
     try
     {
         Scene& scene = getFactory().getSceneManager()->getActiveScene();
-        auto camera = getFactory().getCameraManager()->getActiveCamera();
+        auto camera = dynamic_cast<ObjectAdapter<Camera>*>(getFactory().getCameraManager()->getActiveCamera().get())->getAdaptee();
 
         onBeforeSceneRender(scene, camera, renderSettings);
         renderScene(scene, camera, renderSettings);
@@ -48,32 +48,32 @@ void RenderManager::renderScene(Scene &scene, Camera &camera, const RenderSettin
     auto timeStart = std::chrono::high_resolution_clock::now();
 
 
-    if (renderSettings.getRenderType() == RenderSettings::RenderType::RayTracing)
-    {
-        if (renderSettings.getThreadsCount() > 1)
-        {
-            threadPool.killAllTasks();
-            threadPool.setWorkersCount(renderSettings.getThreadsCount());
-            threadPool.beginTaskGroup();
-
-            int x_side = 64, y_side = 64;
-            for (int y = 0; y < renderTarget.height; y += y_side)
-            {
-                for (int x = 0; x < renderTarget.width; x += x_side)
-                {
-                    Core::RenderParams taskParams = params;
-                    taskParams.viewport = Core::make_rect(x_side, y_side, x, y);
-                    threadPool.addTask([taskParams]() { Core::renderScene(taskParams); });
-                }
-            }
-
-            threadPool.endTaskGroup();
-        }
-    }
-    else
-    {
+//    if (renderSettings.getRenderType() == RenderSettings::RenderType::RayTracing)
+//    {
+//        if (renderSettings.getThreadsCount() > 1)
+//        {
+//            threadPool.killAllTasks();
+//            threadPool.setWorkersCount(renderSettings.getThreadsCount());
+//            threadPool.beginTaskGroup();
+//
+//            int x_side = 64, y_side = 64;
+//            for (int y = 0; y < renderTarget.height; y += y_side)
+//            {
+//                for (int x = 0; x < renderTarget.width; x += x_side)
+//                {
+//                    Core::RenderParams taskParams = params;
+//                    taskParams.viewport = Core::make_rect(x_side, y_side, x, y);
+//                    threadPool.addTask([taskParams]() { Core::renderScene(taskParams); });
+//                }
+//            }
+//
+//            threadPool.endTaskGroup();
+//        }
+//    }
+//    else
+//    {
         Core::renderScene(params);
-    }
+//    }
 
 
     auto timeEnd = std::chrono::high_resolution_clock::now();

@@ -34,8 +34,8 @@ void ObjectAdapter<Camera>::onTransformChange()
 {
     IObject::onTransformChange();
 
-    double pitch = getRotation().getX();
-    double yaw = getRotation().getY();
+    double pitch = getRotation().getX() / 180 * M_PI;
+    double yaw = getRotation().getY() / 180 * M_PI;
 
     camera.setPosition(getPosition());
     camera.setPitch(pitch);

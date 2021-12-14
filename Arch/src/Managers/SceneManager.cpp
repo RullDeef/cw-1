@@ -119,10 +119,10 @@ void SceneManager::onAddObject(std::shared_ptr<IObject> object)
 
 void SceneManager::onBeforeRemoveObject(std::shared_ptr<IObject> object)
 {
-    if (auto adapter = dynamic_cast<ObjectAdapter<Camera>*>(object.get()))
+    if (dynamic_cast<ObjectAdapter<Camera>*>(object.get()))
     {
         auto cameraManager = getFactory().getCameraManager();
-        if (&adapter->getAdaptee() == &cameraManager->getActiveCamera())
+        if (object == cameraManager->getActiveCamera())
             cameraManager->switchToSelectedCamera();
     }
 

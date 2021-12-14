@@ -58,7 +58,7 @@ Mesh ConeMeshBuilder::buildMesh()
 
     size_t in = 0;
 
-    for (int iu = 1; iu <= edgeCount; iu++)
+    for (int iu = 1; iu <= edgeCount + 1; iu++)
     {
         double u = double(iu) / edgeCount * 2 * M_PI;
 
@@ -84,7 +84,7 @@ Mesh ConeMeshBuilder::buildMesh()
         }
 
 
-        if (iu > 1)
+        if (iu > 0)
             linkFace(1, iu, iu - 1);
     }
 

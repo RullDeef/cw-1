@@ -106,6 +106,9 @@ void Core::recalc_bounding_sphere(Mesh& mesh)
 
     mesh.boundingSphere = boundedSphere(first, second);
     mesh.boundingSphere.position = mesh.model_mat * mesh.boundingSphere.position;
+
+    Vec scales = mesh.model_mat * make_dir(1, 1, 1);
+    mesh.boundingSphere.radius *= std::min(std::min(scales.x, scales.y), scales.z);
 }
 
 Sphere Core::get_bounding_sphere(Mesh& mesh)

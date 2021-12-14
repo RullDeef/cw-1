@@ -54,6 +54,10 @@ MainWindow::MainWindow()
     // test scene construction
     createNewSceneCommand();
 
+    factory->getCameraManager()->switchToFirstCamera();
+    factory->getCameraManager()->getActiveCamera()->setPosition(Vector(0, 200, 0, 1));
+    factory->getCameraManager()->getActiveCamera()->setRotation(Vector(-90, 0, 0, 0));
+
     factory->getSceneManager()->addObject(
         LightBuilder()
             .setId(DefaultIDGenerator().generate())
@@ -82,8 +86,7 @@ MainWindow::MainWindow()
 //            .build()
 //    );
 
-    factory->getSceneManager()->addObject(
-    ConeMeshBuilder()
+    auto cone = std::shared_ptr<IObject>(ConeMeshBuilder()
             .setRadius(40)
             .setHeight(100)
             .setMeshDensity(32)
@@ -91,8 +94,21 @@ MainWindow::MainWindow()
             .setColor(Color::green())
             .setId(DefaultIDGenerator().generate())
             .setName("Test Cone")
-            .build()
-    );
+            .build());
+
+    auto renderManager = factory->getRenderManager();
+    factory->getSceneManager()->addObject(cone);
+
+    QTimer *timer = new QTimer();
+    Vector delta(0, 15, 0, 0);
+    timer->callOnTimeout([renderManager, cone, delta](){
+        auto rotation = cone->getRotation();
+        cone->setRotation(rotation + delta);
+        renderManager->renderActiveScene();
+    });
+
+//    timer->setInterval(1000);
+//    timer->start();
 }
 
 void MainWindow::setupActions()
