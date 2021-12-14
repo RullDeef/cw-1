@@ -81,7 +81,7 @@ static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Came
             {
                 if (light.type == LightType::Ambient)
                 {
-                    color += 400 / distance * light.intensity * light.color * mesh->material.ambientColor;
+                    color += light.intensity * light.color * mesh->material.ambientColor;
                 }
                 else if (light.type == LightType::Directional)
                 {
@@ -91,7 +91,7 @@ static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Came
                         auto traced = traceRay(make_ray(position - 0.1 * light.direction, -light.direction), scene, camera, depthLeft - 1);
                         if (!(traced.first < std::numeric_limits<double>::infinity()))
                         {
-                            color += 400 / distance * dot(normal, -light.direction) * light.intensity * light.color;
+                            color += dot(normal, -light.direction) * light.intensity * light.color;
                         }
                     }
                 }
@@ -120,9 +120,9 @@ static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Came
             color += light.intensity * light.color;
         else if (light.type == LightType::Directional)
         {
-            Vec diff = light.direction + ray.direction;
-            if (dot(diff, diff) == 0)
-                color += light.intensity * light.color;
+            double val = dot(ray.direction, -light.direction);
+            if (val > 0)
+                color += val * light.intensity * light.color;
         }
     }
 
@@ -140,18 +140,17 @@ static bool findIntersectionPoint(Mesh*& mesh, Face*& face, double& distance, Ra
         if (!node->value.visible)
             continue;
 
-        Sphere bounding_sphere = get_bounding_sphere(node->value);
         double t;
 
+        Sphere bounding_sphere = get_bounding_sphere(node->value);
         if (ray_intersects(t, ray, bounding_sphere) && t < distance)
         {
-            mesh = &node->value;
-
-            for (size_t i = 0; i < mesh->faces.size; i++)
+            for (size_t i = 0; i < node->value.faces.size; i++)
             {
-                if (ray_intersects(t, ray, mesh->model_mat * mesh->faces.data[i]) && t < distance)
+                if (ray_intersects(t, ray, node->value.model_mat * node->value.faces.data[i]) && t < distance)
                 {
                     distance = t;
+                    mesh = &node->value;
                     face = &mesh->faces.data[i];
                 }
             }
