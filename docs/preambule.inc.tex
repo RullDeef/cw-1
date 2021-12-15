@@ -15,7 +15,7 @@ citecolor=black, menucolor=black, filecolor=black,
 ]{hyperref}
 
 % Изменение начертания шрифта --- после чего выглядит таймсоподобно.
-\usepackage{cyrtimespatched}
+% \usepackage{cyrtimespatched}
 
 % графика
 \usepackage{graphicx}
@@ -99,7 +99,17 @@ citecolor=black, menucolor=black, filecolor=black,
 \makeatletter
 \newcommand{\reporttutor}[1]
 {
-	\large\textbf{Преподователь} & & & & & #1 \\
+	\large\textbf{Консультант} & & & & & #1 \\
+	\cline{4-4} \cline{6-6} \vspace{-4mm} \\
+	& & & \large\textsuperscript{(подпись, дата)} & &
+	\large\textsuperscript{(Фамилия И.О.)} \\
+}
+\makeatother
+
+\makeatletter
+\newcommand{\reportkurov}[1]
+{
+	\multicolumn{2}{l}{\large\textbf{Руководитель курсовой работы}} & & & & #1 \\
 	\cline{4-4} \cline{6-6} \vspace{-4mm} \\
 	& & & \large\textsuperscript{(подпись, дата)} & &
 	\large\textsuperscript{(Фамилия И.О.)} \\
