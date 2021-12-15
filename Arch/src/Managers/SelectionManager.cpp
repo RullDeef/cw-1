@@ -51,6 +51,16 @@ void SelectionManager::selectAll()
     onSelectionChanged(getSelectedObjects());
 }
 
+void SelectionManager::invertSelection()
+{
+    auto& scene = getFactory().getSceneManager()->getActiveScene();
+
+    for (auto& obj : scene)
+        obj->setSelected(!obj->isSelected());
+
+    onSelectionChanged(getSelectedObjects());
+}
+
 void SelectionManager::applyVisitor(IObjectVisitor &visitor)
 {
     auto selected = getSelectedObjects();

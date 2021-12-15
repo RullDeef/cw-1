@@ -24,6 +24,7 @@ public:
     void clearSelection();
 
     void selectAll();
+    void invertSelection();
     void applyVisitor(IObjectVisitor& visitor);
 
     void deleteSelected();

@@ -117,9 +117,9 @@ Vector &Vector::operator/=(double val) {
 
 bool Vector::is_zero() const
 {
-    return x == std::numeric_limits<double>::epsilon()
-        && y == std::numeric_limits<double>::epsilon()
-        && z == std::numeric_limits<double>::epsilon();
+    return std::abs(x) <= std::numeric_limits<double>::epsilon()
+        && std::abs(y) <= std::numeric_limits<double>::epsilon()
+        && std::abs(z) <= std::numeric_limits<double>::epsilon();
 }
 
 Vector Vector::normalized() const

@@ -25,90 +25,26 @@ MainWindow::MainWindow()
     factory = std::shared_ptr<IManagerFactory>(new QtManagerFactory());
 
     // setup default frames
-    if (1) {
-        IFrame *frame = new HierarchyFrame(*factory, this);
-        dockManager->addDockWidget(ads::RightDockWidgetArea, frame);
-        frames.push_back(frame);
-    }
+    IFrame *frame;
 
-    if (1) {
-        IFrame *frame = new SettingsFrame(*factory, this);
-        dockManager->addDockWidget(ads::BottomDockWidgetArea, frame);
-        frames.push_back(frame);
-    }
+    frame = new HierarchyFrame(*factory, this);
+    dockManager->addDockWidget(ads::RightDockWidgetArea, frame);
+    frames.push_back(frame);
 
-    if (1) {
-        IFrame *frame = new ViewportFrame(*factory, this);
-        dockManager->addDockWidget(ads::LeftDockWidgetArea, frame);
-        frames.push_back(frame);
-    }
+    frame = new SettingsFrame(*factory, this);
+    dockManager->addDockWidget(ads::BottomDockWidgetArea, frame);
+    frames.push_back(frame);
 
-    if (1) {
-        IFrame *frame = new InspectorFrame(*factory, this);
-        dockManager->addDockWidget(ads::LeftDockWidgetArea, frame);
-        frames.push_back(frame);
-    }
+    frame = new ViewportFrame(*factory, this);
+    dockManager->addDockWidget(ads::LeftDockWidgetArea, frame);
+    frames.push_back(frame);
+
+    frame = new InspectorFrame(*factory, this);
+    dockManager->addDockWidget(ads::LeftDockWidgetArea, frame);
+    frames.push_back(frame);
 
     setupActions();
-
-    // test scene construction
     createNewSceneCommand();
-
-    factory->getCameraManager()->switchToFirstCamera();
-    factory->getCameraManager()->getActiveCamera()->setPosition(Vector(0, 200, 0, 1));
-    factory->getCameraManager()->getActiveCamera()->setRotation(Vector(-90, 0, 0, 0));
-
-    factory->getSceneManager()->addObject(
-        LightBuilder()
-            .setId(DefaultIDGenerator().generate())
-            .setName("Ambient light")
-            .build()
-    );
-
-    factory->getSceneManager()->addObject(
-        LightBuilder()
-            .setType(Light::Type::Directional)
-            .setIntensity(0.7)
-            .setId(DefaultIDGenerator().generate())
-            .setName("Directional light")
-            .build()
-    );
-
-//    factory->getSceneManager()->addObject(
-//        CylinderMeshBuilder()
-//            .setRadius(50)
-//            .setHeight(100)
-//            .setMeshDensity(32)
-//            .setSmooth(true)
-//            .setColor(Color::yellow())
-//            .setId(DefaultIDGenerator().generate())
-//            .setName("Test Cylinder")
-//            .build()
-//    );
-
-    auto cone = std::shared_ptr<IObject>(ConeMeshBuilder()
-            .setRadius(40)
-            .setHeight(100)
-            .setMeshDensity(32)
-            .setSmooth(true)
-            .setColor(Color::green())
-            .setId(DefaultIDGenerator().generate())
-            .setName("Test Cone")
-            .build());
-
-    auto renderManager = factory->getRenderManager();
-    factory->getSceneManager()->addObject(cone);
-
-    QTimer *timer = new QTimer();
-    Vector delta(0, 15, 0, 0);
-    timer->callOnTimeout([renderManager, cone, delta](){
-        auto rotation = cone->getRotation();
-        cone->setRotation(rotation + delta);
-        renderManager->renderActiveScene();
-    });
-
-//    timer->setInterval(1000);
-//    timer->start();
 }
 
 void MainWindow::setupActions()
@@ -273,5 +209,5 @@ void MainWindow::selectAll()
 
 void MainWindow::invertSelection()
 {
-    throw std::runtime_error("not implemented");
+    factory->getSelectionManager()->invertSelection();
 }
