@@ -2,6 +2,8 @@
 *.fls
 *.fdb_latexmk
 *.log
+note.pdf
+note.synctex.gz
 
 build
 
