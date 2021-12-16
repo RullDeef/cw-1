@@ -38,6 +38,7 @@ namespace Core
 
     Vec get_center(const Face& face);
     Vec get_mean_normal(const Face& face);
+    Vec get_normal_at(const Face& face, Vec pos);
 
     double side_length(const Face& face, size_t i, size_t j);
 

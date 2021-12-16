@@ -70,6 +70,10 @@ void InspectorWidget::inspect(ObjectAdapter<Mesh> &object)
 
     ui->specularHightlightSpinBox->setValue(material.getSpecularHighlight());
     ui->opacitySpinBox->setValue(material.getOpacity());
+
+    ui->reflectionSpinBox->setValue(material.getReflection());
+    ui->refractionSpinBox->setValue(material.getRefraction());
+    ui->refractionIndexSpinBox->setValue(material.getRefractiveIndex());
 }
 
 void InspectorWidget::inspect(ObjectAdapter<Light>& object)
@@ -142,6 +146,10 @@ void InspectorWidget::applyMaterial()
             material.setSpecularColor(ui->specularEdit->getValue());
             material.setSpecularHighlight(ui->specularHightlightSpinBox->value());
             material.setOpacity(ui->opacitySpinBox->value());
+
+            material.setReflection(ui->reflectionSpinBox->value());
+            material.setRefraction(ui->refractionSpinBox->value());
+            material.setRefractionIndex(ui->refractionIndexSpinBox->value());
 
             mesh.setMaterial(material);
 

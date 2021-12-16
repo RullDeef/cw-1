@@ -88,8 +88,7 @@ void UdfExporter::exportMesh(std::ostream& stream, const Mesh& mesh)
     for (size_t i = 0; i < ((Core::Mesh)mesh).faces.size; i++)
         stream << "f\n" << 3 * i << "/" << 3 * i << " " << (3*i + 1) << "/" << (3*i + 1) << " " << (3*i + 2) << "/" << (3*i + 2) << std::endl;
 
-    ///TODO: export materials as well
-
+    exportMaterial(stream, mesh.getMaterial());
     stream << std::string("EM\n");
 }
 
@@ -126,4 +125,19 @@ void UdfExporter::exportLight(std::ostream &stream, const Light& light)
     stream << light.getAttenuation() << std::endl;
     stream << light.getRadius() << std::endl;
     stream << "EL\n";
+}
+
+void UdfExporter::exportMaterial(std::ostream &stream, const Material &material)
+{
+    stream << "mat\n";
+
+    stream << material.getAmbientColor() << std::endl;
+    stream << material.getDiffuseColor() << std::endl;
+    stream << material.getSpecularColor() << std::endl;
+
+    stream << material.getSpecularHighlight() << std::endl;
+    stream << material.getOpacity() << std::endl;
+    stream << material.getReflection() << std::endl;
+    stream << material.getRefraction() << std::endl;
+    stream << material.getRefractiveIndex() << std::endl;
 }

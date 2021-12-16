@@ -23,20 +23,6 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="windowMenu">
-    <property name="title">
-     <string>Окна</string>
-    </property>
-    <widget class="QMenu" name="addMenu">
-     <property name="title">
-      <string>Добавить...</string>
-     </property>
-     <addaction name="viewportWindow"/>
-     <addaction name="hierarhyWindow"/>
-     <addaction name="sceneListWindow"/>
-    </widget>
-    <addaction name="addMenu"/>
-   </widget>
    <widget class="QMenu" name="objectMenu">
     <property name="title">
      <string>Object</string>
@@ -90,7 +76,6 @@
     </widget>
     <addaction name="viewSwitchMenu"/>
    </widget>
-   <addaction name="windowMenu"/>
    <addaction name="sceneMenu"/>
    <addaction name="objectMenu"/>
    <addaction name="viewMenu"/>

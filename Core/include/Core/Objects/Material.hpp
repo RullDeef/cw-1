@@ -19,6 +19,11 @@ namespace Core
         Color specularColor;
         double specularHighlight;
         double opacity;
+
+        /* ray trace specific */
+        double coefReflection;
+        double coefRefraction;
+        double refractiveIndex; // показатель преломления материала
     };
 
     Material make_material();

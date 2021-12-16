@@ -8,7 +8,8 @@ Material::Material() : Material(Core::make_material())
 Material::Material(const Core::Material &mat)
     : ambientColor(mat.ambientColor), diffuseColor(mat.diffuseColor),
       specularColor(mat.specularColor), specularHighlight(mat.specularHighlight),
-      opacity(mat.opacity)
+      opacity(mat.opacity), coefReflection(mat.coefReflection), coefRefraction(mat.coefRefraction),
+      refractiveIndex(mat.refractiveIndex)
 {
 }
 
@@ -21,6 +22,10 @@ Material::operator Core::Material() const
     mat.specularColor = specularColor;
     mat.specularHighlight = specularHighlight;
     mat.opacity = opacity;
+
+    mat.coefReflection = coefReflection;
+    mat.coefRefraction = coefRefraction;
+    mat.refractiveIndex = refractiveIndex;
 
     return mat;
 }
@@ -48,4 +53,19 @@ void Material::setSpecularHighlight(double value)
 void Material::setOpacity(double value)
 {
     opacity = value;
+}
+
+void Material::setReflection(double value)
+{
+    coefReflection = value; /// TODO: checks
+}
+
+void Material::setRefraction(double value)
+{
+    coefRefraction = value; /// TODO: checks
+}
+
+void Material::setRefractionIndex(double value)
+{
+    refractiveIndex = value; /// TODO: checks
 }

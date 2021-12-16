@@ -47,34 +47,48 @@ void RenderManager::renderScene(Scene &scene, Camera &camera, const RenderSettin
 
     auto timeStart = std::chrono::high_resolution_clock::now();
 
+    if (renderSettings.getRenderType() == RenderSettings::RenderType::RayTracing)
+    {
+        int x_side = 16, y_side = 16;
+        for (int y = 0, iy = 0; y < renderTarget.height; y += y_side)
+        {
+            for (int x = 0, ix = 0; x < renderTarget.width; x += x_side)
+            {
+                Core::RenderParams taskParams = params;
+                taskParams.viewport = Core::make_rect(x_side, y_side, x, y);
+                Core::renderScene(taskParams);
 
-//    if (renderSettings.getRenderType() == RenderSettings::RenderType::RayTracing)
-//    {
-//        if (renderSettings.getThreadsCount() > 1)
-//        {
-//            threadPool.killAllTasks();
-//            threadPool.setWorkersCount(renderSettings.getThreadsCount());
-//            threadPool.beginTaskGroup();
-//
-//            int x_side = 64, y_side = 64;
-//            for (int y = 0; y < renderTarget.height; y += y_side)
-//            {
-//                for (int x = 0; x < renderTarget.width; x += x_side)
-//                {
-//                    Core::RenderParams taskParams = params;
-//                    taskParams.viewport = Core::make_rect(x_side, y_side, x, y);
-//                    threadPool.addTask([taskParams]() { Core::renderScene(taskParams); });
-//                }
-//            }
-//
-//            threadPool.endTaskGroup();
-//        }
-//    }
-//    else
-//    {
+                renderPercent = double(iy * renderTarget.width + (ix + 1) * x_side) * y_side / (renderTarget.width * renderTarget.height);
+
+                auto timeEnd = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double, std::ratio<1, 1>> durr = timeEnd - timeStart;
+
+                std::stringstream buff;
+                buff << "rendering... " << 100 * renderPercent << "% ("
+                    << std::setprecision(3) << std::fixed << durr.count() << " s).";
+
+                if (renderPercent > 0)
+                {
+                    auto estimating = double(durr.count()) / renderPercent - durr.count();
+                    buff << " Remaining time: " << std::setprecision(3) << std::fixed << estimating << " s.";
+                }
+                else
+                    buff << "estimating remaining time...";
+
+                std::string message = buff.str();
+                getFactory().getInfoManager()->logInfo(message.c_str());
+
+                onSceneRender(scene, camera, renderSettings);
+
+                ix++;
+            }
+            iy++;
+        }
+    }
+    else
+    {
         Core::renderScene(params);
-//    }
-
+    }
 
     auto timeEnd = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> durr = timeEnd - timeStart;

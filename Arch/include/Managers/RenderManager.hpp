@@ -18,6 +18,8 @@ public:
     void renderActiveScene();
     void renderActiveScene(const RenderSettings& renderSettings);
 
+    inline double getRenderPercent() const { return renderPercent; }
+
     virtual Rect getActiveViewport() = 0;
 
 protected:
@@ -31,7 +33,7 @@ protected:
     virtual void onSceneRender(Scene &scene, Camera &camera, const RenderSettings &renderSettings);
 
 private:
-    ThreadPool threadPool;
+    double renderPercent;
 };
 
 #endif // RENDERMANAGER_HPP

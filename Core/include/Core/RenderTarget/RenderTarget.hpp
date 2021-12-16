@@ -11,11 +11,13 @@ namespace Core
 {
     struct RenderTarget
     {
-        std::atomic<Pixel*> data;
+        // no multithreading
+        // std::atomic<Pixel*> data;
+        Pixel* data;
         int width;
         int height;
 
-        std::atomic<bool> writeLock;
+//        std::atomic<bool> writeLock;
 
         RenderTarget() = default;
         RenderTarget(const RenderTarget& src);

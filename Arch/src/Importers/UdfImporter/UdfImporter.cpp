@@ -45,6 +45,13 @@ std::shared_ptr<Scene> UdfImporter::importScene(std::istream& stream)
     return sceneBuilder.build();
 }
 
+static double readDouble(const std::string &string)
+{
+    double value;
+    std::stringstream(string) >> value;
+    return value;
+}
+
 static Vector readVector(const std::string &string, double w)
 {
     double x, y, z;
@@ -122,10 +129,6 @@ Mesh UdfImporter::importMesh(std::istream& stream)
 
     BaseMeshBuilder builder;
 
-//    std::vector<Vector> vertices;
-//    std::vector<Vector> normals;
-//    std::vector<std::vector<size_t>> faces;
-
     while (line != "EM")
     {
         std::getline(stream, line);
@@ -133,44 +136,48 @@ Mesh UdfImporter::importMesh(std::istream& stream)
         if (line == "v")
         {
             std::getline(stream, line);
-            // vertices.push_back(readVector(line, 1.0));
             builder.pushPos(readVector(line, 1.0));
         }
         else if (line == "n")
         {
             std::getline(stream, line);
-            // normals.push_back(readVector(line, 0.0));
             builder.pushNorm(readVector(line, 0.0));
         }
         else if (line == "f")
         {
             std::getline(stream, line);
-            auto inds = readFace(line);
-            // faces.push_back(readFace(line));
-            builder.linkFace(inds[0], inds[2], inds[4], inds[1], inds[3], inds[5]);
+            auto i = readFace(line);
+            builder.linkFace(i[0], i[2], i[4], i[1], i[3], i[5]);
+        }
+        else if (line == "mat")
+        {
+            Material material;
+
+            std::getline(stream, line);
+            material.setAmbientColor(readVector(line, 1.0));
+            std::getline(stream, line);
+            material.setDiffuseColor(readVector(line, 1.0));
+            std::getline(stream, line);
+            material.setSpecularColor(readVector(line, 1.0));
+
+            std::getline(stream, line);
+            material.setSpecularHighlight(readDouble(line));
+
+            std::getline(stream, line);
+            material.setOpacity(readDouble(line));
+
+            std::getline(stream, line);
+            material.setReflection(readDouble(line));
+
+            std::getline(stream, line);
+            material.setRefraction(readDouble(line));
+
+            std::getline(stream, line);
+            material.setRefractionIndex(readDouble(line));
+
+            builder.useMaterial(material);
         }
     }
-
-//    Core::Mesh mesh = Core::make_mesh(faces.size());
-//
-//    for (const auto& faceIndices : faces)
-//    {
-//        Vector v1 = vertices[faceIndices[0]];
-//        Vector v2 = vertices[faceIndices[2]];
-//        Vector v3 = vertices[faceIndices[4]];
-//
-//        Vector n1 = normals[faceIndices[1]];
-//        Vector n2 = normals[faceIndices[3]];
-//        Vector n3 = normals[faceIndices[5]];
-//
-//        Core::Vertex vr1 = Core::make_vertex(v1, n1);
-//        Core::Vertex vr2 = Core::make_vertex(v2, n2);
-//        Core::Vertex vr3 = Core::make_vertex(v3, n3);
-//
-//        add_face(mesh, Core::make_face(vr1, vr2, vr3));
-//    }
-
-//    return Mesh(mesh);
 
     return builder.buildMesh();
 }

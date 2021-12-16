@@ -10,7 +10,7 @@ RenderTarget::RenderTarget(unsigned char* data, int w, int h)
 }
 
 RenderTarget::RenderTarget(const Core::RenderTarget &renderTarget)
-    : data((unsigned char*)renderTarget.data.load()), width(renderTarget.width), height(renderTarget.height)
+    : data((unsigned char*)renderTarget.data), width(renderTarget.width), height(renderTarget.height)
 {
     if (!Core::is_valid(renderTarget))
         throw std::runtime_error("bad RenderTarget.");

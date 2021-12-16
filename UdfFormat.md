@@ -17,8 +17,15 @@ t
 1 2 3 # triangles
 t
 2 3 4
-mat
-my-mesh-mat.mat # material file
+mat         # material definition
+255 255 255 # ambient color
+255 255 255 # diffuse color
+255 255 255 # specular color
+1.0         # specular highlight
+1.0         # opacity
+0.0         # reflection
+0.0         # refraction
+1.0         # refractive index
 EM
 ```
 

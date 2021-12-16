@@ -1,4 +1,6 @@
 #include <QWidget>
+#include <Managers/IManagerFactory.hpp>
+#include <Managers/InfoManager.hpp>
 #include "QtRenderManager.hpp"
 
 

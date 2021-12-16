@@ -4,16 +4,15 @@ using namespace Core;
 
 
 RenderTarget::RenderTarget(const RenderTarget& src)
-    : data(src.data.load()), width(src.width), height(src.height), writeLock(static_cast<bool>(src.writeLock))
+    : data(src.data), width(src.width), height(src.height)
 {
 }
 
 RenderTarget& RenderTarget::operator=(const RenderTarget& src)
 {
-    data = src.data.load();
+    data = src.data;
     width = src.width;
     height = src.height;
-    writeLock = src.writeLock.load();
 
     return *this;
 }
@@ -27,7 +26,6 @@ RenderTarget Core::make_render_target(unsigned char *data, int width, int height
     res.data = (Core::Pixel*)data;
     res.width = width;
     res.height = height;
-    res.writeLock = false;
 
     return res;
 }
@@ -47,13 +45,16 @@ void Core::setPixel(RenderTarget& renderTarget, size_t row, size_t col, Pixel pi
     if (row >= renderTarget.height || col >= renderTarget.width)
         return; /// TODO: log error
 
-    Pixel* data;
-    do {
-        data = renderTarget.data.exchange(nullptr);
-    } while (data == nullptr);
+        // no multithreading
+//    Pixel* data;
+//    do {
+//        data = renderTarget.data.exchange(nullptr);
+//    } while (data == nullptr);
+//
+//    data[row * renderTarget.width + col] = pixel;
+//    renderTarget.data.exchange(data);
 
-    data[row * renderTarget.width + col] = pixel;
-    renderTarget.data.exchange(data);
+    renderTarget.data[row * renderTarget.width + col] = pixel;
 }
 
 void Core::fill(RenderTarget& renderTarget, Pixel pixel)
@@ -65,12 +66,12 @@ void Core::fill(RenderTarget& renderTarget, Pixel pixel)
 
 void Core::lock(RenderTarget& renderTarget)
 {
-    bool locked;
-    do { locked = false; }
-    while (renderTarget.writeLock.compare_exchange_strong(locked, true, std::memory_order_acquire));
+//    bool locked;
+//    do { locked = false; }
+//    while (renderTarget.writeLock.compare_exchange_strong(locked, true, std::memory_order_acquire));
 }
 
 void Core::unlock(RenderTarget& renderTarget)
 {
-    renderTarget.writeLock.store(false, std::memory_order_release);
+//    renderTarget.writeLock.store(false, std::memory_order_release);
 }

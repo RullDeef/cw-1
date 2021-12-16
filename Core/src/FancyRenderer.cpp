@@ -19,13 +19,8 @@ StatusCode Core::fancyRenderScene(RenderParams renderParams)
     if (!renderViewportValid(renderParams.viewport, renderParams.renderTarget))
         return StatusCode::InvalidRenderViewport;
 
-//    double r = rand() % 100 / 100.0;
-//    double g = rand() % 100 / 100.0;
-//    double b = rand() % 100 / 100.0;
-//    Color color = make_color(r, g, b);
-
-    const int rowSpan = 2;
-    const int colSpan = 2;
+    const int rowSpan = 1;
+    const int colSpan = 1;
 
     for (int row = renderParams.viewport.top; row < renderParams.viewport.top + renderParams.viewport.height; row += rowSpan)
     {
@@ -64,10 +59,37 @@ static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Came
         Vec position = ray_at(ray, distance);
         Vec view = normalized(position - camera.eye);
         Mat view_mat = inverse(camera.model_mat);
-        Vec normal = get_mean_normal(mesh->model_mat * *face);
+        // Vec normal = get_mean_normal(mesh->model_mat * *face);
+        Vec normal = get_normal_at(mesh->model_mat * *face, position);
 
-        Color color = Colors::black;
+        Color colorReflected = Colors::black;
+        Color colorTransmitted = Colors::black;
+        Color colorLighted = Colors::black;
 
+        if (mesh->material.coefReflection > 0)
+        {
+            Vec reflected = ray.direction - 2 * dot(ray.direction, normal) * normal;
+            auto traced = traceRay(make_ray(position + 0.01 * reflected, reflected), scene, camera, depthLeft - 1);
+            if (traced.first < std::numeric_limits<double>::infinity())
+                colorReflected += mesh->material.coefReflection * traced.second;
+        }
+        if (mesh->material.coefRefraction > 0)
+        {
+            double d = dot(-ray.direction, normal);
+            if (d > 0) // ray goes inside
+            {
+                double theta = std::acos(d); // if theta == 0...
+                Vec m = (normal * std::cos(theta) + ray.direction) / std::sin(theta);
+                Vec refracted = normalized(m * std::sin(theta) - normal * std::cos(theta));
+                auto traced = traceRay(make_ray(position + 0.01 * refracted, refracted), scene, camera, depthLeft - 1);
+                if (traced.first < std::numeric_limits<double>::infinity())
+                    colorTransmitted += mesh->material.coefRefraction * traced.second;
+            }
+            else
+            {
+
+            }
+        }
 
         for (size_t i = 0; i < scene.lightList.size; i++)
         {
@@ -81,7 +103,7 @@ static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Came
             {
                 if (light.type == LightType::Ambient)
                 {
-                    color += light.intensity * light.color * mesh->material.ambientColor;
+                    colorLighted += light.intensity * light.color * mesh->material.ambientColor;
                 }
                 else if (light.type == LightType::Directional)
                 {
@@ -89,19 +111,22 @@ static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Came
                     if (dot(normal, -light.direction) > 0)
                     {
                         auto traced = traceRay(make_ray(position - 0.1 * light.direction, -light.direction), scene, camera, depthLeft - 1);
-                        if (!(traced.first < std::numeric_limits<double>::infinity()))
+                        if (traced.first == std::numeric_limits<double>::infinity())
                         {
-                            color += dot(normal, -light.direction) * light.intensity * light.color;
+                            colorLighted += dot(normal, -light.direction) * light.intensity * light.color;
                         }
                     }
                 }
                 else if (light.type == LightType::Point)
                 {
                     auto traced = traceRay(make_ray(position, normalized(light.position - position)), scene, camera, depthLeft - 1);
-                    color += traced.second;
+                    colorLighted += traced.second;
                 }
             }
         }
+
+        double op = mesh->material.opacity;
+        Color color = op * colorLighted + (1 - op) * colorTransmitted + colorReflected; /// TODO: fix transparency
 
         return {distance, color};
         // return compute_color(mesh->material, scene.lightList, view_mat, view, normal);

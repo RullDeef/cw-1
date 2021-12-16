@@ -68,6 +68,43 @@ Vec Core::get_mean_normal(const Face& face)
     return normalized(face.verts[0].normal + face.verts[1].normal + face.verts[2].normal);
 }
 
+// must be in XY plane
+static Vec baricenter(Vec p1, Vec p2, Vec p3, Vec p)
+{
+    double detT = (p2.y - p3.y) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.y - p3.y);
+
+    double l1 = ((p2.y - p3.y) * (p.x - p3.x) + (p3.x - p2.x) * (p.y - p3.y)) / detT;
+    double l2 = ((p3.y - p1.y) * (p.x - p3.x) + (p1.x - p3.x) * (p.y - p3.y)) / detT;
+    double l3 = 1.0 - l1 - l2;
+
+    return make_dir(l1, l2, l3);
+}
+
+Vec Core::get_normal_at(const Face& face, Vec pos)
+{
+    /// TODO: test. Seems not working
+    Vec p1 = make_pos(0, 0, 0);
+    Vec p2 = face.verts[1].position - face.verts[0].position;
+    Vec p3 = face.verts[2].position - face.verts[0].position;
+    Vec p = pos - face.verts[0].position;
+
+    Vec u = normalized(p2);
+    Vec v = normalized(cross(cross(u, p3), u));
+
+    p2 = make_pos(dot(p2, u), 0, 0);
+    p3 = make_pos(dot(p3, u), dot(p3, v), 0);
+    p = make_pos(dot(p, u), dot(p, v), 0);
+
+    Vec bar = baricenter(p1, p2, p3, p);
+
+    Vec n1 = face.verts[0].normal;
+    Vec n2 = face.verts[1].normal;
+    Vec n3 = face.verts[2].normal;
+
+    Vec n = normalized(bar.x * n1 + bar.y * n2 + bar.z * n3);
+    return n;
+}
+
 double Core::side_length(const Face& face, size_t i, size_t j)
 {
     Vec pos_i = face.verts[i].position;
