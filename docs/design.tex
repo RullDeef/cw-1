@@ -6,9 +6,12 @@
 
 \subsection{Иерархия классов}
 
-Ниже приведена иерархия классов для архитектурного домена.
+Ниже приведена иерархия классов для архитектурного домена. (лучше вынести в приложение)
 
-
+\begin{figure}
+	\centering
+	\includegraphics[angle=90,origin=c,width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/uml.pdf}
+\end{figure}
 
 \subsection{Процесс синтеза изображения}
 
@@ -16,22 +19,47 @@
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{idef0/01_A0.jpg}
+    \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/01_A0.jpg}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{idef0/02_A0.jpg}
+    \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/02_A0.jpg}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{idef0/03_A2.jpg}
+    \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/03_A2.jpg}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{idef0/04_A3.jpg}
+    \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/04_A3.jpg}
+\end{figure}
+
+\clearpage
+
+\section{Схемы алгоритмов}
+
+В данной секции представлены 2 алгоритма синтеза изображения. Первый использует закраски полигонов, а второй -- метод трассировки лучей.
+
+\subsection{Быстрая отрисовка}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/fast.pdf}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/draw-face.pdf}
+\end{figure}
+
+\subsection{Реалистичная отрисовка}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/fancy.pdf}
 \end{figure}
 
 \clearpage
@@ -64,25 +92,4 @@
 
 \textbf{Точечное освещение.} ...
 
-\section{Схемы алгоритмов}
-
-В данной секции представлены 2 алгоритма синтеза изображения. Первый использует закраски полигонов, а второй -- метод трассировки лучей.
-
-\subsection{Быстрая отрисовка}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/fast.pdf}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/draw-face.pdf}
-\end{figure}
-
-\subsection{Реалистичная отрисовка}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/fancy.pdf}
-\end{figure}
+%\section{Тестирование ПО}

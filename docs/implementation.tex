@@ -1,1 +1,126 @@
 \chapter{Технологический раздел}
+
+\section{Листинги реализаций алгоритмов}
+
+\subsection{Алгоритм трассировки лучей}
+
+\begin{lstlisting}[language=C++]
+static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Camera& camera, int depthLeft) {
+  Mesh* mesh;
+  Face* face;
+  double distance;
+  
+  if (depthLeft > 0 && findIntersectionPoint(mesh, face, distance, ray, scene)) {
+    Vec position = ray_at(ray, distance);
+    Vec view = normalized(position - camera.eye);
+    Mat view_mat = inverse(camera.model_mat);
+    Vec normal = get_normal_at(mesh->model_mat * *face, position);
+    
+    Color colorReflected = Colors::black;
+    Color colorTransmitted = Colors::black;
+    Color colorLighted = Colors::black;
+    
+    if (mesh->material.coefReflection > 0) {
+      Vec reflected = ray.direction - 2 * dot(ray.direction, normal) * normal;
+      auto traced = traceRay(make_ray(position + 0.01 * reflected, reflected), scene, camera, depthLeft - 1);
+      if (traced.first < std::numeric_limits<double>::infinity())
+        colorReflected += mesh->material.coefReflection * traced.second;
+    }
+    if (mesh->material.coefRefraction > 0) {
+      double d = dot(-ray.direction, normal);
+      if (d > 0) {
+        double theta = std::acos(d);
+        Vec m = (normal * std::cos(theta) + ray.direction) / std::sin(theta);
+        Vec refracted = normalized(m * std::sin(theta) - normal * std::cos(theta));
+        auto traced = traceRay(make_ray(position + 0.01 * refracted, refracted), scene, camera, depthLeft - 1);
+        if (traced.first < std::numeric_limits<double>::infinity())
+          colorTransmitted += mesh->material.coefRefraction * traced.second;
+      }
+    }
+    
+    for (size_t i = 0; i < scene.lightList.size; i++) {
+      Light light;
+  
+      if (!get(scene.lightList, i, light))
+        return {std::numeric_limits<double>::infinity(), Colors::black};
+      else if (!light.visible)
+        continue;
+      else {
+        if (light.type == LightType::Ambient) {
+          colorLighted += light.intensity * light.color * mesh->material.ambientColor;
+        }
+        else if (light.type == LightType::Directional) {
+          if (dot(normal, -light.direction) > 0) {
+            auto traced = traceRay(make_ray(position - 0.1 * light.direction, -light.direction), scene, camera, depthLeft - 1);
+            if (traced.first == std::numeric_limits<double>::infinity()) {
+              colorLighted += dot(normal, -light.direction) * light.intensity * light.color;
+            }
+          }
+        }
+        else if (light.type == LightType::Point) {
+          auto traced = traceRay(make_ray(position, normalized(light.position - position)), scene, camera, depthLeft - 1);
+          colorLighted += traced.second;
+        }
+      }
+    }
+    
+    double op = mesh->material.opacity;
+    Color color = op * colorLighted + (1 - op) * colorTransmitted + colorReflected;
+  
+    return {distance, color};
+  }
+  
+  Color color = Colors::black;
+  
+  for (size_t i = 0; i < scene.lightList.size; i++) {
+    Light light{};
+    get(scene.lightList, i, light);
+    
+    if (!light.visible)
+      continue;
+    else if (light.type == LightType::Ambient)
+      color += light.intensity * light.color;
+    else if (light.type == LightType::Directional) {
+      double val = dot(ray.direction, -light.direction);
+      if (val > 0)
+        color += val * light.intensity * light.color;
+    }
+  }
+  
+  return {std::numeric_limits<double>::infinity(), color};
+}
+\end{lstlisting}
+
+\subsection{Алгоритм сплошной закраски полигона}
+
+\begin{lstlisting}[language=C++]
+void Core::renderFlat(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, ColorComputeFn colorComputeFn) {
+  double xLeft = region.xStartLeft;
+  double xRight = region.xStartRight;
+	
+  double zLeft = region.zStartLeft;
+  double zRight = region.zStartRight;
+	
+  Pixel color = to_pixel(colorComputeFn(region.center, region.normal, region.meshPtr->material));
+	
+  for (int y = region.yStart; y <= region.yEnd; y++) {
+    double z = zLeft;
+    double dz = (zRight - zLeft) / (xRight - xLeft + 1);
+		
+    if (0 <= y && y < renderTarget.height) {
+      for (auto x = (int)xLeft; x < xRight; x++) {
+        if (0 <= x && x < renderTarget.width)
+          updatePixel(renderTarget, zbuffer, y, x, 1.0 / z, color);
+
+        z += dz;
+      }
+    }
+
+    xLeft += region.dxLeft;
+    xRight += region.dxRight;
+
+    zLeft += region.dzLeft;
+    zRight += region.dzRight;
+  }
+}
+\end{lstlisting}
