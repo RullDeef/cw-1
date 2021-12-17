@@ -2,39 +2,85 @@
 
 В данном разделе описаны структура разрабатываемого ПО, используемые структуры данных, а также приведены схемы алгоритмов используемых при отрисовке изображения.
 
+В данном разделе описаны требования, которым должно удовлетворять ПО, структура разрабатываемого ПО, используемые структуры данных, а также приведены схемы алгоритмов используемых при отрисовке изображения.
+
+\section{Требования к ПО}
+
+Создаваемое ПО должно предоставлять следующий функционал:
+
+\begin{itemize}
+	\item загрузка заготовленных полигональных моделей из файлов;
+	\item добавление в сцену объектов из заготовленного набора примитивов;
+	\item независимое трансформирование положения объектов в сцене;
+	\item навигация по сцене с помощью перемещения и поворота главной камеры;
+	\item просмотр и изменение специфических свойств объектов в сцене;
+	\item сохранение текущего изображения сцены в файл на диске;
+	\item сохранение созданной сцены в файл на диске;
+	\item загрузка готовой сцены из файла.
+\end{itemize}
+
+\clearpage
+
 \section{Структура ПО}
+
+\subsection{Схема доменов}
+
+Программное обеспечение будет состоять из трех доменов: прикладного, архитектурного и
+интерфейсного. Прикладной домен будет отвечать за процесс визуализации сцены,
+интерфейсный - за взаимодействие с пользователем, а архитектурный послужит связующим звеном между двумя вышеупомянутыми доменами.
+
+На рисунке \ref{schema:domen} представлена схема доменов.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/domens.pdf}
+	\caption{Схема доменов}
+	\label{schema:domen}
+\end{figure}
 
 \subsection{Иерархия классов}
 
-Ниже приведена иерархия классов для архитектурного домена. (лучше вынести в приложение)
+Ниже на рисунке \ref{uml:arch} приведена иерархия классов для архитектурного домена.
 
 \begin{figure}
 	\centering
 	\includegraphics[angle=90,origin=c,width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/uml.pdf}
+	\caption{UML диаграмма классов архитектурного домена}
+	\label{uml:arch}
 \end{figure}
+
+\clearpage
 
 \subsection{Процесс синтеза изображения}
 
-Ниже представлена IDEF0 диаграмма процесса синтеза изображения сцены.
+Ниже на рисунках \ref{idef0:render:1}--\ref{idef0:render:4} представлена IDEF0 диаграмма процесса синтеза изображения сцены.
 
-\begin{figure}
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/01_A0.jpg}
+    \caption{IDEF0 диаграмма процесса синтеза изображения (часть 1)}
+    \label{idef0:render:1}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/02_A0.jpg}
+    \caption{IDEF0 диаграмма процесса синтеза изображения (часть 2)}
+    \label{idef0:render:2}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/03_A2.jpg}
+    \caption{IDEF0 диаграмма процесса синтеза изображения (часть 3)}
+    \label{idef0:render:3}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{idef0/04_A3.jpg}
+    \caption{IDEF0 диаграмма процесса синтеза изображения (часть 4)}
+    \label{idef0:render:4}
 \end{figure}
 
 \clearpage
@@ -45,21 +91,33 @@
 
 \subsection{Быстрая отрисовка}
 
+На рисунках \ref{alg:fast:1}--\ref{alg:fast:2} представлен алгоритм синтеза изображения, использующий простые закраски.
+
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/fast.pdf}
+	\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/fast.pdf}
+	\caption{Алгоритм использующий простую закраску (часть 1)}
+	\label{alg:fast:1}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/draw-face.pdf}
+	\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/draw-face.pdf}
+	\caption{Алгоритм использующий простую закраску (часть 2)}
+	\label{alg:fast:2}
 \end{figure}
+
+\clearpage
 
 \subsection{Реалистичная отрисовка}
 
+На рисунке \ref{alg:fancy} представлена схема алгоритма трассировки лучей.
+
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{diagrams/fancy.pdf}
+	\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/fancy.pdf}
+	\caption{Алгоритм использующий трассировку лучей}
+	\label{alg:fancy}
 \end{figure}
 
 \clearpage
@@ -90,6 +148,6 @@
 
 \textbf{Направленное освещение.} Для данного типа освещения необходимо хранить его цвет, интенсивность и направление.
 
-\textbf{Точечное освещение.} ...
+\textbf{Точечное освещение.} Данный тип освещения регулируется положением источника в пространстве, радиусом освещения и коэффициентами затухания.
 
 %\section{Тестирование ПО}
