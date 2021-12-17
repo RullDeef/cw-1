@@ -1,0 +1,41 @@
+\babel@toc {russian}{}
+\contentsline {chapter}{Введение}{4}{chapter*.3}%
+\contentsline {chapter}{\numberline {1}Аналитический раздел}{6}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Описание сцены}{6}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Описание моделей трехмерных объектов в сцене}{6}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Функциональное моделирование}{6}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Полигональная сетка}{8}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Воксельная сетка}{9}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.4}Вывод}{9}{subsection.1.2.4}%
+\contentsline {section}{\numberline {1.3}Обзор классических методов синтеза изображения}{9}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Алгоритм Варнока}{9}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Алгоритм Вейлера-Азертона}{9}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Алгоритм с использованием Z-буфера}{10}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Вывод}{10}{subsection.1.3.4}%
+\contentsline {section}{\numberline {1.4}Обзор методов построения реалистичного изображения}{10}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Трассировка лучей}{10}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Метод радиосити}{11}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Вывод}{11}{subsection.1.4.3}%
+\contentsline {chapter}{\numberline {2}Конструкторский раздел}{12}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Требования к ПО}{12}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Структура ПО}{13}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Схема доменов}{13}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Иерархия классов}{13}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Процесс синтеза изображения}{15}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Схемы алгоритмов}{18}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Быстрая отрисовка}{18}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Реалистичная отрисовка}{21}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Структуры данных}{23}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Сцена}{23}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Трёхмерное тело}{23}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Источник освещения}{24}{subsection.2.4.3}%
+\contentsline {chapter}{\numberline {3}Технологический раздел}{25}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Инструменты разработки}{25}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Листинги реализаций алгоритмов}{26}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Алгоритм трассировки лучей}{26}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Алгоритм сплошной закраски полигона}{28}{subsection.3.2.2}%
+\contentsline {chapter}{\numberline {4}Исследовательский раздел}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Технические характеристики}{29}{section.4.1}%
+\contentsline {chapter}{Заключение}{30}{chapter*.14}%
+\contentsline {chapter}{Список использованных источников}{31}{chapter*.14}%
+\contentsline {chapter}{Приложение}{33}{chapter*.16}%

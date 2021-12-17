@@ -1,0 +1,57 @@
+\begin{thebibliography}{1}
+
+\bibitem{cad}
+Волков В. Я., Мясоедова Н. В. Решение
+  позиционных задач средствами
+  компьютерной графики // ОНВ. 2006. №2 (35). (дата
+  обращения: 11.08.2021).
+\newblock
+  \url{https://cyberleninka.ru/article/n/reshenie-pozitsionnyh-zadach-sredstvami-kompyuternoy-grafiki}.
+
+\bibitem{optics}
+Доморацкий Е.П., Байбикова Т.Н. О
+  формализации понятий и терминологии при
+  анализе изображений объектов // Вестник
+  МФЮА. 2013. №4. (дата обращения: 11.08.2021).
+\newblock
+  \url{https://cyberleninka.ru/article/n/o-formalizatsii-ponyatiy-i-terminologii-pri-analize-izobrazheniy-obektov}.
+
+\bibitem{polygon-net}
+Colin smith, on vertex-vertex meshes and their use in geometric and biological
+  modeling [Электронный ресурс] // algorithmic botany.
+  (Дата обращения: 13.08.2021).
+\newblock \url{http://algorithmicbotany.org/papers/smithco.dis2006.pdf.}
+
+\bibitem{voxel}
+Симонов Евгений Николаевич, Аврамов Денис
+  Витальевич, Аврамов Максим Витальевич
+  Метод объемного рендеринга для
+  визуализации трехмерных данных в
+  рентгеновской компьютерной томографии //
+  Вестник ЮУрГУ. Серия: Компьютерные
+  технологии, управление, радиоэлектроника.
+  2016. №4. (дата обращения: 14.08.2021).
+\newblock
+  https://cyberleninka.ru/article/n/metod-obemnogo-renderinga-dlya-vizualizatsii-trehmernyh-dannyh-v-rentgenovskoy-kompyuternoy-tomografii.
+
+\bibitem{ray-tracing}
+Arthur Appel.
+\newblock {\em Some Techniques for Shading Machine Renderings of Solid}.
+\newblock SJCC, 1968, P. 27--45.
+
+\bibitem{radiocity}
+Donald P.~Greenberg Cindy M.~Goral, Kenneth E.~Torrance and Bennett Battaile.
+\newblock {\em Modeling the Interaction of Light Between Diffuse Surfaces}.
+\newblock Proceedings of ACM SIGGRAPH, 1984, P. 213--222.
+
+\bibitem{c++}
+C++ standard.
+\newblock \url{https://isocpp.org/}.
+\newblock (дата обращения: 24.11.2021).
+
+\bibitem{pop}
+Pop!\_os.
+\newblock \url{https://pop.system76.com/}.
+\newblock (дата обращения: 01.12.2021).
+
+\end{thebibliography}
