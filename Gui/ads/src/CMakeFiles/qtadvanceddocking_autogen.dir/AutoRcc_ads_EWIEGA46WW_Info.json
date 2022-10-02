@@ -1,0 +1,35 @@
+{
+	"BUILD_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/qtadvanceddocking_autogen",
+	"CMAKE_BINARY_DIR" : "/home/rulldeef/Projects/cw-1",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src",
+	"CMAKE_SOURCE_DIR" : "/home/rulldeef/Projects/cw-1",
+	"INCLUDE_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/qtadvanceddocking_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/close-button-focused.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/tabs-menu-button.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/restore-button.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/detach-button.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/detach-button-disabled.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/restore-button-focused.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/close-button.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/maximize-button-focused.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/maximize-button.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/images/close-button-disabled.svg",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/stylesheets/focus_highlighting_linux.css",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/stylesheets/default_linux.css",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/stylesheets/default.css",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/stylesheets/focus_highlighting.css"
+	],
+	"LOCK_FILE" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/CMakeFiles/qtadvanceddocking_autogen.dir/AutoRcc_ads_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "ads" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_ads.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt5/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/CMakeFiles/qtadvanceddocking_autogen.dir/AutoRcc_ads_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/ads.qrc",
+	"VERBOSITY" : 0
+}

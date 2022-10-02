@@ -1,0 +1,386 @@
+{
+	"BUILD_DIR" : "/home/rulldeef/Projects/cw-1/Gui/Gui_autogen",
+	"CMAKE_BINARY_DIR" : "/home/rulldeef/Projects/cw-1",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/rulldeef/Projects/cw-1/Gui",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/rulldeef/Projects/cw-1/Gui",
+	"CMAKE_EXECUTABLE" : "/usr/local/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/rulldeef/Projects/cw-1/Gui/CMakeLists.txt",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5Config.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtras.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreMacros.cmake",
+		"/usr/local/share/cmake-3.23/Modules/CMakeParseArguments.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSKmsGbmIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLibInputPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake",
+		"/usr/local/share/cmake-3.23/Modules/CMakeParseArguments.cmake"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/rulldeef/Projects/cw-1",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/HierarchyFrame/CheckBoxDelegate/CheckBoxDelegate.hpp",
+			"MU",
+			"FSYMYRKVJZ/moc_CheckBoxDelegate.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/HierarchyFrame/HierarchyFrame.hpp",
+			"MU",
+			"PXGRPN4XR4/moc_HierarchyFrame.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/HierarchyFrame/ObjectView/ObjectView.hpp",
+			"MU",
+			"SHBVGBSSVM/moc_ObjectView.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/IFrame.hpp",
+			"MU",
+			"GEBBJWIT24/moc_IFrame.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/InspectorFrame/InspectorFrame.hpp",
+			"MU",
+			"SZZCBIGWMV/moc_InspectorFrame.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/InspectorFrame/InspectorWidget/InspectorWidget.hpp",
+			"MU",
+			"KB22TAMA46/moc_InspectorWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/SettingsFrame/SettingsFrame.hpp",
+			"MU",
+			"KHTYJU25QA/moc_SettingsFrame.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.hpp",
+			"MU",
+			"RXEN3GFKTK/moc_SettingsWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/ViewportFrame/FreeFlyDispatcher/FreeFlyDispatcher.hpp",
+			"MU",
+			"2J6RFSIMI5/moc_FreeFlyDispatcher.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/ViewportFrame/ViewportFrame.hpp",
+			"MU",
+			"7TYPMODY2L/moc_ViewportFrame.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/ItemModels/ObjectModel.hpp",
+			"MU",
+			"FECV36TX5N/moc_ObjectModel.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/MainWindow.hpp",
+			"MU",
+			"UVLADIE3JM/moc_MainWindow.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtCameraManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtCameraManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtInfoManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtInfoManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtLoadManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtLoadManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtManagerFactory.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtManagerFactory.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtPortManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtPortManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtRenderManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtRenderManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtSceneManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtSceneManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtSelectionManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtSelectionManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtSettingsManager.hpp",
+			"MU",
+			"PONQXYI2GT/moc_QtSettingsManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/ColorEditWidget/ColorEditWidget.hpp",
+			"MU",
+			"RHHVQUDIZ3/moc_ColorEditWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/ColorPickerWidget/ColorPickerWidget.hpp",
+			"MU",
+			"IIUQWSAJB2/moc_ColorPickerWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/RenderWidget/RenderWidget.hpp",
+			"MU",
+			"RRELYUS3TX/moc_RenderWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/VectorEditWidget/VectorEditWidget.hpp",
+			"MU",
+			"OLC2BSN3XI/moc_VectorEditWidget.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/rulldeef/Projects/cw-1/Gui/Gui_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/rulldeef/Projects/cw-1/Gui/Gui_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NO_DEBUG", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src",
+		"/home/rulldeef/Projects/cw-1/Core/include",
+		"/home/rulldeef/Projects/cw-1/Arch/include",
+		"/home/rulldeef/Projects/cw-1/Gui/src",
+		"/usr/include/x86_64-linux-gnu/qt5",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
+		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
+		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+		"/usr/include/c++/11",
+		"/usr/include/x86_64-linux-gnu/c++/11",
+		"/usr/include/c++/11/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/11/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/rulldeef/Projects/cw-1/Gui/Gui_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/rulldeef/Projects/cw-1/Gui/CMakeFiles/Gui_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/home/rulldeef/Projects/cw-1/Gui/CMakeFiles/Gui_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/HierarchyFrame/CheckBoxDelegate/CheckBoxDelegate.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/HierarchyFrame/HierarchyFrame.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/HierarchyFrame/ObjectView/ObjectView.cpp",
+			"MU",
+			null
+		],
+		[ "/home/rulldeef/Projects/cw-1/Gui/src/Frames/IFrame.cpp", "MU", null ],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/InspectorFrame/InspectorFrame.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/InspectorFrame/InspectorWidget/InspectorWidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/SettingsFrame/SettingsFrame.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/SettingsFrame/SettingsWidget/SettingsWidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/ViewportFrame/FreeFlyDispatcher/FreeFlyDispatcher.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Frames/ViewportFrame/ViewportFrame.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/ItemModels/ObjectModel.cpp",
+			"MU",
+			null
+		],
+		[ "/home/rulldeef/Projects/cw-1/Gui/src/MainWindow.cpp", "MU", null ],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtCameraManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtInfoManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtLoadManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtManagerFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtPortManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtRenderManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtSceneManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtSelectionManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Managers/QtSettingsManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/ColorEditWidget/ColorEditWidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/ColorPickerWidget/ColorPickerWidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/RenderWidget/RenderWidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/src/Widgets/VectorEditWidget/VectorEditWidget.cpp",
+			"MU",
+			null
+		],
+		[ "/home/rulldeef/Projects/cw-1/Gui/src/main.cpp", "MU", null ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

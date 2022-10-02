@@ -1,0 +1,1 @@
+/usr/bin/c++  -O0 CMakeFiles/Tests.dir/main.cpp.o -o Tests  ../Core/libCore.a 

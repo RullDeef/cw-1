@@ -6,7 +6,7 @@
 
 \section{Требования к ПО}
 
-Создаваемое ПО должно предоставлять следующий функционал:
+Разрабатываемое ПО должно предоставлять следующий функционал:
 
 \begin{itemize}
 	\item загрузка заготовленных полигональных моделей из файлов;
@@ -48,26 +48,18 @@
 	\caption{Информационная модель прикладного домена}
 \end{figure}
 
+\clearpage
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/core-data.pdf}
 	\caption{Иерархия прикладного домена по данным}
 \end{figure}
 
-\clearpage
 
 \subsection{Архитектурный домен}
 
-Ниже на рисунке \ref{uml:arch} приведена иерархия классов для архитектурного домена.
-
-\begin{figure}
-	\centering
-	\includegraphics[angle=90,origin=c,width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/uml.pdf}
-	\caption{UML диаграмма классов архитектурного домена}
-	\label{uml:arch}
-\end{figure}
-
-\clearpage
+В приложении А на рисунке \ref{uml:arch} приведена иерархия классов для архитектурного домена.
 
 \subsection{Процесс синтеза изображения}
 
@@ -111,17 +103,17 @@
 
 На рисунках \ref{alg:fast:1}--\ref{alg:fast:2} представлен алгоритм синтеза изображения, использующий простые закраски.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/fast.pdf}
-	\caption{Алгоритм использующий простую закраску (часть 1)}
+	\includegraphics[width=\linewidth,height=0.65\textheight,keepaspectratio]{diagrams/fast.pdf}
+	\caption{Алгоритм, использующий простую закраску (часть 1)}
 	\label{alg:fast:1}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth,height=0.85\textheight,keepaspectratio]{diagrams/draw-face.pdf}
-	\caption{Алгоритм использующий простую закраску (часть 2)}
+	\caption{Алгоритм, использующий простую закраску (часть 2)}
 	\label{alg:fast:2}
 \end{figure}
 
@@ -134,7 +126,7 @@
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\linewidth,height=0.7\textheight,keepaspectratio]{diagrams/fancy.pdf}
-	\caption{Алгоритм использующий трассировку лучей}
+	\caption{Алгоритм, использующий трассировку лучей}
 	\label{alg:fancy}
 \end{figure}
 

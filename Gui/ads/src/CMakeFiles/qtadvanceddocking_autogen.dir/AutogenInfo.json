@@ -1,0 +1,301 @@
+{
+	"BUILD_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/qtadvanceddocking_autogen",
+	"CMAKE_BINARY_DIR" : "/home/rulldeef/Projects/cw-1",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src",
+	"CMAKE_EXECUTABLE" : "/usr/local/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/CMakeLists.txt",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5Config.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5Config.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/Qt5CoreConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Gui/Qt5GuiConfig.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake",
+		"/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake",
+		"/usr/local/share/cmake-3.23/Modules/CMakePackageConfigHelpers.cmake",
+		"/usr/local/share/cmake-3.23/Modules/WriteBasicConfigVersionFile.cmake",
+		"/usr/local/share/cmake-3.23/Modules/BasicConfigVersion-SameMajorVersion.cmake.in",
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src/ads.qrc"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/rulldeef/Projects/cw-1",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockAreaTabBar.h",
+			"MU",
+			"EWIEGA46WW/moc_DockAreaTabBar.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockAreaTitleBar.h",
+			"MU",
+			"EWIEGA46WW/moc_DockAreaTitleBar.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockAreaTitleBar_p.h",
+			"MU",
+			"EWIEGA46WW/moc_DockAreaTitleBar_p.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockAreaWidget.h",
+			"MU",
+			"EWIEGA46WW/moc_DockAreaWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockComponentsFactory.h",
+			"MU",
+			"EWIEGA46WW/moc_DockComponentsFactory.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockContainerWidget.h",
+			"MU",
+			"EWIEGA46WW/moc_DockContainerWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockFocusController.h",
+			"MU",
+			"EWIEGA46WW/moc_DockFocusController.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockManager.h",
+			"MU",
+			"EWIEGA46WW/moc_DockManager.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockOverlay.h",
+			"MU",
+			"EWIEGA46WW/moc_DockOverlay.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockSplitter.h",
+			"MU",
+			"EWIEGA46WW/moc_DockSplitter.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockWidget.h",
+			"MU",
+			"EWIEGA46WW/moc_DockWidget.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockWidgetTab.h",
+			"MU",
+			"EWIEGA46WW/moc_DockWidgetTab.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockingStateReader.h",
+			"MU",
+			"EWIEGA46WW/moc_DockingStateReader.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/ElidingLabel.h",
+			"MU",
+			"EWIEGA46WW/moc_ElidingLabel.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/FloatingDockContainer.h",
+			"MU",
+			"EWIEGA46WW/moc_FloatingDockContainer.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/FloatingDragPreview.h",
+			"MU",
+			"EWIEGA46WW/moc_FloatingDragPreview.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/IconProvider.h",
+			"MU",
+			"EWIEGA46WW/moc_IconProvider.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/ads_globals.h",
+			"MU",
+			"EWIEGA46WW/moc_ads_globals.cpp",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/linux/FloatingWidgetTitleBar.h",
+			"MU",
+			"YCY4FPCVH5/moc_FloatingWidgetTitleBar.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/qtadvanceddocking_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/qtadvanceddocking_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"ADS_SHARED_EXPORT",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NO_DEBUG",
+		"QT_WIDGETS_LIB",
+		"qtadvanceddocking_EXPORTS"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/rulldeef/Projects/cw-1/Gui/ads/src",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui/5.15.2",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui/5.15.2/QtGui",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore/5.15.2",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore/5.15.2/QtCore",
+		"/usr/include/x86_64-linux-gnu/qt5",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
+		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
+		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+		"/usr/include/c++/11",
+		"/usr/include/x86_64-linux-gnu/c++/11",
+		"/usr/include/c++/11/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/11/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/local/share/cmake-3.23/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/qtadvanceddocking_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/CMakeFiles/qtadvanceddocking_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/home/rulldeef/Projects/cw-1/Gui/ads/src/CMakeFiles/qtadvanceddocking_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockAreaTabBar.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockAreaTitleBar.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockAreaWidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockComponentsFactory.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockContainerWidget.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockFocusController.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockOverlay.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockSplitter.cpp",
+			"MU",
+			null
+		],
+		[ "/home/rulldeef/Projects/cw-1/Gui/ads/src/DockWidget.cpp", "MU", null ],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockWidgetTab.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/DockingStateReader.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/ElidingLabel.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/FloatingDockContainer.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/FloatingDragPreview.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/IconProvider.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/ads_globals.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/rulldeef/Projects/cw-1/Gui/ads/src/linux/FloatingWidgetTitleBar.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

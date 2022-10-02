@@ -13,7 +13,7 @@
 	\item имеет мощный механизм шаблонов.
 \end{itemize}
 
-Для раработки графического интерфейса будет использована библиотека Qt, так как данная библиотека имеет открытый исходный код, а также является платформо-независимой.
+Для раработки графического интерфейса будет использована библиотека Qt\cite{qt}, так как данная библиотека имеет открытый исходный код, а также является платформо-независимой.
 
 В качестве среды разработки будет использована <<CLion>>\cite{clion} по следующим причинам:
 
@@ -27,9 +27,9 @@
 
 В данном подразделе будут представлены реализации алгоритмов синтеза изображения.
 
-\subsection{Алгоритм трассировки лучей}
+На листинге \ref{code:ray-trace} представлена реализация алгоритма трассировки лучей.
 
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}[language=C++,label=code:ray-trace,caption=Реализация алгоритма трассировки лучей]
 static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Camera& camera, int depthLeft) {
   Mesh* mesh;
   Face* face;
@@ -116,9 +116,9 @@ static std::pair<double, Color> traceRay(Ray ray, const Scene& scene, const Came
 }
 \end{lstlisting}
 
-\subsection{Алгоритм сплошной закраски полигона}
+Листинг \ref{code:fast} содержит реализацию алгоритма сплошной закраски полигона.
 
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}[language=C++,label=code:fast,caption=Реализация алгоритма сплошной закраски полигона]
 void Core::renderFlat(RenderTarget& renderTarget, ZBuffer& zbuffer, RenderRegion region, ColorComputeFn colorComputeFn) {
   double xLeft = region.xStartLeft;
   double xRight = region.xStartRight;
